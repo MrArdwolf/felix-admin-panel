@@ -17,7 +17,15 @@ Jag gör detta projekt själv.
 
 ### Kravspecifikation:
 
-- Admin ska kunna logga in
-- Admin ska kunna se en lista på alla kunder
-- Admin ska kunna importa kunder från ett externt formulär
-- Admin ska kunna skcka sms till kunder med uppgifter om pris och delar
+#### Applikationen ska:
+
+- lagra data i en databas
+- finnas publicerad på en publik webbplats
+- hantera vy för mobil
+- hantera 1 användarroll: admin
+
+#### En administratör (admin) ska kunna
+
+- se en lista på alla kunder
+- importa kunder från ett externt formulär
+- skcka sms till kunder med uppgifter om pris och delar
