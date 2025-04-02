@@ -2,9 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import MovieRouter from './routes/MovieRouter.js';
-import ShowRouter from './routes/ShowRouter.js';
-import BookingRouter from './routes/BookingRouter.js';
 import UserRouter from './routes/UserRouter.js';
 
 
@@ -34,7 +31,10 @@ function requestLogger(req, res, next) {
     next();
 }
 
-// Routes
+server.use("/api/user", UserRouter);
+server.use("/api/customer", CustomerRouter);
+server.use("/api/archived", ArchivedRouter);
+server.use("/api/part", PartRouter);
 
 server.all("*", (req, res) => {
     res.statusCode = 404;
