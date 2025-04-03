@@ -32,6 +32,11 @@ async function registerUser(req, res) {
             masterCorrect = true;
         }
 
+        if (!masterCorrect) {
+            res.statusCode = 400;
+            throw new Error("Master password incorrect")
+        }
+
         const isEmailAllReadyExist = await UserModel.findOne({
             email: email,
         });
@@ -73,7 +78,7 @@ async function registerUser(req, res) {
         });
     } catch (error) {
         res.statusCode = 400;
-        res.json({ message: "There was an error", error });
+        res.json({ message: "There was an error", error: error.message });
     }
 }
 
@@ -143,7 +148,7 @@ async function Authenticate(req, res) {
         });
         }
     catch (error) {
-        res.json({ message: "There was an error", error });
+        res.json({ message: "There was an error", error: error.message });
     }
 }
 

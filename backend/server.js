@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import UserRouter from './routes/UserRouter.js';
+import MasterRouter from './routes/MasterRouter.js';
 
 
 dotenv.config();
@@ -32,9 +33,10 @@ function requestLogger(req, res, next) {
 }
 
 server.use("/api/user", UserRouter);
-server.use("/api/customer", CustomerRouter);
-server.use("/api/archived", ArchivedRouter);
-server.use("/api/part", PartRouter);
+server.use("/api/master", MasterRouter);
+// server.use("/api/customer", CustomerRouter);
+// server.use("/api/archived", ArchivedRouter);
+// server.use("/api/part", PartRouter);
 
 server.all("*", (req, res) => {
     res.statusCode = 404;

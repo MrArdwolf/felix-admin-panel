@@ -44,7 +44,7 @@ async function registerMaster(req, res) {
         });
     } catch (error) {
         res.statusCode = 400;
-        res.json({ message: "There was an error", error });
+        res.json({ message: "There was an error", error: error.message });
     }
 }
 

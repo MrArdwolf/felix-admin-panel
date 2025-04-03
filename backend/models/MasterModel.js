@@ -11,7 +11,7 @@ const masterSchema = new mongoose.Schema({
         required: true
     },
 },
-{ timestamps: true }
+// { timestamps: true }
 );
 
 const MasterModel = new mongoose.model("Master", masterSchema);
