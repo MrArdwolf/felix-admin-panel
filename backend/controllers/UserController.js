@@ -112,6 +112,12 @@ async function loginUser(req, res) {
             token = jwt.sign({ id: isUserExist._id, username: isUserExist.username, role: isUserExist.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
         }
 
+        res.cookie("authToken", token, {
+            httpOnly: true,
+            // secure: true,
+            // sameSite: "strict",
+        });
+
         // send the response
         res.status(200).json({
             status: 200,
@@ -128,7 +134,8 @@ async function loginUser(req, res) {
 
 async function Authenticate(req, res) {
     try {
-        const token = req.header('Authorization');
+        console.log(req.cookies);
+        const token = req.cookies;
         if (!token) {
             res.statusCode = 401;
             throw new Error("Unauthorized");
@@ -137,7 +144,7 @@ async function Authenticate(req, res) {
         jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
             if (err) {
                 res.statusCode = 401;
-                throw new Error("Unauthorized");
+                throw new Error("invalid token");
             }
             res.status(200).json({
                 status: 200,
