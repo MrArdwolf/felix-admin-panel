@@ -35,3 +35,7 @@ Jag gör detta projekt själv.
 - skcka sms till kunder med uppgifter om pris och delar
 
 ### [Figma skiss](https://www.figma.com/design/F8h7ph0THIHbMQue6TkAGt/examen?node-id=31-385)
+
+
+
+### [Logg bok](Loggbok.md)
