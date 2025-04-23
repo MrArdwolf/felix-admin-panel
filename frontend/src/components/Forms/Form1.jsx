@@ -4,7 +4,7 @@ import './Form.scss'
 
 export default function Form() {
   return (
-    <form action="" className="Form1">
+    <form action="" className="customer-form">
 
       <p>1. Lås fast din cykel med vajer och lås i vänstra staketet. </p>
       <p>NOTERA: Lås den inte med din egen nyckel!</p>

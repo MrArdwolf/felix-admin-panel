@@ -4,7 +4,7 @@ import './Form.scss'
 
 export default function Form() {
   return (
-    <form action="" className="Form1">
+    <form action="" className="customer-form">
       <div className="inputs">
         <div className="input-row">
           <label>Kan ni kolla/fixa</label>

@@ -1,3 +1,7 @@
-// .SignUpForm {
-//   background-color: aqua;
-// }
+@use "../../assets/scss/main" as *;
+
+
+
+.customer-form {
+  color: $primary-color;
+}
