@@ -11,9 +11,9 @@ export default function Form() {
           <input type="text" id="comment" />
         </div>
       </div>
-      <button>Bakåt</button>
-      <button type="submit">Skicka</button>
-      <button>Rensa formuläret</button>
+      <button className='secondary-button'>Bakåt</button>
+      <button type="submit" className='primary-button'>Skicka</button>
+      <button className='text-button'>Rensa formuläret</button>
     </form>
   )
 }
