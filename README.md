@@ -7,6 +7,7 @@ Applikationer ska vara en admin panel och ett formulär som ska göra det lätta
 ### Tekniker och programspråk:
 
 - React
+- Scss
 - Node.js
 - Express
 - MongoDB
