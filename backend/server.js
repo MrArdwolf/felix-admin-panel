@@ -2,8 +2,10 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import cookieParser from 'cookie-parser';
 import UserRouter from './routes/UserRouter.js';
 import MasterRouter from './routes/MasterRouter.js';
+import PartRouter from './routes/PartRouter.js';
 
 
 dotenv.config();
@@ -14,6 +16,8 @@ server.use(cors());
 
 server.use(express.json());
 server.use(requestLogger);
+
+server.use(cookieParser());
 
 const { MONGODB_USER, MONGODB_PASSWORD, MONGODB_URL, MONGODB_DATABASE } = process.env;
 if (!MONGODB_USER || !MONGODB_PASSWORD || !MONGODB_URL || !MONGODB_DATABASE) {
@@ -36,7 +40,7 @@ server.use("/api/user", UserRouter);
 server.use("/api/master", MasterRouter);
 // server.use("/api/customer", CustomerRouter);
 // server.use("/api/archived", ArchivedRouter);
-// server.use("/api/part", PartRouter);
+server.use("/api/part", PartRouter);
 
 server.all("*", (req, res) => {
     res.statusCode = 404;
