@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import UserRouter from './routes/UserRouter.js';
 import MasterRouter from './routes/MasterRouter.js';
 import PartRouter from './routes/PartRouter.js';
+import CustomerRouter from './routes/CustomerRouter.js';
 
 
 dotenv.config();
@@ -38,7 +39,7 @@ function requestLogger(req, res, next) {
 
 server.use("/api/user", UserRouter);
 server.use("/api/master", MasterRouter);
-// server.use("/api/customer", CustomerRouter);
+server.use("/api/customer", CustomerRouter);
 // server.use("/api/archived", ArchivedRouter);
 server.use("/api/part", PartRouter);
 
