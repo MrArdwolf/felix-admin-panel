@@ -15,3 +15,7 @@ Lov
 ## Vecka 17
 
 Jag började med att implementera css för kund formuläret.
+
+## Vecka 18
+
+Jag gjorde klart nästan alla routes på mitt api.
