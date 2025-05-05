@@ -13,8 +13,8 @@ async function registerUser(req, res) {
         const user = req.body;
         let masterCorrect = false;
 
-        const { username, email, firstName, lastName, password, masterPassword } = user;
-        if (!username || !email || !firstName || !lastName || !password || !masterPassword) {
+        const { username, firstName, lastName, password, masterPassword } = user;
+        if (!username || !firstName || !lastName || !password || !masterPassword) {
             res.statusCode = 400;
             throw new Error("Missing data")
         }
@@ -37,15 +37,6 @@ async function registerUser(req, res) {
             throw new Error("Master password incorrect")
         }
 
-        const isEmailAllReadyExist = await UserModel.findOne({
-            email: email,
-        });
-
-        if (isEmailAllReadyExist) {
-            res.statusCode = 400;
-            throw new Error("Email all ready in use")
-        }
-
         const isUsernameAllReadyExist = await UserModel.findOne({
             username: username,
         });
@@ -57,13 +48,12 @@ async function registerUser(req, res) {
 
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
-        
+
 
 
         // now create the user;
         const newUser = await UserModel.create({
             username,
-            email,
             firstName,
             lastName,
             password: hashedPassword,
@@ -88,16 +78,16 @@ async function loginUser(req, res) {
         const user = req.body;
 
         // ** destructure the information from user;
-        const { email, password } = user;
-        
-        if (!email || !password) {
+        const { username, password } = user;
+
+        if (!username || !password) {
             res.statusCode = 400;
             throw new Error("Missing data")
         }
 
-        // ** Check the (email/user) exist  in database or not ;
+        // ** Check the (username/user) exist  in database or not ;
         const isUserExist = await UserModel.findOne({
-            email: email,
+            username: username,
         });
 
         // ** if there is not any user we will send user not found;
@@ -106,13 +96,20 @@ async function loginUser(req, res) {
             throw new Error("User not found")
         }
 
-        let token;
+        let token, refreshToken;
 
         if (await bcrypt.compare(password, isUserExist.password)) {
-            token = jwt.sign({ id: isUserExist._id, username: isUserExist.username, role: isUserExist.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
+            token = jwt.sign({ id: isUserExist._id, username: isUserExist.username, role: isUserExist.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
+            refreshToken = jwt.sign({ id: isUserExist._id, username: isUserExist.username, role: isUserExist.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
         }
 
         res.cookie("authToken", token, {
+            httpOnly: true,
+            // secure: true,
+            // sameSite: "strict",
+        });
+
+        res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
             // secure: true,
             // sameSite: "strict",
@@ -134,18 +131,36 @@ async function loginUser(req, res) {
 
 async function Authenticate(req, res) {
     try {
-        console.log(req.cookies);
-        const token = req.cookies;
-        if (!token) {
+        console.log(req.cookies.authToken);
+        const oldToken = req.cookies.refreshToken;
+        if (!oldToken) {
             res.statusCode = 401;
-            throw new Error("Unauthorized");
+            throw new Error("No token found");
         }
 
-        jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        jwt.verify(oldToken, process.env.JWT_SECRET, (err, decoded) => {
             if (err) {
                 res.statusCode = 401;
                 throw new Error("invalid token");
             }
+
+            const token = jwt.sign({ id: decoded._id, username: decoded.username, role: decoded.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
+            const refreshToken = jwt.sign({ id: decoded._id, username: decoded.username, role: decoded.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
+
+
+            res.cookie("authToken", token, {
+                httpOnly: true,
+                // secure: true,
+                // sameSite: "strict",
+            });
+
+            res.cookie("refreshToken", refreshToken, {
+                httpOnly: true,
+                // secure: true,
+                // sameSite: "strict",
+            });
+
+
             res.status(200).json({
                 status: 200,
                 success: true,
@@ -153,7 +168,9 @@ async function Authenticate(req, res) {
                 user: decoded,
             });
         });
-        }
+
+
+    }
     catch (error) {
         res.json({ message: "There was an error", error: error.message });
     }

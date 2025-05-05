@@ -14,7 +14,14 @@ dotenv.config();
 
 const server = express()
 
-server.use(cors());
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173';
+const corsOptions = {
+    origin: FRONTEND_URL, // Replace with your frontend's origin
+    credentials: true, // Allow cookies to be sent with requests
+    allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+server.use(cors(corsOptions));
 
 server.use(express.json());
 server.use(requestLogger);
