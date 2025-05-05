@@ -2,6 +2,8 @@ import CustomerModel from "../models/CustomerModel.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
+dotenv.config();
+
 
 
 async function addCustomer(req, res) {
@@ -40,9 +42,24 @@ async function addCustomer(req, res) {
 
 async function getCustomers(req, res) {
     try {
+        const userToken = req.cookies.authToken;
+        let user = null;
+        if (!userToken) {
+            res.statusCode = 401;
+            throw new Error("Unauthorized");
+        }
+
+        jwt.verify(userToken, process.env.JWT_SECRET, (err, decoded) => {
+            if (err) {
+                res.statusCode = 401;
+                throw new Error("Unauthorized", err);
+            }
+            user = decoded.id;
+        });
+
         const customer = await CustomerModel.find().populate("parts");
         res.json(customer);
-    } catch {
+    } catch(error) {
         res.statusCode = 400;
         res.json({ message: "There was an error", error: error.message });
     }
@@ -60,7 +77,7 @@ async function updateCustomer(req, res) {
         let user = null;
         if (!userToken) {
             res.statusCode = 401;
-            throw new Error("Unauthorized1");
+            throw new Error("Unauthorized");
         }
 
         jwt.verify(userToken, process.env.JWT_SECRET, (err, decoded) => {
@@ -92,7 +109,7 @@ async function deleteCustomer(req, res) {
         let user = null;
         if (!userToken) {
             res.statusCode = 401;
-            throw new Error("Unauthorized1");
+            throw new Error("Unauthorized");
         }
 
         jwt.verify(userToken, process.env.JWT_SECRET, (err, decoded) => {

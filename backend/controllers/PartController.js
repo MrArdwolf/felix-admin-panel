@@ -28,7 +28,7 @@ async function addPart(req, res) {
         let user = null;
         if (!userToken) {
             res.statusCode = 401;
-            throw new Error("Unauthorized1");
+            throw new Error("Unauthorized");
         }
 
         jwt.verify(userToken, process.env.JWT_SECRET, (err, decoded) => {
@@ -68,9 +68,24 @@ async function addPart(req, res) {
 
 async function getParts(req, res) {
     try {
+        const userToken = req.cookies.authToken;
+        let user = null;
+        if (!userToken) {
+            res.statusCode = 401;
+            throw new Error("Unauthorized");
+        }
+
+        jwt.verify(userToken, process.env.JWT_SECRET, (err, decoded) => {
+            if (err) {
+                res.statusCode = 401;
+                throw new Error("Unauthorized", err);
+            }
+            user = decoded.id;
+        });
+
         const part = await PartModel.find();
         res.json(part);
-    } catch {
+    } catch(error) {
         res.statusCode = 400;
         res.json({ message: "There was an error", error: error.message });
     }
@@ -78,6 +93,21 @@ async function getParts(req, res) {
 
 async function getPartsByParent(req, res) {
     try {
+        const userToken = req.cookies.authToken;
+        let user = null;
+        if (!userToken) {
+            res.statusCode = 401;
+            throw new Error("Unauthorized");
+        }
+
+        jwt.verify(userToken, process.env.JWT_SECRET, (err, decoded) => {
+            if (err) {
+                res.statusCode = 401;
+                throw new Error("Unauthorized", err);
+            }
+            user = decoded.id;
+        });
+
         const part = await PartModel.find({ parent: req.params.id }).populate("parent");
         res.json(part);
     } catch {
@@ -98,7 +128,7 @@ async function updatePart(req, res) {
         let user = null;
         if (!userToken) {
             res.statusCode = 401;
-            throw new Error("Unauthorized1");
+            throw new Error("Unauthorized");
         }
 
         jwt.verify(userToken, process.env.JWT_SECRET, (err, decoded) => {
@@ -126,6 +156,21 @@ async function updatePart(req, res) {
 
 async function deletePart(req, res) {
     try {
+        const userToken = req.cookies.authToken;
+        let user = null;
+        if (!userToken) {
+            res.statusCode = 401;
+            throw new Error("Unauthorized");
+        }
+
+        jwt.verify(userToken, process.env.JWT_SECRET, (err, decoded) => {
+            if (err) {
+                res.statusCode = 401;
+                throw new Error("Unauthorized", err);
+            }
+            user = decoded.id;
+        });
+
         const Part = await PartModel.findById(req.params.id);
         if (!Part) {
             res.statusCode = 404;
