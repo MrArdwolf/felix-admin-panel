@@ -1,5 +1,5 @@
 import './App.scss'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import SignUpPage from './pages/SignUpPage/SignUpPage';
 import FormPage from './pages/FormPage/FormPage';
 import HomePage from './pages/FormPage/HomePage/HomePage';
@@ -9,6 +9,8 @@ import {  useEffect, useState } from 'react';
 import axios from 'axios';
 
 export default function App() {
+  // const location = useLocation();
+  // const { pathname } = location;
 
   axios.defaults.withCredentials = true;
 
@@ -27,7 +29,9 @@ export default function App() {
       })
       .catch(err => {
         console.log(err);
-        if (err.status == 401) setUser(null)
+        if (err.status == 401) {
+          setUser(null)
+        } 
       })
   }
 
@@ -38,7 +42,7 @@ export default function App() {
         <Route path="/" element={<HomePage user={user}/>} />
         <Route path="/auth" element={<SignUpPage />} />
         <Route path="/form" element={<FormPage />} />
-        <Route path="/parts" element={<PartsPage />} />
+        <Route path="/parts" element={<PartsPage authenticate={authenticate} user={user}/>} />
       </Routes>
     </BrowserRouter>
   )

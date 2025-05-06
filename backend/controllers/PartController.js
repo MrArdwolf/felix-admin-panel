@@ -61,7 +61,6 @@ async function addPart(req, res) {
             part: newPart,
         });
     } catch (error) {
-        res.statusCode = 400;
         res.json({ message: "There was an error", error: error.message });
     }
 }
@@ -86,7 +85,6 @@ async function getParts(req, res) {
         const part = await PartModel.find();
         res.json(part);
     } catch(error) {
-        res.statusCode = 400;
         res.json({ message: "There was an error", error: error.message });
     }
 }
@@ -110,8 +108,7 @@ async function getPartsByParent(req, res) {
 
         const part = await PartModel.find({ parent: req.params.id }).populate("parent");
         res.json(part);
-    } catch {
-        res.statusCode = 400;
+    } catch(error) {
         res.json({ message: "There was an error", error: error.message });
     }
 }
@@ -149,7 +146,6 @@ async function updatePart(req, res) {
         const updatedPart = await PartModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
         res.json({ message: "Part has been updated", data: updatedPart });
     } catch (error) {
-        res.statusCode = 400;
         res.json({ message: "There was an error", error: error.message });
     }
 }
@@ -190,7 +186,6 @@ async function deletePart(req, res) {
         await PartModel.findByIdAndDelete(req.params.id);
         res.json({ message: "Part has been deleted" });
     } catch (error) {
-        res.statusCode = 400;
         res.json({ message: "There was an error", error: error.message });
     }
 }
