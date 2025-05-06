@@ -176,10 +176,25 @@ async function Authenticate(req, res) {
     }
 }
 
+async function logoutUser(req, res) {
+    try {
+        res.clearCookie("authToken");
+        res.clearCookie("refreshToken");
+        res.status(200).json({
+            status: 200,
+            success: true,
+            message: "logout success",
+        });
+    } catch (error) {
+        res.json({ message: "There was an error", error: error.message });
+    }
+}
+
 
 
 export default {
     registerUser,
     loginUser,
     Authenticate,
+    logoutUser,
 }

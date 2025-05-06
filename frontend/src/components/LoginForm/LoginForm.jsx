@@ -20,6 +20,7 @@ export default function LoginForm() {
         password
       });
       console.log(response.data);
+      window.location.href = "/";
     } catch (error) {
       console.error(error);
     }

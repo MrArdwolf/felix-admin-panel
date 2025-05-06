@@ -9,4 +9,6 @@ UserRouter.post("/auth/login", UserController.loginUser);
 
 UserRouter.get("/auth/authenticate", UserController.Authenticate);
 
+UserRouter.get("/auth/logout", UserController.logoutUser);
+
 export default UserRouter;
