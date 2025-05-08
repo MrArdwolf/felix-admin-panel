@@ -100,7 +100,7 @@ async function loginUser(req, res) {
 
         if (await bcrypt.compare(password, isUserExist.password)) {
             token = jwt.sign({ id: isUserExist._id, username: isUserExist.username, role: isUserExist.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
-            refreshToken = jwt.sign({ id: isUserExist._id, username: isUserExist.username, role: isUserExist.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
+            refreshToken = jwt.sign({ id: isUserExist._id, username: isUserExist.username, role: isUserExist.role }, process.env.JWT_SECRET, { expiresIn: "2d" });
         }
 
         res.cookie("authToken", token, {
@@ -145,7 +145,7 @@ async function Authenticate(req, res) {
             }
 
             const token = jwt.sign({ id: decoded._id, username: decoded.username, role: decoded.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
-            const refreshToken = jwt.sign({ id: decoded._id, username: decoded.username, role: decoded.role }, process.env.JWT_SECRET, { expiresIn: "1d" });
+            const refreshToken = jwt.sign({ id: decoded._id, username: decoded.username, role: decoded.role }, process.env.JWT_SECRET, { expiresIn: "2d" });
 
 
             res.cookie("authToken", token, {
