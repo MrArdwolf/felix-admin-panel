@@ -2,7 +2,7 @@ import './App.scss'
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import SignUpPage from './pages/SignUpPage/SignUpPage';
 import FormPage from './pages/FormPage/FormPage';
-import HomePage from './pages/FormPage/HomePage/HomePage';
+import HomePage from './pages/HomePage/HomePage';
 import PartsPage from './pages/PartsPage/PartsPage';
 import Header from './components/Header/Header';
 import {  useEffect, useState } from 'react';
