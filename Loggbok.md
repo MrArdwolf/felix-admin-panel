@@ -19,3 +19,7 @@ Jag började med att implementera css för kund formuläret.
 ## Vecka 18
 
 Jag gjorde klart nästan alla routes på mitt api.
+
+## Vecka 19
+
+Jag gjorde klart de sista routesen på mitt api sedan gjorde jag klart start sidan, headern och parts sidan
