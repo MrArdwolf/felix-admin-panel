@@ -5,7 +5,7 @@ import AlertModal from '../AlertModal/AlertModal';
 
 
 export default function Form(props) {
-  const [form1Data, setForm1Data] = useState({
+  const [form1Data, setForm1Data] = useState(props.formData.form1Data || {
     name: '',
     phone: '',
     email: '',
@@ -18,7 +18,8 @@ export default function Form(props) {
     e.preventDefault();
     // props.setStep(props.step + 1);
     console.log(form1Data);
-    props.setFormData(form1Data);
+    props.setFormData({ ...props.formData, form1Data: form1Data });
+    console.log(props.formData);
     if (form1Data.detailsOrNot === 'details') {
       props.setStep(2);
     } else {
@@ -53,19 +54,19 @@ export default function Form(props) {
       <div className="inputs">
         <div className="input-row">
           <label htmlFor="name">Namn*</label>
-          <input type="text" id="name" onChange={handleChange} name="name" value={form1Data.name} />
+          <input type="text" id="name" onChange={handleChange} name="name" value={form1Data.name} required />
         </div>
         <div className="input-row">
           <label htmlFor="phone">Mobilnummer*</label>
-          <input type="text" id="phone" onChange={handleChange} name="phone" value={form1Data.phone} />
+          <input type="text" id="phone" onChange={handleChange} name="phone" value={form1Data.phone} required />
         </div>
         <div className="input-row">
           <label htmlFor="email">Email*</label>
-          <input type="text" id="email" onChange={handleChange} name="email" value={form1Data.email} />
+          <input type="text" id="email" onChange={handleChange} name="email" value={form1Data.email} required />
         </div>
         <div className="input-row">
           <label htmlFor="description">Beskrivning av cykel* <p>Skriv gärna färg och märke.</p></label>
-          <input type="text" id="description" onChange={handleChange} name="description" value={form1Data.description} />
+          <input type="text" id="description" onChange={handleChange} name="description" value={form1Data.description} required />
         </div>
         <div className="input-row">
           <label>Översyn eller detalj?*</label>
@@ -81,6 +82,7 @@ export default function Form(props) {
           </div>
           <div className="inner-row">
             <input
+              required
               type="radio"
               id='details'
               name='detailsOrNot'

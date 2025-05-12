@@ -17,12 +17,12 @@ const customerSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    partToFix: {
-        type: [{}]
-    },
-    alsoDo: {
-        type: [{}]
-    },
+    partToFix: [{
+        type: String
+    }],
+    alsoDo: [{
+        type: String
+    }],
     comments: {
         type: String
     },

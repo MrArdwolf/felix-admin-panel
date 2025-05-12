@@ -22,8 +22,8 @@ async function addCustomer(req, res) {
             email,
             phone,
             bikeDescription,
-            partToFix: [],
-            alsoDo: [],
+            partToFix,
+            alsoDo,
             comments,
         });
 
