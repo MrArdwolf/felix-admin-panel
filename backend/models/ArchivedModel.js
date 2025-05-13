@@ -17,18 +17,21 @@ const archivedSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    partToFix: {
-        type: [{}]
-    },
-    alsoDo: {
-        type: [{}]
-    },
+    partToFix: [{
+        type: String
+    }],
+    alsoDo: [{
+        type: String
+    }],
     comments: {
         type: String
     },
     parts: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Part"
+    }],
+    partPrices: [{
+        
     }],
     createdAt: {
         type: Date,

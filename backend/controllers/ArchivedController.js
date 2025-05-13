@@ -8,8 +8,8 @@ async function addArchived(req, res) {
     try {
         const archived = req.body;
 
-        const { name, email, phone, bikeDescription, partToFix, alsoDo, comments } = archived;
-        if (!name || !email || !phone || !bikeDescription) {
+        const { name, email, phone, bikeDescription, partToFix, alsoDo, comments, parts, partPrices } = archived;
+        if (!archived) {
             res.statusCode = 400;
             throw new Error("Missing data")
         }
@@ -35,9 +35,11 @@ async function addArchived(req, res) {
             email,
             phone,
             bikeDescription,
-            partToFix: [],
-            alsoDo: [],
+            partToFix,
+            alsoDo,
             comments,
+            parts,
+            partPrices,
         });
 
         // Send the Archived as response;
@@ -55,7 +57,7 @@ async function addArchived(req, res) {
 
 async function getAllArchived(req, res) {
     try {
-        const archived = await ArchivedModel.find().populate("parts");
+        const archived = await ArchivedModel.find();
         res.json(archived);
     } catch(error) {
         res.statusCode = 400;
