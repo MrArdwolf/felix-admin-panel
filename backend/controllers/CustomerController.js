@@ -57,7 +57,7 @@ async function getCustomers(req, res) {
             user = decoded.id;
         });
 
-        const customer = await CustomerModel.find().populate("parts");
+        const customer = await CustomerModel.find();
         res.json(customer);
     } catch(error) {
         res.statusCode = 400;
@@ -94,7 +94,7 @@ async function updateCustomer(req, res) {
             throw new Error("No data to update Customer");
         }
 
-        const updatedCustomer = await CustomerModel.findByIdAndUpdate(req.params.id, { parts: body.parts }, { new: true });
+        const updatedCustomer = await CustomerModel.findByIdAndUpdate(req.params.id, { parts: body.parts, partPrices: body.partPrices}, { new: true });
         res.json({ message: "Customer has been updated", data: updatedCustomer });
     } catch (error) {
         res.statusCode = 400;

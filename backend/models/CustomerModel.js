@@ -29,6 +29,9 @@ const customerSchema = new mongoose.Schema({
     parts: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Part"
+    }],
+    partPrices: [{
+        
     }]
 });
 

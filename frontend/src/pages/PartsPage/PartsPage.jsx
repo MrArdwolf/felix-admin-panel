@@ -63,7 +63,7 @@ export default function PartsPage(props) {
     <div>PartsPage
       <button onClick={update}>test</button>
       {parts.filter(part => !part.parent).map(part => (
-        <Part part={part} key={part._id} update={update} authenticate={() => { props.authenticate() }} />
+        <Part part={part} key={part._id} authenticate={() => { props.authenticate() }} />
       ))}
 
       <div className="add-part">

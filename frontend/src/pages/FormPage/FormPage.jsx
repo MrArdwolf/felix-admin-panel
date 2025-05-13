@@ -25,64 +25,64 @@ export default function FormPage() {
     console.log(formData)
 
       if (formData.form2Data.puncturedFront) {
-        customer.partToFix.push('puncturedFront')
+        customer.partToFix.push('Punktering fram')
       }
       if (formData.form2Data.puncturedBack) {
-        customer.partToFix.push('puncturedBack')
+        customer.partToFix.push('Punktering bak')
       }
       if (formData.form2Data.changeTireFront) {
-        customer.partToFix.push('changeTireFront')
+        customer.partToFix.push('Byte däck fram')
       }
       if (formData.form2Data.changeTireBack) {
-        customer.partToFix.push('changeTireBack')
+        customer.partToFix.push('Byte däck bak')
       }
       if (formData.form2Data.changeGearCableFront) {
-        customer.partToFix.push('changeGearCableFront')
+        customer.partToFix.push('Byte växelvajer fram')
       }
       if (formData.form2Data.changeGearCableBack) {
-        customer.partToFix.push('changeGearCableBack')
+        customer.partToFix.push('Byte växelvajer bak')
       }
       if (formData.form2Data.changeBrakeCableFront) {
-        customer.partToFix.push('changeBrakeCableFront')
+        customer.partToFix.push('Byte bromsvajer fram')
       }
       if (formData.form2Data.changeBrakeCableBack) {
-        customer.partToFix.push('changeBrakeCableBack')
+        customer.partToFix.push('Byte bromsvajer bak')
       }
       if (formData.form2Data.adjustGearCableFront) {
-        customer.partToFix.push('adjustGearCableFront')
+        customer.partToFix.push('Justera växel fram')
       }
       if (formData.form2Data.adjustGearCableBack) {
-        customer.partToFix.push('adjustGearCableBack')
+        customer.partToFix.push('Justera växel bak')
       }
       if (formData.form2Data.adjustBrakeCableFront) {
-        customer.partToFix.push('adjustBrakeCableFront')
+        customer.partToFix.push('Justera broms fram')
       }
       if (formData.form2Data.adjustBrakeCableBack) {
-        customer.partToFix.push('adjustBrakeCableBack')
+        customer.partToFix.push('Justera broms bak')
       }
       if (formData.form2Data.adjustTireFront) {
-        customer.partToFix.push('adjustTireFront')
+        customer.partToFix.push('Rikta hjul fram')
       }
       if (formData.form2Data.adjustTireBack) {
-        customer.partToFix.push('adjustTireBack')
+        customer.partToFix.push('Rikta hjul bak')
       }
       if (formData.form2Data.changeSpokesFront) {
-        customer.partToFix.push('changeSpokesFront')
+        customer.partToFix.push('Byta eker fram')
       }
       if (formData.form2Data.changeSpokesBack) {
-        customer.partToFix.push('changeSpokesBack')
+        customer.partToFix.push('Byta eker bak')
       }
       if (formData.form2Data.changeChain) {
-        customer.alsoDo.push('changeChain')
+        customer.alsoDo.push('Byte kedja')
       }
       if (formData.form2Data.lubricate) {
-        customer.alsoDo.push('lubricate')
+        customer.alsoDo.push('Smörja')
       }
       if (formData.form2Data.pump) {
-        customer.alsoDo.push('pump')
+        customer.alsoDo.push('Pumpa')
       }
       if (formData.form2Data.wash) {
-        customer.alsoDo.push('wash')
+        customer.alsoDo.push('Tvätta')
       }
     
 
