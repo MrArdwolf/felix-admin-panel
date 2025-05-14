@@ -22,8 +22,7 @@ export default function FormPage() {
       comments: formData.form3Data.comment,
     }
 
-    console.log(formData)
-
+    if (formData.form2Data) {
       if (formData.form2Data.puncturedFront) {
         customer.partToFix.push('Punktering fram')
       }
@@ -84,45 +83,45 @@ export default function FormPage() {
       if (formData.form2Data.wash) {
         customer.alsoDo.push('Tvätta')
       }
-    
+    }
 
 
-  console.log(customer)
+    console.log(customer)
     axios.post(`${backend}/api/customer/add`, customer)
-    .then(res => {
-      console.log(res.data)
-    })
-    .catch(err => {
-      console.log(err)
-    })
+      .then(res => {
+        console.log(res.data)
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
-if (step === 4) {
-  sendFormData();
-  setStep(5);
-}
+  if (step === 4) {
+    sendFormData();
+    setStep(5);
+  }
 
-if (step > 4) {
-  
+  if (step > 4) {
+
+    return (
+      <div className="FormPage">
+        <h1>Tack för din beställning!</h1>
+        <p>Vi hör av oss med offert inom 24h.</p>
+        <p>Välkommen åter!</p>
+      </div>
+    )
+  }
+
   return (
     <div className="FormPage">
-      <h1>Tack för din beställning!</h1>
-      <p>Vi hör av oss med offert inom 24h.</p>
-      <p>Välkommen åter!</p>
-    </div>
-  )
-}
-
-  return (
-    <div className="FormPage">
       {
-        step === 1 && <Form setStep={setStep} setFormData={setFormData} formData={formData}  />
+        step === 1 && <Form setStep={setStep} setFormData={setFormData} formData={formData} />
       }
       {
-        step === 2 && <Form2 setStep={setStep} setFormData={setFormData} formData={formData}  />
+        step === 2 && <Form2 setStep={setStep} setFormData={setFormData} formData={formData} />
       }
       {
-        step === 3 && <FormLast setStep={setStep} setFormData={setFormData} formData={formData}  />
+        step === 3 && <FormLast setStep={setStep} setFormData={setFormData} formData={formData} />
       }
     </div>
   )

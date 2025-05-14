@@ -44,10 +44,11 @@ export default function Form(props) {
   return (
     <form action="" className="customer-form" onSubmit={nextForm}>
 
-      <p>1. Lås fast din cykel med vajer och lås i vänstra staketet.</p>
-      <p>NOTERA: Lås den inte med din egen nyckel!</p>
-      <p>2. Fyll i det här formuläret.</p>
-      <p>3. Vi hör av oss via sms med offert.</p>
+      <ol>
+        <li>Lås fast din cykel med lås i cykelstället. <p>NOTERA: Lås den inte med din egen nyckel!</p></li>
+        <li>Fyll i det här formuläret.</li>
+        <li>Vi hör av oss via sms med prisförslag.</li>
+      </ol>
 
       <p>* Anger obligatorisk fråga</p>
 

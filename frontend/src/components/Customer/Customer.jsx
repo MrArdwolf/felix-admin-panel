@@ -5,10 +5,10 @@ import axios from 'axios';
 
 export default function Customer(props) {
   const backend = import.meta.env.VITE_API_URL
-  const customer = props.archived;
+  const customer = props.customer;
   const [open, setOpen] = useState(false);
-  const [markedParts, setMarkedParts] = useState(customer.parts);
-  const [customPartPrice, setCustomPartPrice] = useState(customer.partPrices);
+  const [markedParts, setMarkedParts] = useState(customer.parts || []);
+  const [customPartPrice, setCustomPartPrice] = useState(customer.partPrices || []);
   const [openParts, setOpenParts] = useState(false);
 
   const saveChanges = () => {
@@ -45,6 +45,10 @@ export default function Customer(props) {
     })
   }
 
+  const sendSMS = () => {
+    
+  }
+
   return (
     <div>
       <h2>{customer.name}</h2>
@@ -65,6 +69,11 @@ export default function Customer(props) {
               <h4>Beskrivning av cykel</h4>
               <p>{customer.bikeDescription}</p>
             </div>
+            <div className="info-line">
+              <h4>Cykel nummer</h4>
+              <p>{customer.bikeNumber}</p>
+            </div>
+
             <div className="info-line">
               <h4>Saker att kolla på</h4>
               {
@@ -110,7 +119,7 @@ export default function Customer(props) {
           </div>
           <div className="buttons">
             <button onClick={archiveCustomer}>Arkivera</button>
-            <button>Skicka SMS</button>
+            <a href={`sms:0725161408?body=Hejsan ${customer.name}!%0AHär kommer en prisuppfattning`}>Skicka SMS</a>
           </div>
         </div>
       )}

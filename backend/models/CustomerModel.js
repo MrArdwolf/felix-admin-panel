@@ -32,7 +32,11 @@ const customerSchema = new mongoose.Schema({
     }],
     partPrices: [{
         
-    }]
+    }],
+    bikeNumber: {
+        type: Number,
+        required: true
+    }
 });
 
 const CustomerModel = new mongoose.model("Customer", customerSchema);

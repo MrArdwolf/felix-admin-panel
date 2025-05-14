@@ -150,12 +150,14 @@ async function Authenticate(req, res) {
 
             res.cookie("authToken", token, {
                 httpOnly: true,
+                maxAge: 3600000,
                 // secure: true,
                 // sameSite: "strict",
             });
 
             res.cookie("refreshToken", refreshToken, {
                 httpOnly: true,
+                maxAge: 172800000,
                 // secure: true,
                 // sameSite: "strict",
             });
