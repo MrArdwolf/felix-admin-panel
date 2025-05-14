@@ -1,7 +1,8 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-
+import './header.scss'
 import Nav from '../Nav/nav'
+import logo from '../../assets/Logo.avif'
 
 export default function Header(props) {
   const location = useLocation();
@@ -10,7 +11,7 @@ export default function Header(props) {
   if (pathname === "/") {
     return (
       <header>
-        <h1>App Name</h1>
+        <img src={logo} alt="logo" />
       </header>
     )
   }
@@ -22,7 +23,7 @@ export default function Header(props) {
             <Nav />
           </menu>
           :
-          <Link to="/auth">Log in</Link>
+          <Link to="/auth"><img src={logo} alt="logo" /></Link>
         }
       </header>
     )

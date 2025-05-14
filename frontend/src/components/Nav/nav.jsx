@@ -8,7 +8,7 @@ export default function Nav() {
       <Link to="/customers">Kunder</Link>
       <Link to="/archive">Arkiverade Kunder</Link>
       <Link to="/form">Formulär</Link>
-      <Link to="/">Logga ut</Link>
+      <Link to="/logout">Logga ut</Link>
     </nav>
   )
 }

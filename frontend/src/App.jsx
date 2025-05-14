@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage/HomePage';
 import PartsPage from './pages/PartsPage/PartsPage';
 import CustomerPage from './pages/CustomerPage/CustomerPage';
 import ArchivedPage from './pages/ArchivedPage/ArchivedPage';
+import LogoutPage from './pages/LogoutPage/LogoutPage';
 import Header from './components/Header/Header';
 import {  useEffect, useState } from 'react';
 import axios from 'axios';
@@ -47,6 +48,7 @@ export default function App() {
         <Route path="/parts" element={<PartsPage authenticate={authenticate} user={user}/>} />
         <Route path="/customers" element={<CustomerPage />} />
         <Route path="/archive" element={<ArchivedPage />} />
+        <Route path="/logout" element={<LogoutPage />} />
       </Routes>
     </BrowserRouter>
   )

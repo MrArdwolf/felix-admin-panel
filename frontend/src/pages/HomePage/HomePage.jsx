@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Nav from '../../components/Nav/nav';
+import './HomePage.scss'
 
 
 
@@ -14,7 +15,7 @@ export default function HomePage(props) {
   return (
     <div className="home-page">
       <div className="welcome-container">
-        <h1>välkommen</h1>
+        <h1>Välkommen</h1>
         <h1>{props.user.username}</h1>
       </div>
       <Nav/>

@@ -1,0 +1,20 @@
+@use "../../assets/scss/main" as *;
+
+header {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100dvw;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+
+
+  img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 50px;
+  }
+}
