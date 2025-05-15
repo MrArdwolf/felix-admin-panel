@@ -1,0 +1,17 @@
+@use '../../assets/scss/main.scss' as *;
+
+.parts-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+
+  .parts-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+    padding: 0 30px;
+  }
+}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Part from '../../components/Part/Part';
+import './PartsPage.scss'
 
 
 
@@ -60,11 +61,13 @@ export default function PartsPage(props) {
   }
 
   return (
-    <div>PartsPage
-      <button onClick={update}>test</button>
-      {parts.filter(part => !part.parent).map(part => (
-        <Part part={part} key={part._id} authenticate={() => { props.authenticate() }} />
-      ))}
+    <div className='parts-page'>
+      <h1>Parts</h1>
+      <div className="parts-container">
+        {parts.filter(part => !part.parent).map(part => (
+          <Part part={part} key={part._id} authenticate={() => { props.authenticate() }} />
+        ))}
+      </div>
 
       <div className="add-part">
         <h3>Add</h3>
@@ -73,14 +76,14 @@ export default function PartsPage(props) {
           <div className="add-part-form">
             <div className="input-row">
               <label htmlFor="name">Namn</label>
-              <input type="text" name="name" id="name" placeholder='Namn' value={partName} onChange={(e) => {setPartName(e.target.value)}} />
+              <input type="text" name="name" id="name" placeholder='Namn' value={partName} onChange={(e) => { setPartName(e.target.value) }} />
             </div>
             <div className="input-row">
               <label htmlFor="price">Pris</label>
-              <input type="text" name="price" id="price" placeholder='Pris' value={partPrice} onChange={(e) => {setPartPrice(e.target.value)}} />
+              <input type="text" name="price" id="price" placeholder='Pris' value={partPrice} onChange={(e) => { setPartPrice(e.target.value) }} />
             </div>
             <div className="input-row">
-              <button onClick={(e) => {addPart(e)}}>Add</button>
+              <button onClick={(e) => { addPart(e) }}>Add</button>
             </div>
           </div>
         }

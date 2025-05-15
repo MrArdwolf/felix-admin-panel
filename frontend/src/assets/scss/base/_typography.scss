@@ -16,3 +16,21 @@
   font-size: 1.5rem;
   font-weight: 700;
 }
+
+@mixin font-part-name {
+  font-family: 'inter';
+  font-size: 14px;
+  font-weight: 500;
+}
+
+@mixin font-part-price {
+  font-family: 'inter';
+  font-size: 14px;
+  font-weight: 400;
+}
+
+@mixin font-label {
+  font-family: 'inter';
+  font-size: 1rem;
+  font-weight: 600;
+}
