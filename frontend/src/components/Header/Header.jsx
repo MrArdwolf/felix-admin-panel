@@ -11,21 +11,25 @@ export default function Header(props) {
   if (pathname === "/") {
     return (
       <header>
+        <h1 className='title'>FELIX CYKELMECK</h1>
         <img src={logo} alt="logo" />
       </header>
     )
   }
-    return (
-      <header>
-        <h1>App Name</h1>
-        {props.user ?
+  return (
+    <header>
+      <h1 className='title'>FELIX CYKELMECK</h1>
+      {props.user ?
+        <div className="logged-in">
           <menu>
             <Nav />
           </menu>
-          :
-          <Link to="/auth"><img src={logo} alt="logo" /></Link>
-        }
-      </header>
-    )
-  }
+          <img src={logo} alt="logo" />
+        </div>
+        :
+        <Link to="/auth"><img src={logo} alt="logo" /></Link>
+      }
+    </header>
+  )
+}
 

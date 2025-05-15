@@ -1,4 +1,4 @@
-
+@use '../utils' as *;
 
 .primary-button {
   @include button-style($primary-color, $secondary-color);

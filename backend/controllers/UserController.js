@@ -99,18 +99,20 @@ async function loginUser(req, res) {
         let token, refreshToken;
 
         if (await bcrypt.compare(password, isUserExist.password)) {
-            token = jwt.sign({ id: isUserExist._id, username: isUserExist.username, role: isUserExist.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
-            refreshToken = jwt.sign({ id: isUserExist._id, username: isUserExist.username, role: isUserExist.role }, process.env.JWT_SECRET, { expiresIn: "2d" });
+            token = jwt.sign({ id: decoded._id, username: decoded.username, role: decoded.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
+            refreshToken = jwt.sign({ id: decoded._id, username: decoded.username, role: decoded.role }, process.env.JWT_SECRET, { expiresIn: "30d" });
         }
 
         res.cookie("authToken", token, {
             httpOnly: true,
+            maxAge: 3600000,
             // secure: true,
             // sameSite: "strict",
         });
 
         res.cookie("refreshToken", refreshToken, {
             httpOnly: true,
+            maxAge: Math.floor(Date.now() + 30 * 24 * 60 * 60 * 1000),
             // secure: true,
             // sameSite: "strict",
         });
@@ -145,7 +147,7 @@ async function Authenticate(req, res) {
             }
 
             const token = jwt.sign({ id: decoded._id, username: decoded.username, role: decoded.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
-            const refreshToken = jwt.sign({ id: decoded._id, username: decoded.username, role: decoded.role }, process.env.JWT_SECRET, { expiresIn: "2d" });
+            const refreshToken = jwt.sign({ id: decoded._id, username: decoded.username, role: decoded.role }, process.env.JWT_SECRET, { expiresIn: "30d" });
 
 
             res.cookie("authToken", token, {
@@ -157,7 +159,7 @@ async function Authenticate(req, res) {
 
             res.cookie("refreshToken", refreshToken, {
                 httpOnly: true,
-                maxAge: 172800000,
+                maxAge: Math.floor(Date.now() + 30 * 24 * 60 * 60 * 1000),
                 // secure: true,
                 // sameSite: "strict",
             });

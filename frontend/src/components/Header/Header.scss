@@ -10,11 +10,22 @@ header {
   align-items: center;
   height: 50px;
 
+  h1 {
+    @include font-app-title;
+  }
+
 
   img {
     position: absolute;
     top: 0;
     right: 0;
     height: 50px;
+  }
+
+  menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+
   }
 }

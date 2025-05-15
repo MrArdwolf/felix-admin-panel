@@ -1,3 +1,7 @@
-@import 'utils';
-@import 'components';
-@import 'base';
+@forward 'utils';
+@forward 'components';
+@forward 'base';
+
+@use 'utils';
+@use 'components';
+@use 'base';

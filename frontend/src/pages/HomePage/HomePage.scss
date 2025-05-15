@@ -12,5 +12,9 @@
     align-items: center;
     gap: 24px;
     padding: 24px 0;
+
+    h1 {
+      @include font-title;
+    }
   }
 }

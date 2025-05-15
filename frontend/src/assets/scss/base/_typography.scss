@@ -1,0 +1,18 @@
+@mixin font-app-title {
+  font-family: Impact;
+  font-size: 2rem;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+@mixin font-title {
+  font-family: 'inter';
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+@mixin font-menu-item {
+  font-family: 'inter';
+  font-size: 1.5rem;
+  font-weight: 700;
+}
