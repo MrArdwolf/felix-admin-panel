@@ -96,10 +96,11 @@ export default function Part(props) {
           <div className="part-info">
             <h3>{
               openEdit ? part.name :
-                <div className="edit-part-form">
+                <div className="edit-parent-form">
                   <div className="input-row">
                     <input type="text" name="name" id="name" placeholder='Namn' value={editName} onChange={(e) => { setEditName(e.target.value) }} />
                   </div>
+                <button onClick={(e) => { editPart(e) }}>Save</button>
                 </div>
             }</h3>
           </div>
@@ -111,29 +112,31 @@ export default function Part(props) {
               <Part part={child} key={child._id} authenticate={() => { props.authenticate() }} updateParent={update} className="child part" />
             ))}
 
-
-            {
-              openEdit ? null :
-                <button onClick={(e) => { editPart(e) }}>Save</button>
-            }
-            <button onClick={() => { openDropDown(setOpenEdit, openEdit) }}>{`${openEdit ? "Edit Parent" : "Close Edit"}`}</button>
-            <h3>Add</h3>
-            <button onClick={() => { openDropDown(setAddButton, addButton) }}>{`${addButton ? "Add" : "Close"}`}</button>
-            {addButton ? null :
-              <div className="add-part-form">
-                <div className="input-row">
-                  <label htmlFor="name">Namn</label>
-                  <input type="text" name="name" id="name" placeholder='Namn' value={partName} onChange={(e) => { setPartName(e.target.value) }} />
+            <div className="part-bottom">
+              <div className="edit-part-form">
+                <div className="add-top">
+                  <h3>Add</h3>
+                  <button onClick={() => { openDropDown(setAddButton, addButton) }}>{`${addButton ? "Add" : "Close"}`}</button>
                 </div>
-                <div className="input-row">
-                  <label htmlFor="price">Pris</label>
-                  <input type="text" name="price" id="price" placeholder='Pris' value={partPrice} onChange={(e) => { setPartPrice(e.target.value) }} />
-                </div>
-                <div className="input-row">
-                  <button onClick={(e) => { addPart(e) }}>Add</button>
-                </div>
+                {addButton ? null :
+                  <div className="add-part-form">
+                    <div className="input-row">
+                      <label htmlFor="name">Namn</label>
+                      <input type="text" name="name" id="name" placeholder='Namn' value={partName} onChange={(e) => { setPartName(e.target.value) }} />
+                    </div>
+                    <div className="input-row">
+                      <label htmlFor="price">Pris</label>
+                      <input type="text" name="price" id="price" placeholder='Pris' value={partPrice} onChange={(e) => { setPartPrice(e.target.value) }} />
+                    </div>
+                    <div className="button-row">
+                      <button onClick={(e) => { addPart(e) }}>Add</button>
+                    </div>
+                  </div>
+                }
               </div>
-            }
+
+              <button className='edit-parent-button' onClick={() => { openDropDown(setOpenEdit, openEdit) }}>{`${openEdit ? "Edit Parent" : "Close Edit"}`}</button>
+            </div>
           </div>
         }
       </div >

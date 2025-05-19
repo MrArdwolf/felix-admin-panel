@@ -67,26 +67,29 @@ export default function PartsPage(props) {
         {parts.filter(part => !part.parent).map(part => (
           <Part part={part} key={part._id} authenticate={() => { props.authenticate() }} />
         ))}
-      </div>
 
-      <div className="add-part">
-        <h3>Add</h3>
-        <button onClick={openAddPart}>{`${addButton ? "Add" : "Close"}`}</button>
-        {addButton ? null :
-          <div className="add-part-form">
-            <div className="input-row">
-              <label htmlFor="name">Namn</label>
-              <input type="text" name="name" id="name" placeholder='Namn' value={partName} onChange={(e) => { setPartName(e.target.value) }} />
-            </div>
-            <div className="input-row">
-              <label htmlFor="price">Pris</label>
-              <input type="text" name="price" id="price" placeholder='Pris' value={partPrice} onChange={(e) => { setPartPrice(e.target.value) }} />
-            </div>
-            <div className="input-row">
-              <button onClick={(e) => { addPart(e) }}>Add</button>
-            </div>
+        <div className="add-part">
+
+          <div className="add-top">
+            <h3>Add</h3>
+            <button onClick={openAddPart}>{`${addButton ? "Add" : "Close"}`}</button>
           </div>
-        }
+          {addButton ? null :
+            <div className="add-part-form">
+              <div className="input-row">
+                <label htmlFor="name">Namn</label>
+                <input type="text" name="name" id="name" placeholder='Namn' value={partName} onChange={(e) => { setPartName(e.target.value) }} />
+              </div>
+              <div className="input-row">
+                <label htmlFor="price">Pris</label>
+                <input type="text" name="price" id="price" placeholder='Pris' value={partPrice} onChange={(e) => { setPartPrice(e.target.value) }} />
+              </div>
+              <div className="button-row">
+                <button onClick={(e) => { addPart(e) }}>Add</button>
+              </div>
+            </div>
+          }
+        </div>
       </div>
     </div>
   )
