@@ -35,20 +35,24 @@ export default function Form(props) {
           <input type="text" id="comment" value={form3Data.comment} onChange={handleChange} name="comment" />
         </div>
       </div>
-      <button className='secondary-button' onClick={(e) => {
+      <div className="buttons">
+        <div className="buttons-left">
+          <button className='secondary-button' onClick={(e) => {
+            e.preventDefault();
+            if (props.formData.form1Data.detailsOrNot === 'details') {
+              props.setStep(2);
+            } else {
+              props.setStep(1);
+            }
+          }}>Bakåt</button>
+          <button type="submit" className='primary-button'>Skicka</button>
+        </div>
+        <button className='text-button' onClick={(e) => {
           e.preventDefault();
-          if (props.formData.form1Data.detailsOrNot === 'details') {
-            props.setStep(2);
-          } else {
-            props.setStep(1);
-          }
-        }}>Bakåt</button>
-      <button type="submit" className='primary-button'>Skicka</button>
-      <button onClick={(e) => {
-        e.preventDefault();
-        setShowAlert(true);
-      }}>Rensa formuläret</button>
-      {showAlert && <AlertModal onClose={() => setShowAlert(false)} onConfirm={resetForm} />}
+          setShowAlert(true);
+        }}>Rensa formuläret</button>
+        {showAlert && <AlertModal onClose={() => setShowAlert(false)} onConfirm={resetForm} />}
+      </div>
     </form>
   )
 }

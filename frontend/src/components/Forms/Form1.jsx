@@ -12,7 +12,7 @@ export default function Form(props) {
     description: '',
     detailsOrNot: '',
   });
-    const [showAlert, setShowAlert] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   const nextForm = (e) => {
     e.preventDefault();
@@ -45,7 +45,7 @@ export default function Form(props) {
     <form action="" className="customer-form" onSubmit={nextForm}>
 
       <ol>
-        <li>Lås fast din cykel med lås i cykelstället. <p>NOTERA: Lås den inte med din egen nyckel!</p></li>
+        <li>Lås fast din cykel med lås i cykelstället. <p><span>NOTERA:</span> Lås den inte med din egen nyckel!</p></li>
         <li>Fyll i det här formuläret.</li>
         <li>Vi hör av oss via sms med prisförslag.</li>
       </ol>
@@ -69,7 +69,7 @@ export default function Form(props) {
           <label htmlFor="description">Beskrivning av cykel* <p>Skriv gärna färg och märke.</p></label>
           <input type="text" id="description" onChange={handleChange} name="description" value={form1Data.description} required />
         </div>
-        <div className="input-row">
+        <div className="input-row radio">
           <label>Översyn eller detalj?*</label>
           <div className="inner-row">
             <input
@@ -79,7 +79,7 @@ export default function Form(props) {
               value={"noDetails"}
               checked={form1Data.detailsOrNot === 'noDetails'}
               onChange={handleChange} />
-            <label htmlFor="noDetails">Kolla min cykel i helhet och kom med en rekommendation med pris</label>
+            <label htmlFor="noDetails"><span>Kolla min cykel i helhet och kom med en rekommendation med pris</span></label>
           </div>
           <div className="inner-row">
             <input
@@ -90,16 +90,18 @@ export default function Form(props) {
               value={"details"}
               checked={form1Data.detailsOrNot === 'details'}
               onChange={handleChange} />
-            <label htmlFor="details">Jag vill ange i mer detalj</label>
+            <label htmlFor="details"><span>Jag vill ange i mer detalj</span></label>
           </div>
         </div>
       </div>
-      <button type='submit'>Nästa</button>
-      <button onClick={(e) => {
-        e.preventDefault();
-        setShowAlert(true);
-      }}>Rensa formuläret</button>
-      {showAlert && <AlertModal onClose={() => setShowAlert(false)} onConfirm={resetForm} />}
+      <div className="buttons">
+        <button type='submit' className='primary-button'>Nästa</button>
+        <button className='text-button' onClick={(e) => {
+          e.preventDefault();
+          setShowAlert(true);
+        }}>Rensa formuläret</button>
+        {showAlert && <AlertModal onClose={() => setShowAlert(false)} onConfirm={resetForm} />}
+      </div>
     </form>
   )
 }

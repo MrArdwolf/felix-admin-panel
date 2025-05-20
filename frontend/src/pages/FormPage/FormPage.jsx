@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import "./FormPage.css"
+import "./FormPage.scss"
 import Form from "../../components/Forms/Form1"
 import Form2 from "../../components/Forms/Form2"
 import FormLast from "../../components/Forms/FormLast"
@@ -114,6 +114,7 @@ export default function FormPage() {
 
   return (
     <div className="FormPage">
+      <h1>Felix Cykelmeck: Lämna in</h1>
       {
         step === 1 && <Form setStep={setStep} setFormData={setFormData} formData={formData} />
       }
