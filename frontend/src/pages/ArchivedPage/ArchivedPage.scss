@@ -1,6 +1,6 @@
-@use '../../assets/scss/main' as *;
+@use "../../assets/scss/main" as *;
 
-.customer-page {
+.archived-page {
   display: flex;
   flex-direction: column;
   gap: 32px;
@@ -11,12 +11,11 @@
     @include font-title;
   }
 
-  .customer-list {
+  .archived-list {
     display: flex;
     flex-direction: column;
     gap: 24px;
     width: 100%;
     max-width: 390px;
-
   }
 }

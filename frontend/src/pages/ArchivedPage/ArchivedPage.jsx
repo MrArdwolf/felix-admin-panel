@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import ArchivedCustomer from '../../components/Customer/ArchivedCustomer';
 import axios from 'axios';
+import './ArchivedPage.scss'
 
 export default function ArchivedPage() {
   const backend = import.meta.env.VITE_API_URL
@@ -34,8 +35,8 @@ export default function ArchivedPage() {
   }
 
   return (
-    <div>
-      <h1>Kunder</h1>
+    <div className='archived-page'>
+      <h1>Arkiverade Kunder</h1>
 
       <div className="archived-list">
         {archivedCustomers.map(archived => {
