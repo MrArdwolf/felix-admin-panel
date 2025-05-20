@@ -40,29 +40,7 @@ export default function Form(props) {
   }
 
   const resetForm = () => {
-    setForm2Data({
-      puncturedFront: false,
-      puncturedBack: false,
-      changeTireFront: false,
-      changeTireBack: false,
-      changeGearCableFront: false,
-      changeGearCableBack: false,
-      changeBrakeCableFront: false,
-      changeBrakeCableBack: false,
-      adjustGearCableFront: false,
-      adjustGearCableBack: false,
-      adjustBrakeCableFront: false,
-      adjustBrakeCableBack: false,
-      adjustTireFront: false,
-      adjustTireBack: false,
-      changeSpokesFront: false,
-      changeSpokesBack: false,
-      changeChain: false,
-      lubricate: false,
-      pump: false,
-      wash: false,
-    });
-    props.setStep(1);
+    window.location.reload();
   }
 
   return (

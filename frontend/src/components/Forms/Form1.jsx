@@ -32,13 +32,7 @@ export default function Form(props) {
   }
 
   const resetForm = () => {
-    setForm1Data({
-      name: '',
-      phone: '',
-      email: '',
-      description: '',
-      detailsOrNot: '',
-    });
+    window.location.reload();
   }
 
   return (

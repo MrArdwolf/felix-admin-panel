@@ -23,9 +23,7 @@ export default function Form(props) {
   }
 
   const resetForm = () => {
-    setForm3Data({
-      comment: '',
-    });
+    window.location.reload();
   }
   return (
     <form action="" className="customer-form" onSubmit={nextForm}>
