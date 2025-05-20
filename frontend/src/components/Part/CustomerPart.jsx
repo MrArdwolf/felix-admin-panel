@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
+import './Part.scss'
 
 
 
@@ -68,11 +69,14 @@ export default function Part(props) {
   if (part.children && part.children.length >= 1) {
 
     return (
-      <div>
-        <h3>{part.name}</h3>
-        <button onClick={() => { openDropDown(setOpenPart, openPart) }}>{`${openPart ? "Open" : "Close"}`}</button>
-        {openPart ? null :
-          <div className="part-content">
+      <div className={"part"}>
+        <div className="part-top">
+          <div className="part-info">
+            <h3>{part.name}</h3>
+          </div>
+          <button onClick={() => { openDropDown(setOpenPart, openPart) }}>{`${openPart ? "Open" : "Close"}`}</button>
+        </div>
+          <div className={`part-content ${openPart ? "hidden" : ""}`}>
             {children.map(child => (
               <Part
                 part={child}
@@ -83,34 +87,38 @@ export default function Part(props) {
                 setMarkedParts={props.setMarkedParts}
                 customPartPrice={props.customPartPrice}
                 setCustomPartPrice={props.setCustomPartPrice}
+                className="child"
               />
             ))}
           </div>
-        }
+        
       </div >
     )
   }
 
   return (
-    <div style={marked ? { backgroundColor: "red" } : {}}>
-      <h3>{part.name}</h3>
-      <p>
-        {openEdit ? partPrice :
-          <input
-            type="text"
-            name="price"
-            id="price"
-            placeholder='Pris'
-            value={partPrice}
-            onChange={(e) => { 
-              setPartPrice(e.target.value)
-              customPrice(e.target.value)
-              }}
-          />
-        }
-      </p>
-      <button onClick={() => { openDropDown(setOpenEdit, openEdit) }}>{`${openEdit ? "Edit" : "Close"}`}</button>
-      <button onClick={markPart}>Mark</button>
+    <div className={`part ${props.className ? props.className : ""} ${marked ? "marked" : ""}`} >
+      <div className="part-top">
+        <div className="part-info" onClick={markPart}>
+          <h3>{part.name}</h3>
+          <p>
+            {openEdit ? partPrice :
+              <input
+                type="text"
+                name="price"
+                id="price"
+                placeholder='Pris'
+                value={partPrice}
+                onChange={(e) => {
+                  setPartPrice(e.target.value)
+                  customPrice(e.target.value)
+                }}
+              />
+            }
+          </p>
+        </div>
+        <button onClick={() => { openDropDown(setOpenEdit, openEdit) }}>{`${openEdit ? "Edit" : "Close"}`}</button>
+      </div>
     </div>
   )
 }

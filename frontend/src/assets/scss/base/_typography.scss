@@ -34,3 +34,15 @@
   font-size: 1rem;
   font-weight: 600;
 }
+
+@mixin font-customer-name {
+  font-family: 'inter';
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+@mixin font-customer-info($font-weight) {
+  font-family: 'inter';
+  font-size: 14px;
+  font-weight: $font-weight;
+}

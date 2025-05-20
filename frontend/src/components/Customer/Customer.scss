@@ -1,0 +1,80 @@
+@use "../../assets/scss/main.scss" as *;
+
+.customer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background-color: $input-background-color;
+  border-radius: 8px;
+  padding: 12px;
+  width: 100%;
+  border: 2px solid $secondary-color;
+  box-shadow: $button-box-shadow;
+  color: $secondary-color;
+
+  .customer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h2 {
+      @include font-customer-name;
+    }
+  }
+
+  .customer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+
+    h3 {
+      @include font-customer-name;
+    }
+
+    .info-content {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+
+      .info-line {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+
+        h4 {
+          @include font-customer-info(700);
+        }
+
+        p {
+          @include font-customer-info(500);
+        }
+      }
+    }
+
+    .parts-container {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+
+      .parts-container-top {
+        display: flex;
+        justify-content: space-between;
+      }
+
+    .parts-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+}
+
+

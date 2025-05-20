@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Customer from '../../components/Customer/Customer';
 import axios from 'axios';
+import './CustomerPage.scss'
 
 export default function CustomerPage() {
   const backend = import.meta.env.VITE_API_URL
@@ -34,7 +35,7 @@ export default function CustomerPage() {
   }
 
   return (
-    <div>
+    <div className="customer-page">
       <h1>Kunder</h1>
 
       <div className="customer-list">

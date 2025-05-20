@@ -22,6 +22,8 @@
       display: flex;
       align-items: center;
       gap: 16px;
+      width: 100%;
+      height: 100%;
 
       .edit-parent-form {
         display: flex;
@@ -124,8 +126,24 @@
       }
     }
   }
+
+
 }
+
+.marked {
+    border: 4px solid $marked-color;
+    padding: 6px;
+  }
+
+.part:has(.marked) {
+    border: 4px solid $marked-color;
+    padding: 6px;
+    }
 
 .child {
   background-color: $input-background-color;
+}
+
+.hidden {
+  display: none !important;
 }

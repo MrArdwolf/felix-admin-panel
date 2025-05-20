@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Part from '../Part/CustomerPart';
 import axios from 'axios';
+import './Customer.scss'
 
 
 export default function Customer(props) {
@@ -16,22 +17,6 @@ export default function Customer(props) {
       parts: markedParts,
       partPrices: customPartPrice
     })
-    .then(res => {
-      console.log(res.data);
-      props.update();
-    })
-    .catch(err => {
-      console.log(err);
-    })
-  }
-
-  const archiveCustomer = () => {
-    axios.post(`${backend}/api/archived/add`, 
-      customer
-    )
-    .then(res => {
-      console.log(res.data);
-      axios.delete(`${backend}/api/customer/${customer._id}`)
       .then(res => {
         console.log(res.data);
         props.update();
@@ -39,10 +24,26 @@ export default function Customer(props) {
       .catch(err => {
         console.log(err);
       })
-    })
-    .catch(err => {
-      console.log(err);
-    })
+  }
+
+  const archiveCustomer = () => {
+    axios.post(`${backend}/api/archived/add`,
+      customer
+    )
+      .then(res => {
+        console.log(res.data);
+        axios.delete(`${backend}/api/customer/${customer._id}`)
+          .then(res => {
+            console.log(res.data);
+            props.update();
+          })
+          .catch(err => {
+            console.log(err);
+          })
+      })
+      .catch(err => {
+        console.log(err);
+      })
   }
 
   const sendSMS = () => {
@@ -50,13 +51,19 @@ export default function Customer(props) {
   }
 
   return (
-    <div>
-      <h2>{customer.name}</h2>
-      <span><button onClick={() => { setOpen(!open) }}>open</button></span>
+    <div className="customer">
+      <div className="customer-top">
+        <h2>{customer.name} {customer.bikeNumber}</h2>
+        <span><button onClick={() => { setOpen(!open) }}>open</button></span>
+      </div>
       {open && (
-        <div>
-          <div className="info-container">
-            <h3>Info</h3>
+        <div className='customer-content'>
+          <h3>Info</h3>
+          <div className="info-content">
+            <div className="info-line">
+              <h4>Namn</h4>
+              <p>{customer.name}</p>
+            </div>
             <div className="info-line">
               <h4>Email</h4>
               <p>{customer.email}</p>
@@ -77,11 +84,11 @@ export default function Customer(props) {
             <div className="info-line">
               <h4>Saker att kolla på</h4>
               {
-              customer.partToFix.map(part => {
-                return (
-                  <p key={part}>{part}</p>
-                )
-              })
+                customer.partToFix.map(part => {
+                  return (
+                    <p key={part}>{part}</p>
+                  )
+                })
               }
               {
                 customer.alsoDo.map(part => {
@@ -94,8 +101,10 @@ export default function Customer(props) {
 
           </div>
           <div className="parts-container">
-            <h3>Delar</h3>
-            <button onClick={() => { setOpenParts(!openParts) }}>Open parts</button>
+            <div className="parts-container-top">
+              <h3>Delar</h3>
+              <button onClick={() => { setOpenParts(!openParts) }}>Open parts</button>
+            </div>
             {openParts && (
               <div className="parts-list">
                 {
@@ -115,11 +124,13 @@ export default function Customer(props) {
                 }
               </div>
             )}
-            <button onClick={saveChanges}>Save changes</button>
           </div>
           <div className="buttons">
             <button onClick={archiveCustomer}>Arkivera</button>
-            <a href={`sms:0725161408?body=Hejsan ${customer.name}!%0AHär kommer en prisuppfattning`}>Skicka SMS</a>
+            <button onClick={saveChanges}>Save changes</button>
+            <a href={`sms:0725161408?body=Hejsan ${customer.name}!%0AHär kommer en prisuppfattning`}>
+              <button>Skicka SMS</button>
+            </a>
           </div>
         </div>
       )}
