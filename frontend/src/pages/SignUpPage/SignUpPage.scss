@@ -1,0 +1,27 @@
+@use '../../assets/scss/main' as *;
+
+.sign-up-page {
+  width: 100%;
+  padding: 40px 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+
+  .sign-up-page-top {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h2 {
+      @include font-form-title;
+    }
+
+    p {
+      @include font-part-price;
+      color: $primary-color;
+      text-decoration: underline;
+    }
+  }
+}

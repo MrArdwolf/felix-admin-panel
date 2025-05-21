@@ -13,8 +13,8 @@ async function registerUser(req, res) {
         const user = req.body;
         let masterCorrect = false;
 
-        const { username, firstName, lastName, password, masterPassword } = user;
-        if (!username || !firstName || !lastName || !password || !masterPassword) {
+        const { username, password, masterPassword } = user;
+        if (!username || !password || !masterPassword) {
             res.statusCode = 400;
             throw new Error("Missing data")
         }
@@ -54,8 +54,6 @@ async function registerUser(req, res) {
         // now create the user;
         const newUser = await UserModel.create({
             username,
-            firstName,
-            lastName,
             password: hashedPassword,
         });
 
@@ -99,8 +97,8 @@ async function loginUser(req, res) {
         let token, refreshToken;
 
         if (await bcrypt.compare(password, isUserExist.password)) {
-            token = jwt.sign({ id: decoded._id, username: decoded.username, role: decoded.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
-            refreshToken = jwt.sign({ id: decoded._id, username: decoded.username, role: decoded.role }, process.env.JWT_SECRET, { expiresIn: "30d" });
+            token = jwt.sign({ id: isUserExist._id, username: isUserExist.username, role: isUserExist.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
+            refreshToken = jwt.sign({ id: isUserExist._id, username: isUserExist.username, role: isUserExist.role }, process.env.JWT_SECRET, { expiresIn: "30d" });
         }
 
         res.cookie("authToken", token, {

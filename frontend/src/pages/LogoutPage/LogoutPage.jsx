@@ -7,7 +7,7 @@ export default function LogoutPage() {
     axios.get(`${backend}/api/user/auth/logout`)
     .then(res => {
       console.log(res)
-      window.location.href = "/"
+      window.location.href = "/auth"
     })
     .catch(err => {
       console.log(err)
