@@ -8,7 +8,7 @@ import CustomerPage from './pages/CustomerPage/CustomerPage';
 import ArchivedPage from './pages/ArchivedPage/ArchivedPage';
 import LogoutPage from './pages/LogoutPage/LogoutPage';
 import Header from './components/Header/Header';
-import {  useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 export default function App() {
@@ -26,7 +26,7 @@ export default function App() {
 
   const authenticate = () => {
     axios.get(`${backend}/api/user/auth/authenticate`)
-    .then(res => {
+      .then(res => {
         console.log(res.data);
         setUser(res.data.user)
       })
@@ -34,22 +34,24 @@ export default function App() {
         console.log(err);
         if (err.status == 401) {
           setUser(null)
-        } 
+        }
       })
   }
 
   return (
     <BrowserRouter>
-    <Header user={user}/>
+      <Header user={user} />
       <Routes>
-        <Route path="/" element={<HomePage user={user}/>} />
+        <Route path="/" element={<HomePage user={user} />} />
         <Route path="/auth" element={<SignUpPage />} />
         <Route path="/form" element={<FormPage />} />
-        <Route path="/parts" element={<PartsPage authenticate={authenticate} user={user}/>} />
+        <Route path="/parts" element={<PartsPage authenticate={authenticate} user={user} />} />
         <Route path="/customers" element={<CustomerPage />} />
         <Route path="/archive" element={<ArchivedPage />} />
         <Route path="/logout" element={<LogoutPage />} />
       </Routes>
+      <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+      <script noModule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     </BrowserRouter>
   )
 }

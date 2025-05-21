@@ -105,8 +105,7 @@ export default function FormPage() {
 
     return (
       <div className="FormPage">
-        <h1>Tack för din beställning!</h1>
-        <p>Vi hör av oss med offert inom 24h.</p>
+        <h1>Tack för din inlämning av cykel!</h1>
         <p>Välkommen åter!</p>
       </div>
     )

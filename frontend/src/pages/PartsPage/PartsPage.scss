@@ -6,6 +6,22 @@
   align-items: center;
   gap: 32px;
 
+  span:has(ion-icon) {
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease-in-out;
+
+    &.open {
+      transform: rotate(180deg);
+    }
+
+    ion-icon {
+      font-size: 24px;
+    }
+  }
+
   h1 {
     @include font-title;
   }
@@ -35,6 +51,7 @@
     .add-top {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       width: 100%;
 
       h3 {

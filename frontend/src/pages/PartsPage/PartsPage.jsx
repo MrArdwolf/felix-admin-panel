@@ -62,17 +62,14 @@ export default function PartsPage(props) {
 
   return (
     <div className='parts-page'>
+      
       <h1>Parts</h1>
       <div className="parts-container">
-        {parts.filter(part => !part.parent).map(part => (
-          <Part part={part} key={part._id} authenticate={() => { props.authenticate() }} />
-        ))}
-
         <div className="add-part">
 
           <div className="add-top">
             <h3>Add</h3>
-            <button onClick={openAddPart}>{`${addButton ? "Add" : "Close"}`}</button>
+            <span onClick={openAddPart}>{addButton ? <ion-icon name="add-outline"></ion-icon> : <ion-icon name="close-outline"></ion-icon>}</span>
           </div>
           {addButton ? null :
             <div className="add-part-form">
@@ -85,11 +82,16 @@ export default function PartsPage(props) {
                 <input type="text" name="price" id="price" placeholder='Pris' value={partPrice} onChange={(e) => { setPartPrice(e.target.value) }} />
               </div>
               <div className="button-row">
-                <button onClick={(e) => { addPart(e) }}>Add</button>
+                <span onClick={(e) => { addPart(e) }}><ion-icon name="add-outline"></ion-icon></span>
               </div>
             </div>
           }
         </div>
+        {parts.filter(part => !part.parent).map(part => (
+          <Part part={part} key={part._id} authenticate={() => { props.authenticate() }} />
+        ))}
+
+        
       </div>
     </div>
   )

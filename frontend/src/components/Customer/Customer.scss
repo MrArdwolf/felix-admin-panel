@@ -12,6 +12,21 @@
   box-shadow: $button-box-shadow;
   color: $secondary-color;
 
+  span:has(ion-icon) {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease-in-out;
+
+    &.open {
+      transform: rotate(180deg);
+    }
+
+    ion-icon {
+      font-size: 24px;
+    }
+  }
+
   .customer-top {
     display: flex;
     justify-content: space-between;
@@ -62,19 +77,18 @@
         justify-content: space-between;
       }
 
-    .parts-list {
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-    }
+      .parts-list {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
     }
 
     .buttons {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      z-index: 2;
     }
   }
 }
-
-

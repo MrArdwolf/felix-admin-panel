@@ -89,7 +89,7 @@ export default function Customer(props) {
     <div className="customer">
       <div className="customer-top">
         <h2>{customer.name} {customer.bikeNumber}</h2>
-        <span><button onClick={() => { setOpen(!open) }}>open</button></span>
+        <span onClick={() => { setOpen(!open) }} className={`${open ? "open" : ""}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
       </div>
       {open && (
         <div className='customer-content'>
@@ -138,7 +138,7 @@ export default function Customer(props) {
           <div className="parts-container">
             <div className="parts-container-top">
               <h3>Delar</h3>
-              <button onClick={() => { setOpenParts(!openParts) }}>Open parts</button>
+              <span onClick={() => { setOpenParts(!openParts) }} className={`${openParts ? "open" : ""}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
             </div>
             {openParts && (
               <div className="parts-list">
@@ -161,14 +161,14 @@ export default function Customer(props) {
             )}
           </div>
           <div className="buttons">
-            <button onClick={archiveCustomer}>Arkivera</button>
-            <button onClick={saveChanges}>Save changes</button>
+            <button className='primary-button' onClick={archiveCustomer}>Arkivera</button>
+            <button className='primary-button' onClick={saveChanges}>Save changes</button>
             {/* <a href={`sms:0725161408?body=Hej, vi har nu kollat över er cykel och här är vad vi rekommenderar att göra.%0A%0AOm allt är ok med er så kommer vi påbörja arbetet och återkomma när den är klar. Betalning sker när cykeln är redo att hämtas.%0A%0A/Felix Cykelmeck`}>
               <button>Skicka SMS</button>
             </a> */}
             {/* <button onClick={sendPriceSMS}>Skicka prisförslag</button>
             <button onClick={sendDoneSMS}>Skicka klar</button> */}
-            <button onClick={() => { setOpenSmsModal(true) }}>SMS</button>
+            <button className='primary-button' onClick={() => { setOpenSmsModal(true) }}>SMS</button>
             {openSmsModal &&
               <SmsModal customer={customer} sendPriceSMS={sendPriceSMS} sendDoneSMS={sendDoneSMS} closeModal={() => { setOpenSmsModal(false) }} />
             }

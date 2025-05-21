@@ -53,11 +53,11 @@ export default function Form(props) {
         </div>
         <div className="input-row">
           <label htmlFor="phone">Mobilnummer*</label>
-          <input type="text" id="phone" onChange={handleChange} name="phone" value={form1Data.phone} required />
+          <input type="tel" id="phone" onChange={handleChange} name="phone" pattern="(\+[0-9]{2}|0)[0-9]{9}" title='t.ex. 0712345678 eller +46712345678' value={form1Data.phone} required />
         </div>
         <div className="input-row">
           <label htmlFor="email">Email*</label>
-          <input type="text" id="email" onChange={handleChange} name="email" value={form1Data.email} required />
+          <input type="text" id="email" onChange={handleChange} name="email" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" value={form1Data.email} required />
         </div>
         <div className="input-row">
           <label htmlFor="description">Beskrivning av cykel* <p>Skriv gärna färg och märke.</p></label>

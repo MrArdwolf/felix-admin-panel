@@ -53,7 +53,7 @@ export default function Part(props) {
           <div className="part-info">
             <h3>{part.name}</h3>
           </div>
-          <button onClick={() => { openDropDown(setOpenPart, openPart) }}>{`${openPart ? "Open" : "Close"}`}</button>
+          <span onClick={() => { openDropDown(setOpenPart, openPart) }} className={`${openPart ? "" : "open"}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
         </div>
         <div className={`part-content ${openPart ? "hidden" : ""}`}>
           {children.map(child => (

@@ -12,11 +12,28 @@
   box-shadow: $button-box-shadow;
   gap: 24px;
 
+  span:has(ion-icon) {
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease-in-out;
+
+    &.open {
+      transform: rotate(180deg);
+    }
+
+    ion-icon {
+      font-size: 24px;
+    }
+  }
+
   .part-top {
     display: flex;
     justify-content: space-between;
     width: 100%;
     gap: 16px;
+    align-items: center;
 
     .part-info {
       display: flex;
@@ -27,16 +44,19 @@
 
       .edit-parent-form {
         display: flex;
-        justify-content: space-between;
+        gap: 16px;
+        width: 100%;
       }
 
-      .input-row {
-        input {
-          width: 100%;
-          padding: 8px;
-          border-radius: 8px;
-          border: $input-border;
-          box-shadow: $button-box-shadow;
+      input {
+        width: 100%;
+        padding: 8px;
+        border-radius: 8px;
+        border: $input-border;
+        box-shadow: $button-box-shadow;
+
+        &.price-input {
+          width: 50%;
         }
       }
 
@@ -62,9 +82,8 @@
       gap: 16px;
 
       .edit-parent-button {
-        width: 45px;
-        height: 45px;
         align-self: end;
+        margin-bottom: 10px;
       }
     }
   }
@@ -84,6 +103,7 @@
     .add-top {
       display: flex;
       justify-content: space-between;
+      align-items: center;
 
       h3 {
         @include font-part-name;
@@ -126,19 +146,17 @@
       }
     }
   }
-
-
 }
 
 .marked {
-    border: 4px solid $marked-color;
-    padding: 6px;
-  }
+  border: 4px solid $marked-color;
+  padding: 6px;
+}
 
 .part:has(.marked) {
-    border: 4px solid $marked-color;
-    padding: 6px;
-    }
+  border: 4px solid $marked-color;
+  padding: 6px;
+}
 
 .child {
   background-color: $input-background-color;

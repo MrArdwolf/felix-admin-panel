@@ -13,7 +13,7 @@ export default function Customer(props) {
     <div className="customer">
       <div className="customer-top">
         <h2>{customer.name}</h2>
-        <span><button onClick={() => { setOpen(!open) }}>open</button></span>
+        <span onClick={() => { setOpen(!open) }} className={`${open ? "open" : ""}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
       </div>
       {open && (
         <div className='customer-content'>
@@ -62,7 +62,7 @@ export default function Customer(props) {
           <div className="parts-container">
             <div className="parts-container-top">
             <h3>Delar</h3>
-            <button onClick={() => { setOpenParts(!openParts) }}>Open parts</button>
+            <span onClick={() => { setOpenParts(!openParts) }} className={`${openParts ? "open" : ""}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
             </div>
             {openParts && (
               <div className="parts-list">

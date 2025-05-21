@@ -9,6 +9,7 @@ header {
   justify-content: center;
   align-items: center;
   height: 50px;
+  z-index: 2;
 
   h1 {
     @include font-app-title;
