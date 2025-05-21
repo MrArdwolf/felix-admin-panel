@@ -26,7 +26,7 @@ export default function PartsPage(props) {
       .catch(err => {
         console.log(err);
         if (err.status == 401) {
-          props.authenticate();
+          props.authenticate(update);
         }
       })
   }
@@ -55,7 +55,7 @@ export default function PartsPage(props) {
       .catch(err => {
         console.log(err);
         if (err.status == 401) {
-          props.authenticate();
+          props.authenticate(addPart);
         }
       })
   }
@@ -88,7 +88,7 @@ export default function PartsPage(props) {
           }
         </div>
         {parts.filter(part => !part.parent).map(part => (
-          <Part part={part} key={part._id} authenticate={() => { props.authenticate() }} />
+          <Part part={part} key={part._id} authenticate={(req) => { props.authenticate(req) }} />
         ))}
 
         

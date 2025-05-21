@@ -19,26 +19,36 @@ export default function App() {
 
   const backend = import.meta.env.VITE_API_URL
   const [user, setUser] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     authenticate();
   }, []);
 
-  const authenticate = () => {
+  const authenticate = (req) => {
     axios.get(`${backend}/api/user/auth/authenticate`)
       .then(res => {
         console.log(res.data);
         setUser(res.data.user)
+        setIsLoading(false);
+        if (req) {
+          req();
+        }
       })
       .catch(err => {
         console.log(err);
         if (err.status == 401) {
           setUser(null)
+        setIsLoading(true);
         }
       })
   }
 
-  return (
+  if (isLoading) {
+    return <div>Loading...</div>
+  }else{
+    
+    return (
     <BrowserRouter>
       <Header user={user} />
       <Routes>
@@ -46,12 +56,16 @@ export default function App() {
         <Route path="/auth" element={<SignUpPage />} />
         <Route path="/form" element={<FormPage />} />
         <Route path="/parts" element={<PartsPage authenticate={authenticate} user={user} />} />
-        <Route path="/customers" element={<CustomerPage />} />
-        <Route path="/archive" element={<ArchivedPage />} />
+        <Route path="/customers" element={<CustomerPage authenticate={authenticate} user={user} />} />
+        <Route path="/archive" element={<ArchivedPage authenticate={authenticate} user={user} />} />
         <Route path="/logout" element={<LogoutPage />} />
       </Routes>
       <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
       <script noModule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     </BrowserRouter>
   )
+
+  }
+
+  
 }

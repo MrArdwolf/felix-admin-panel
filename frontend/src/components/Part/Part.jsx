@@ -32,7 +32,7 @@ export default function Part(props) {
         .catch(err => {
           console.log(err);
           if (err.status == 401) {
-            props.authenticate();
+            props.authenticate(update);
           }
         })
     }
@@ -63,7 +63,7 @@ export default function Part(props) {
       .catch(err => {
         console.log(err);
         if (err.status == 401) {
-          props.authenticate();
+          props.authenticate(addPart);
         }
       })
   }
@@ -83,7 +83,8 @@ export default function Part(props) {
       .catch(err => {
         console.log(err);
         if (err.status == 401) {
-          props.authenticate();
+          props.authenticate(editPart);
+
         }
       })
   }
@@ -109,7 +110,7 @@ export default function Part(props) {
         {openPart ? null :
           <div className="part-content">
             {children.map(child => (
-              <Part part={child} key={child._id} authenticate={() => { props.authenticate() }} updateParent={update} className="child part" />
+              <Part part={child} key={child._id} authenticate={(req) => { props.authenticate(req) }} updateParent={update} className="child part" />
             ))}
 
             <div className="part-bottom">

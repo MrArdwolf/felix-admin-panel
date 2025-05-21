@@ -8,10 +8,11 @@ export default function CustomerPage() {
   const [customers, setCustomers] = useState([]);
   const [parts, setParts] = useState([]);
   useEffect(() => {
-    update();
+    updateParts();
+    updateCustomers();
   }, []);
 
-  const update = () => {
+  const updateParts = () => {
     axios.get(`${backend}/api/part/get`)
     .then(res => {
       console.log(res.data);
@@ -19,8 +20,13 @@ export default function CustomerPage() {
     })
     .catch(err => {
       console.log(err);
+        if (err.status == 401) {
+          props.authenticate(updateParts);
+        }
     })
+  }
 
+  const updateCustomers = () => {
     
     axios.get(`${backend}/api/customer/get`)
     .then(res => {
@@ -29,6 +35,9 @@ export default function CustomerPage() {
     })
     .catch(err => {
       console.log(err);
+        if (err.status == 401) {
+          props.authenticate(updateCustomers);
+        }
     })
 
     
@@ -41,7 +50,7 @@ export default function CustomerPage() {
       <div className="customer-list">
         {customers.map(customer => {
           return (
-            <Customer key={customer._id} customer={customer} parts={parts} update={update}/>
+            <Customer key={customer._id} customer={customer} parts={parts} update={update} authenticate={() => { props.authenticate() }}/>
           )
         })}
       </div>

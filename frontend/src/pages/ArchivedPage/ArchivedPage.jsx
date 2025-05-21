@@ -8,10 +8,11 @@ export default function ArchivedPage() {
   const [archivedCustomers, setArchivedCustomers] = useState([]);
   const [parts, setParts] = useState([]);
   useEffect(() => {
-    update();
+    updateParts();
+    updateCustomers();
   }, []);
 
-  const update = () => {
+  const updateParts = () => {
     axios.get(`${backend}/api/part/get`)
     .then(res => {
       console.log(res.data);
@@ -19,7 +20,13 @@ export default function ArchivedPage() {
     })
     .catch(err => {
       console.log(err);
+        if (err.status == 401) {
+          props.authenticate(updateParts);
+        }
     })
+  }
+
+  const updateCustomers = () => {
 
     
     axios.get(`${backend}/api/archived/get`)
@@ -29,6 +36,9 @@ export default function ArchivedPage() {
     })
     .catch(err => {
       console.log(err);
+        if (err.status == 401) {
+          props.authenticate(updateCustomers);
+        }
     })
 
     
@@ -41,7 +51,7 @@ export default function ArchivedPage() {
       <div className="archived-list">
         {archivedCustomers.map(archived => {
           return (
-            <ArchivedCustomer key={archived._id} archived={archived} parts={parts} update={update}/>
+            <ArchivedCustomer key={archived._id} archived={archived} parts={parts} update={update} authenticate={() => { props.authenticate() }}/>
           )
         })}
       </div>

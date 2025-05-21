@@ -24,6 +24,9 @@ export default function Customer(props) {
       })
       .catch(err => {
         console.log(err);
+        if (err.status == 401) {
+          props.authenticate(saveChanges);
+        }
       })
   }
 
@@ -33,17 +36,27 @@ export default function Customer(props) {
     )
       .then(res => {
         console.log(res.data);
-        axios.delete(`${backend}/api/customer/${customer._id}`)
-          .then(res => {
-            console.log(res.data);
-            props.update();
-          })
-          .catch(err => {
-            console.log(err);
-          })
+        deleteCustomer();
       })
       .catch(err => {
         console.log(err);
+        if (err.status == 401) {
+          props.authenticate(archiveCustomer);
+        }
+      })
+  }
+
+  const deleteCustomer = () => {
+    axios.delete(`${backend}/api/customer/${customer._id}`)
+      .then(res => {
+        console.log(res.data);
+        props.update();
+      })
+      .catch(err => {
+        console.log(err);
+        if (err.status == 401) {
+          props.authenticate(deleteCustomer);
+        }
       })
   }
 
