@@ -88,7 +88,7 @@ export default function PartsPage(props) {
           }
         </div>
         {parts.filter(part => !part.parent).map(part => (
-          <Part part={part} key={part._id} authenticate={(req) => { props.authenticate(req) }} />
+          <Part part={part} key={part._id} authenticate={(req) => { props.authenticate(req) }} update={update} />
         ))}
 
         

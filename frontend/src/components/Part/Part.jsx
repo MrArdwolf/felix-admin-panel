@@ -89,7 +89,26 @@ export default function Part(props) {
       })
   }
 
-  if (part.children && part.children.length >= 1) {
+  const deletePart = () => {
+    axios.delete(`${backend}/api/part/${part._id}`)
+      .then(res => {
+        console.log(res.data);
+        if (props.updateParent) {
+          props.updateParent();
+          props.setChildren(props.children.filter(child => child._id !== part._id));
+        } else {
+          props.update();
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        if (err.status == 401) {
+          props.authenticate(deletePart);
+        }
+      })
+  }
+
+  if (children && children.length >= 1) {
 
     return (
       <div className="part">
@@ -110,7 +129,7 @@ export default function Part(props) {
         {openPart ? null :
           <div className="part-content">
             {children.map(child => (
-              <Part part={child} key={child._id} authenticate={(req) => { props.authenticate(req) }} updateParent={update} className="child part" />
+              <Part part={child} key={child._id} children={children} setChildren={setChildren} authenticate={(req) => { props.authenticate(req) }} updateParent={update} className="child part" />
             ))}
 
             <div className="part-bottom">
@@ -160,6 +179,7 @@ export default function Part(props) {
                 <input type="text" name="name" id="name" placeholder='Namn' value={editPrice} onChange={(e) => { setEditPrice(e.target.value) }} />
               </div>
           }
+          {openEdit ? "" : <span onClick={deletePart}><ion-icon name="trash-outline"></ion-icon></span>}
         </div>
 
         <span onClick={() => {
