@@ -63,7 +63,7 @@ export default function PartsPage(props) {
   return (
     <div className='parts-page'>
       
-      <h1>Delar/uppgifter</h1>
+      <h1>Delar/Uppgifter</h1>
       <div className="parts-container">
         <div className="add-part">
 

@@ -1,5 +1,5 @@
 import './App.scss'
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SignUpPage from './pages/SignUpPage/SignUpPage';
 import FormPage from './pages/FormPage/FormPage';
 import HomePage from './pages/HomePage/HomePage';
@@ -12,14 +12,12 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 export default function App() {
-  // const location = useLocation();
-  // const { pathname } = location;
 
   axios.defaults.withCredentials = true;
 
   const backend = import.meta.env.VITE_API_URL
   const [user, setUser] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState();
 
   useEffect(() => {
     authenticate();
@@ -39,7 +37,7 @@ export default function App() {
         console.log(err);
         if (err.status == 401) {
           setUser(null)
-        setIsLoading(true);
+        setIsLoading(false);
         }
       })
   }
@@ -60,8 +58,6 @@ export default function App() {
         <Route path="/archive" element={<ArchivedPage authenticate={authenticate} user={user} />} />
         <Route path="/logout" element={<LogoutPage />} />
       </Routes>
-      <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-      <script noModule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     </BrowserRouter>
   )
 
