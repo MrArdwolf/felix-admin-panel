@@ -63,12 +63,12 @@ export default function PartsPage(props) {
   return (
     <div className='parts-page'>
       
-      <h1>Parts</h1>
+      <h1>Delar/uppgifter</h1>
       <div className="parts-container">
         <div className="add-part">
 
           <div className="add-top">
-            <h3>Add</h3>
+            <h3>Lägg till</h3>
             <span onClick={openAddPart}>{addButton ? <ion-icon name="add-outline"></ion-icon> : <ion-icon name="close-outline"></ion-icon>}</span>
           </div>
           {addButton ? null :

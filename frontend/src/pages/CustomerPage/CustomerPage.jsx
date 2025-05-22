@@ -8,9 +8,13 @@ export default function CustomerPage() {
   const [customers, setCustomers] = useState([]);
   const [parts, setParts] = useState([]);
   useEffect(() => {
-    updateParts();
-    updateCustomers();
+    update();
   }, []);
+
+  const update = () => {
+    updateCustomers();
+    updateParts();
+  }
 
   const updateParts = () => {
     axios.get(`${backend}/api/part/get`)

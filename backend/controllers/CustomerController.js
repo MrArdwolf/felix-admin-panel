@@ -76,7 +76,6 @@ async function removeBikeNumber() {
             customer.forEach((customer) => {
                 bikeNumbers = bikeNumbers.filter((bikeNumber) => bikeNumber !== customer.bikeNumber);
             })
-            console.log(bikeNumbers);
         }
     } catch (error) {
         console.log(error);

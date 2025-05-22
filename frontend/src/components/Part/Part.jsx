@@ -135,7 +135,7 @@ export default function Part(props) {
             <div className="part-bottom">
               <div className="edit-part-form">
                 <div className="add-top">
-                  <h3>Add</h3>
+                  <h3>Lägg till</h3>
                   <span onClick={() => { openDropDown(setAddButton, addButton) }}>{addButton ? <ion-icon name="add-outline"></ion-icon> : <ion-icon name="close-outline"></ion-icon>}</span>
                 </div>
                 {addButton ? null :
@@ -193,7 +193,7 @@ export default function Part(props) {
       {openEdit ? null :
         <div className="edit-part-form">
           <div className="add-top">
-            <h3>Add</h3>
+            <h3>Lägg till</h3>
             <span onClick={() => { openDropDown(setAddButton, addButton) }}>{addButton ? <ion-icon name="add-outline"></ion-icon> : <ion-icon name="close-outline"></ion-icon>}</span>
           </div>
           {addButton ? null :

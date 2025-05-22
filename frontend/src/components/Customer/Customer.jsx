@@ -175,7 +175,7 @@ export default function Customer(props) {
           </div>
           <div className="buttons">
             <button className='primary-button' onClick={archiveCustomer}>Arkivera</button>
-            <button className='primary-button' onClick={saveChanges}>Save changes</button>
+            <button className='primary-button' onClick={saveChanges}>Spara</button>
             {/* <a href={`sms:0725161408?body=Hej, vi har nu kollat över er cykel och här är vad vi rekommenderar att göra.%0A%0AOm allt är ok med er så kommer vi påbörja arbetet och återkomma när den är klar. Betalning sker när cykeln är redo att hämtas.%0A%0A/Felix Cykelmeck`}>
               <button>Skicka SMS</button>
             </a> */}

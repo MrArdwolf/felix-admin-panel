@@ -28,6 +28,10 @@
     gap: 16px;
     width: 100%;
 
+    &:has(input[type="checkbox"]) {
+      gap: 24px;
+    }
+
     .input-row {
       display: flex;
       flex-direction: column;
@@ -125,7 +129,7 @@
     .input-row-checkbox {
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 20px;
     }
 
     .single-checkbox {
