@@ -110,10 +110,9 @@ async function addCustomer(req, res) {
         });
 
         const info = await transporter.sendMail({
-            from: '"Maddison Foo Koch" <ardwolftech@gmail.com>',
+            from: `"Felix Cykelmeck" <${process.env.EMAIL_USER}>`,
             to: newCustomer.email,
             subject: "Inlämning av cykel",
-            text: "Hello world?", // plain‑text body
             html: 
                 `<body style="width: 90%; font-family: Arial, Helvetica, sans-serif; color: #2F2E2E; ">
                     <h2>Hejsan ${newCustomer.name},</h2>
