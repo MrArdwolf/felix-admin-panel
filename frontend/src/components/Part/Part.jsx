@@ -55,8 +55,11 @@ export default function Part(props) {
         setPartName("");
         setPartPrice("");
         openDropDown(setAddButton, addButton);
-        openDropDown(setOpenEdit, openEdit);
-        openDropDown(setOpenPart, openPart);
+        
+        if (!openEdit) {
+          setOpenEdit(true);
+          openDropDown(setOpenPart, openPart);
+        }
         part.children.push(res.data);
         update();
       })

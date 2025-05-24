@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import './nav.scss'
+import './Nav.scss'
 
 export default function Nav() {
   const [isOpen, setIsOpen] = useState(false)

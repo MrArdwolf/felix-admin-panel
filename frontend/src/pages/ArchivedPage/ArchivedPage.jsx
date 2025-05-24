@@ -8,9 +8,13 @@ export default function ArchivedPage() {
   const [archivedCustomers, setArchivedCustomers] = useState([]);
   const [parts, setParts] = useState([]);
   useEffect(() => {
-    updateParts();
-    updateCustomers();
+    update();
   }, []);
+
+  const update = () => {
+    updateCustomers();
+    updateParts();
+  }
 
   const updateParts = () => {
     axios.get(`${backend}/api/part/get`)

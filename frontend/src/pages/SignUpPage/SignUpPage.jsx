@@ -10,7 +10,7 @@ export default function SignUpPage() {
   return (
     <div className="sign-up-page">
       <div className="sign-up-page-top">
-        <h2>{signUp ? "Skapa admin konto" : "Logga in"}</h2>
+        <h2>{signUp ? "Skapa konto" : "Logga in"}</h2>
         <p onClick={() => {setSignUp(!signUp)}}>{signUp ? "Logga in" : "Skapa konto"}</p>
       </div>
       {signUp ? <SignUpForm /> : <LoginForm />}

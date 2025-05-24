@@ -35,18 +35,22 @@ export default function App() {
       })
       .catch(err => {
         console.log(err);
-        if (err.status == 401) {
+        if (err.status !== 401) {
           setUser(null)
-        setIsLoading(false);
+          setIsLoading(true);
+          alert("server fel. försök igen senare")
+        } else {
+          setUser(null)
+          setIsLoading(false);
         }
       })
   }
 
   if (isLoading) {
-    return <div>Loading...</div>
-  }else{
-    
-    return (
+    return <div>Server fel</div>
+  }
+
+  return (
     <BrowserRouter>
       <Header user={user} />
       <Routes>
@@ -61,7 +65,7 @@ export default function App() {
     </BrowserRouter>
   )
 
-  }
 
-  
+
+
 }

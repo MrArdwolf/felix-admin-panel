@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import './header.scss'
+import './Header.scss'
 import Nav from '../Nav/nav'
 import logo from '../../assets/Logo.avif'
 
@@ -11,14 +11,14 @@ export default function Header(props) {
   if (pathname === "/") {
     return (
       <header>
-        <h1 className='title'>FELIX CYKELMECK</h1>
+        {/* <h1 className='title'>FELIX CYKELMECK</h1> */}
         <img src={logo} alt="logo" />
       </header>
     )
   }
   return (
     <header>
-      <h1 className='title'>FELIX CYKELMECK</h1>
+      {/* <h1 className='title'>FELIX CYKELMECK</h1> */}
       {props.user ?
         <div className="logged-in">
           <menu>
