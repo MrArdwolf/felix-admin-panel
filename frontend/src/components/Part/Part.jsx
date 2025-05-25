@@ -194,6 +194,7 @@ export default function Part(props) {
 
       </div>
       {openEdit ? null :
+      part.parent ? null :
         <div className="edit-part-form">
           <div className="add-top">
             <h3>Lägg till</h3>
