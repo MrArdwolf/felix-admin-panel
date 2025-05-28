@@ -1,0 +1,33 @@
+@use "../../assets/scss/main" as *;
+
+header {
+  display: flex;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100dvw;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  z-index: 2;
+
+  h1 {
+    @include font-app-title;
+  }
+
+
+  img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 50px;
+    padding: 8px;
+  }
+
+  menu {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+  }
+}

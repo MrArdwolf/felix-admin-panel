@@ -1,0 +1,21 @@
+@use "../../assets/scss/main" as *;
+
+.archived-page {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+  width: 100%;
+
+  h1 {
+    @include font-title;
+  }
+
+  .archived-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    width: 100%;
+    max-width: 390px;
+  }
+}

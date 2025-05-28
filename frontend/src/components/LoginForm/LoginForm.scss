@@ -1,0 +1,43 @@
+@use "../../assets/scss/main.scss" as *;
+
+.SignUpForm {
+  width: 100%;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+
+    .input-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      label {
+        @include font-label;
+      }
+
+      input {
+        padding: 8px;
+        border: $input-border;
+        background-color: $input-background-color;
+        border-radius: 8px;
+        width: 100%;
+
+        &::placeholder {
+          font-style: italic;
+        }
+      }
+    }
+  }
+  button {
+    width: 100%;
+    color: $black-color;
+  }
+}

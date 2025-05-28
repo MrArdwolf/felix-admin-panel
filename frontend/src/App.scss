@@ -1,0 +1,8 @@
+@use './assets/scss/main' as *;
+
+body {
+  margin-top: 50px;
+  padding: 40px 20px;
+  background-color: $background-color;
+  color: #fff;
+}

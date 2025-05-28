@@ -1,0 +1,99 @@
+@use '../../assets/scss/main.scss' as *;
+
+.parts-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+
+  span:has(ion-icon) {
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease-in-out;
+
+    &.open {
+      transform: rotate(180deg);
+    }
+
+    ion-icon {
+      font-size: 24px;
+    }
+  }
+
+  h1 {
+    @include font-title;
+  }
+
+  .parts-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+    width: 100%;
+    max-width: 390px;
+    padding: 0 30px;
+  }
+
+  .add-part {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    background-color: $input-background-color;
+    color: $black-color;
+    padding: 10px;
+    border-radius: 8px;
+    gap: 10px;
+    align-items: center;
+    box-shadow: $button-box-shadow;
+
+    .add-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+
+      h3 {
+        @include font-part-name;
+      }
+    }
+
+    .add-part-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+
+      .input-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+
+        input {
+          width: 100%;
+          max-width: 250px;
+          padding: 0 8px;
+          border-radius: 8px;
+          border: $input-border;
+          height: 40px;
+          background-color: $input-background-color;
+
+          &::placeholder {
+            font-style: italic;
+          }
+        }
+
+        label {
+          @include font-label;
+          width: 100px;
+        }
+      }
+      .button-row {
+        display: flex;
+        justify-content: flex-end;
+      }
+    }
+  }
+}

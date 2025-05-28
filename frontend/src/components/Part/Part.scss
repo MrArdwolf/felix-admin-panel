@@ -1,0 +1,167 @@
+@use "../../assets/scss/main" as *;
+
+.part {
+  display: flex;
+  flex-direction: column;
+  background-color: $primary-color;
+  color: $black-color;
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  align-items: center;
+  box-shadow: $button-box-shadow;
+  gap: 24px;
+
+  span:has(ion-icon) {
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease-in-out;
+
+    &.open {
+      transform: rotate(180deg);
+    }
+
+    ion-icon {
+      font-size: 24px;
+    }
+  }
+
+  .part-top {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 16px;
+    align-items: center;
+
+    .part-info {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      width: 100%;
+      height: 100%;
+
+      .edit-parent-form {
+        display: flex;
+        gap: 16px;
+        width: 100%;
+      }
+
+      input {
+        width: 100%;
+        padding: 8px;
+        border-radius: 8px;
+        border: $input-border;
+        box-shadow: $button-box-shadow;
+
+        &.price-input {
+          width: 50%;
+        }
+      }
+
+      h3 {
+        @include font-part-name;
+      }
+
+      p {
+        @include font-part-price;
+      }
+    }
+  }
+
+  .part-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+
+    .part-bottom {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+
+      .edit-parent-button {
+        align-self: end;
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  .edit-part-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    background-color: $background-color;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: $button-box-shadow;
+    color: $primary-color;
+    justify-content: center;
+
+    .add-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      h3 {
+        @include font-part-name;
+      }
+    }
+
+    .add-part-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .input-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+
+        label {
+          @include font-label;
+          width: 100px;
+        }
+
+        input {
+          max-width: 200px;
+          width: 100%;
+          height: 40px;
+          padding: 0 8px;
+          border-radius: 8px;
+          border: $input-border;
+
+          &::placeholder {
+            font-style: italic;
+          }
+        }
+      }
+
+      .button-row {
+        display: flex;
+        justify-content: end;
+      }
+    }
+  }
+}
+
+.marked {
+  border: 4px solid $marked-color;
+  padding: 6px;
+}
+
+.part:has(.marked) {
+  border: 4px solid $marked-color;
+  padding: 6px;
+}
+
+.child {
+  background-color: $input-background-color;
+}
+
+.hidden {
+  display: none !important;
+}
