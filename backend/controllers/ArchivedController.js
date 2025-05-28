@@ -57,6 +57,21 @@ async function addArchived(req, res) {
 
 async function getAllArchived(req, res) {
     try {
+        const userToken = req.cookies.authToken;
+        let user = null;
+        if (!userToken) {
+            res.statusCode = 401;
+            throw new Error("Unauthorized");
+        }
+
+        jwt.verify(userToken, process.env.JWT_SECRET, (err, decoded) => {
+            if (err) {
+                res.statusCode = 401;
+                throw new Error("Unauthorized", err);
+            }
+            user = decoded.id;
+        });
+        
         const archived = await ArchivedModel.find();
         res.json(archived);
     } catch(error) {
