@@ -1,6 +1,6 @@
 @use "../../assets/scss/main" as *;
 
-.alert-modal {
+.clear-form-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -8,7 +8,7 @@
   height: 100dvh;
   background-color: $transparent-background-color;
 
-  .alert-modal-content {
+  .clear-form-modal-content {
     display: flex;
     flex-direction: column;
     gap: 16px;

@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 import './LoginForm.scss'
 import axios from 'axios'
+import { useNavigate, redirect } from 'react-router-dom';
 
 
-export default function LoginForm() {
+export default function LoginForm(props) {
 
   const backend = import.meta.env.VITE_API_URL
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(false);
+  const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -21,8 +23,14 @@ export default function LoginForm() {
       .then(res => {
         console.log(res.data);
         setLoginSuccess(true);
+        props.setUser(res.data.user);
+        props.setAlert({
+          show: true,
+          message: "test alert1",
+          type: "success"
+        })
         setTimeout(() => {
-          window.location.href = "/";
+          navigate('/');
         }, 1000)
       })
       .catch(err => {

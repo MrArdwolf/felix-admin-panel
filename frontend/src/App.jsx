@@ -10,6 +10,7 @@ import LogoutPage from './pages/LogoutPage/LogoutPage';
 import Header from './components/Header/Header';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import AlertModal from './components/AlertModal/AlertModal';
 
 export default function App() {
 
@@ -18,6 +19,12 @@ export default function App() {
   const backend = import.meta.env.VITE_API_URL
   const [user, setUser] = useState({});
   const [isLoading, setIsLoading] = useState();
+
+  const [alert, setAlert] = useState({
+    show: false,
+    message: '',
+    type: ''
+  });
 
   useEffect(() => {
     authenticate();
@@ -50,12 +57,23 @@ export default function App() {
     return <div>Server fel</div>
   }
 
+  const colseAlert = () => {
+    setAlert({
+      show: false,
+      message: '',
+      type: ''
+    })
+  }
+
   return (
     <BrowserRouter>
       <Header user={user} />
+      {alert.show &&
+        <AlertModal show={alert.show} message={alert.message} type={alert.type} colseAlert={colseAlert} />
+      }
       <Routes>
         <Route path="/" element={<HomePage user={user} />} />
-        <Route path="/auth" element={<SignUpPage />} />
+        <Route path="/auth" element={<SignUpPage setAlert={setAlert} setUser={setUser} />} />
         <Route path="/form" element={<FormPage />} />
         <Route path="/parts" element={<PartsPage authenticate={authenticate} user={user} />} />
         <Route path="/customers" element={<CustomerPage authenticate={authenticate} user={user} />} />

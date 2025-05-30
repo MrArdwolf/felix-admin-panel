@@ -120,7 +120,7 @@ async function loginUser(req, res) {
             status: 200,
             success: true,
             message: "login success",
-            username: isUserExist.username,
+            user: isUserExist,
             token: token,
         });
 
