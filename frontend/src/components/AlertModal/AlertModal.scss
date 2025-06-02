@@ -1,0 +1,40 @@
+@use "../../assets/scss/main.scss" as *;
+
+.alert-modal {
+  position: fixed;
+  top: -100px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  padding: 12px 40px;
+  color: $secondary-color;
+  box-shadow: $button-box-shadow;
+
+  z-index: 100;
+  transition: top 0.5s ease-in-out;
+
+  p {
+    text-wrap: nowrap;
+    @include font-label;
+    color: $secondary-color;
+  }
+
+  &.success {
+    background-color: $success-color;
+  }
+
+  &.error {
+    background-color: $error-color;
+  }
+
+  &.task {
+    background-color: $working-color;
+  }
+
+  &.show {
+    top: 50px;
+  }
+}
