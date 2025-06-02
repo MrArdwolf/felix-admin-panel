@@ -51,11 +51,28 @@ export default function PartsPage(props) {
         setPartName("");
         setPartPrice("");
         setAddButton(true);
+        props.setAlert({
+          show: true,
+          message: `${partName} tillagd`,
+          type: "success"
+        })
       })
       .catch(err => {
         console.log(err);
         if (err.status == 401) {
           props.authenticate(addPart);
+        } else if (err.response.data.error === "Missing data") {
+          props.setAlert({
+            show: true,
+            message: "Fyll i alla fält",
+            type: "error"
+          })
+        } else {
+          props.setAlert({
+            show: true,
+            message: "Något gick fel",
+            type: "error"
+          })
         }
       })
   }
@@ -88,7 +105,7 @@ export default function PartsPage(props) {
           }
         </div>
         {parts.filter(part => !part.parent).map(part => (
-          <Part part={part} key={part._id} authenticate={(req) => { props.authenticate(req) }} update={update} />
+          <Part part={part} key={part._id} authenticate={(req) => { props.authenticate(req) }} update={update} setAlert={props.setAlert} />
         ))}
 
         

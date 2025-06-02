@@ -26,25 +26,39 @@ export default function LoginForm(props) {
         props.setUser(res.data.user);
         props.setAlert({
           show: true,
-          message: "test alert1",
+          message: "Login successful",
           type: "success"
         })
-        setTimeout(() => {
           navigate('/');
-        }, 1000)
       })
       .catch(err => {
         console.log(err);
+        if (err.response.data.error === "Missing data") {
+          props.setAlert({
+            show: true,
+            message: "Fyll i alla fält",
+            type: "error"
+          })
+        } else if (err.response.data.error === "User not found") {
+          props.setAlert({
+            show: true,
+            message: "Fel användarnamn",
+            type: "error"
+          })
+        } else if (err.response.data.error === "Password incorrect") {
+          props.setAlert({
+            show: true,
+            message: "Fel lösenord",
+            type: "error"
+          })
+        } else {
+          props.setAlert({
+            show: true,
+            message: "Något gick fel",
+            type: "error"
+          })
+        }
       })
-  }
-
-  if (loginSuccess) {
-    return (
-      <div className="login-success">
-        <h2>Login successful!</h2>
-        <p>Redirecting to home page...</p>
-      </div>
-    )
   }
 
 

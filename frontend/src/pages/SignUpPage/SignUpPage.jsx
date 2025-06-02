@@ -14,14 +14,7 @@ export default function SignUpPage(props) {
         <h2>{signUp ? "Skapa konto" : "Logga in"}</h2>
         <p onClick={() => {setSignUp(!signUp)}}>{signUp ? "Logga in" : "Skapa konto"}</p>
       </div>
-      {signUp ? <SignUpForm /> : <LoginForm setAlert={props.setAlert} setUser={props.setUser} />}
-      <button onClick={() => {
-        props.setAlert({
-          show: true,
-          message: "test alert1",
-          type: "success"
-        })
-        }}>test alert</button>
+      {signUp ? <SignUpForm setAlert={props.setAlert} /> : <LoginForm setAlert={props.setAlert} setUser={props.setUser} />}
     </div>
   )
 }

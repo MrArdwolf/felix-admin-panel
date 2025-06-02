@@ -45,7 +45,11 @@ export default function App() {
         if (err.status !== 401) {
           setUser(null)
           setIsLoading(true);
-          alert("server fel. försök igen senare")
+          setAlert({
+            show: true,
+            message: `Serverfel. Försök igen senare`,
+            type: "error"
+          })
         } else {
           setUser(null)
           setIsLoading(false);
@@ -53,33 +57,25 @@ export default function App() {
       })
   }
 
-  if (isLoading) {
-    return <div>Server fel</div>
-  }
-
   const colseAlert = () => {
-    setAlert({
-      show: false,
-      message: '',
-      type: ''
-    })
+    setAlert({ ...alert, show: false })
   }
 
   return (
     <BrowserRouter>
       <Header user={user} />
-      {alert.show &&
-        <AlertModal show={alert.show} message={alert.message} type={alert.type} colseAlert={colseAlert} />
+      <AlertModal show={alert.show} message={alert.message} type={alert.type} colseAlert={colseAlert} />
+      {isLoading ? <p>Server fel. Försök igen senare</p> :
+        <Routes>
+          <Route path="/" element={<HomePage user={user} />} />
+          <Route path="/auth" element={<SignUpPage setAlert={setAlert} setUser={setUser} />} />
+          <Route path="/form" element={<FormPage setAlert={setAlert} />} />
+          <Route path="/parts" element={<PartsPage authenticate={authenticate} user={user} setAlert={setAlert} />} />
+          <Route path="/customers" element={<CustomerPage authenticate={authenticate} user={user} setAlert={setAlert} />} />
+          <Route path="/archive" element={<ArchivedPage authenticate={authenticate} user={user} />} />
+          <Route path="/logout" element={<LogoutPage setAlert={setAlert} />} />
+        </Routes>
       }
-      <Routes>
-        <Route path="/" element={<HomePage user={user} />} />
-        <Route path="/auth" element={<SignUpPage setAlert={setAlert} setUser={setUser} />} />
-        <Route path="/form" element={<FormPage />} />
-        <Route path="/parts" element={<PartsPage authenticate={authenticate} user={user} />} />
-        <Route path="/customers" element={<CustomerPage authenticate={authenticate} user={user} />} />
-        <Route path="/archive" element={<ArchivedPage authenticate={authenticate} user={user} />} />
-        <Route path="/logout" element={<LogoutPage />} />
-      </Routes>
     </BrowserRouter>
   )
 
