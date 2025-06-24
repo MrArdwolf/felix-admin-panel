@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import './Form.scss'
 
-import AlertModal from '../AlertModal/AlertModal';
+import ClearFormModal from '../ClearFormModal/ClearFormModal';
 
 
 export default function Form(props) {
@@ -49,7 +49,7 @@ export default function Form(props) {
           e.preventDefault();
           setShowAlert(true);
         }}>Rensa formuläret</button>
-        {showAlert && <AlertModal onClose={() => setShowAlert(false)} onConfirm={resetForm} />}
+        {showAlert && <ClearFormModal onClose={() => setShowAlert(false)} onConfirm={resetForm} />}
       </div>
     </form>
   )

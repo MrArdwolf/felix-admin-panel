@@ -3,7 +3,7 @@ import Customer from '../../components/Customer/Customer';
 import axios from 'axios';
 import './CustomerPage.scss'
 
-export default function CustomerPage() {
+export default function CustomerPage(props) {
   const backend = import.meta.env.VITE_API_URL
   const [customers, setCustomers] = useState([]);
   const [parts, setParts] = useState([]);
@@ -54,7 +54,7 @@ export default function CustomerPage() {
       <div className="customer-list">
         {customers.map(customer => {
           return (
-            <Customer key={customer._id} customer={customer} parts={parts} update={update} authenticate={() => { props.authenticate() }}/>
+            <Customer key={customer._id} customer={customer} parts={parts} update={update} authenticate={() => { props.authenticate() }} setAlert={props.setAlert} />
           )
         })}
       </div>

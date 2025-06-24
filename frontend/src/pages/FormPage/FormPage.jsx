@@ -5,7 +5,7 @@ import Form2 from "../../components/Forms/Form2"
 import FormLast from "../../components/Forms/FormLast"
 import axios from 'axios'
 
-export default function FormPage() {
+export default function FormPage(props) {
   const backend = import.meta.env.VITE_API_URL
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({});
@@ -90,9 +90,19 @@ export default function FormPage() {
     axios.post(`${backend}/api/customer/add`, customer)
       .then(res => {
         console.log(res.data)
+          props.setAlert({
+            show: true,
+            message: `Formuläret har skickats in!`,
+            type: "success"
+          })
       })
       .catch(err => {
         console.log(err)
+          props.setAlert({
+            show: true,
+            message: `Ett fel uppstod!`,
+            type: "error"
+          })
       })
   }
 

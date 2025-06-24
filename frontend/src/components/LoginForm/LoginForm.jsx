@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 import './LoginForm.scss'
 import axios from 'axios'
+import { useNavigate, redirect } from 'react-router-dom';
 
 
-export default function LoginForm() {
+export default function LoginForm(props) {
 
   const backend = import.meta.env.VITE_API_URL
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [loginSuccess, setLoginSuccess] = useState(false);
+  const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -21,22 +23,42 @@ export default function LoginForm() {
       .then(res => {
         console.log(res.data);
         setLoginSuccess(true);
-        setTimeout(() => {
-          window.location.href = "/";
-        }, 1000)
+        props.setUser(res.data.user);
+        props.setAlert({
+          show: true,
+          message: "Login successful",
+          type: "success"
+        })
+          navigate('/');
       })
       .catch(err => {
         console.log(err);
+        if (err.response.data.error === "Missing data") {
+          props.setAlert({
+            show: true,
+            message: "Fyll i alla fält",
+            type: "error"
+          })
+        } else if (err.response.data.error === "User not found") {
+          props.setAlert({
+            show: true,
+            message: "Fel användarnamn",
+            type: "error"
+          })
+        } else if (err.response.data.error === "Password incorrect") {
+          props.setAlert({
+            show: true,
+            message: "Fel lösenord",
+            type: "error"
+          })
+        } else {
+          props.setAlert({
+            show: true,
+            message: "Något gick fel",
+            type: "error"
+          })
+        }
       })
-  }
-
-  if (loginSuccess) {
-    return (
-      <div className="login-success">
-        <h2>Login successful!</h2>
-        <p>Redirecting to home page...</p>
-      </div>
-    )
   }
 
 

@@ -55,6 +55,11 @@ export default function Part(props) {
         setPartName("");
         setPartPrice("");
         openDropDown(setAddButton, addButton);
+        props.setAlert({
+          show: true,
+          message: `${partName} tillagd`,
+          type: "success"
+        })
         
         if (!openEdit) {
           setOpenEdit(true);
@@ -78,6 +83,11 @@ export default function Part(props) {
     })
       .then(res => {
         console.log(res.data);
+        props.setAlert({
+          show: true,
+          message: `${editName} ändrad`,
+          type: "task"
+        })
         setPart({ ...part, name: editName, price: editPrice });
         if (props.updateParent) {
           props.updateParent();
@@ -96,6 +106,11 @@ export default function Part(props) {
     axios.delete(`${backend}/api/part/${part._id}`)
       .then(res => {
         console.log(res.data);
+        props.setAlert({
+          show: true,
+          message: `${part.name} borttagen`,
+          type: "task"
+        })
         if (props.updateParent) {
           props.updateParent();
           props.setChildren(props.children.filter(child => child._id !== part._id));
@@ -132,7 +147,7 @@ export default function Part(props) {
         {openPart ? null :
           <div className="part-content">
             {children.map(child => (
-              <Part part={child} key={child._id} children={children} setChildren={setChildren} authenticate={(req) => { props.authenticate(req) }} updateParent={update} className="child part" />
+              <Part part={child} key={child._id} children={children} setChildren={setChildren} authenticate={(req) => { props.authenticate(req) }} updateParent={update} className="child part" setAlert={props.setAlert} />
             ))}
 
             <div className="part-bottom">

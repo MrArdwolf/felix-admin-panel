@@ -1,36 +1,40 @@
-@use "../../assets/scss/main" as *;
+@use "../../assets/scss/main.scss" as *;
 
 .alert-modal {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100dvw;
-  height: 100dvh;
-  background-color: $transparent-background-color;
+  top: -100px;
+  left: 50%;
+  transform: translate(-50%, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  padding: 12px 40px;
+  color: $secondary-color;
+  box-shadow: $button-box-shadow;
 
-  .alert-modal-content {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    position: fixed;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: $background-color;
-    border: $input-border;
-    box-shadow: $button-box-shadow;
-    padding: 20px 24px;
-    border-radius: 12px;
-    z-index: 1000;
-    width: 100%;
-    max-width: 340px;
+  z-index: 100;
+  transition: top 0.5s ease-in-out;
 
-    .buttons {
-      display: flex;
-      justify-content: flex-end;
-      gap: 24px;
+  p {
+    text-wrap: nowrap;
+    @include font-label;
+    color: $secondary-color;
+  }
 
-      @include font-button;
-    }
+  &.success {
+    background-color: $success-color;
+  }
+
+  &.error {
+    background-color: $error-color;
+  }
+
+  &.task {
+    background-color: $working-color;
+  }
+
+  &.show {
+    top: 50px;
   }
 }

@@ -21,6 +21,11 @@ export default function Customer(props) {
       .then(res => {
         console.log(res.data);
         props.update();
+        props.setAlert({
+          show: true,
+          message: `${customer.name} ${customer.bikeNumber} sparad`,
+          type: "success"
+        })
       })
       .catch(err => {
         console.log(err);
@@ -36,6 +41,11 @@ export default function Customer(props) {
     )
       .then(res => {
         console.log(res.data);
+        props.setAlert({
+          show: true,
+          message: `${customer.name} ${customer.bikeNumber} arkiverad`,
+          type: "success"
+        })
         deleteCustomer();
       })
       .catch(err => {
@@ -83,6 +93,12 @@ export default function Customer(props) {
 
 
     window.open(`sms:${parseInt(customer.phone)}?body=${message}`)
+    
+        props.setAlert({
+          show: true,
+          message: `prisförslag skickad`,
+          type: "task"
+        })
   }
 
   const sendDoneSMS = (lock) => {
@@ -94,6 +110,12 @@ export default function Customer(props) {
 
 
     window.open(`sms:${parseInt(customer.phone)}?body=${message}`)
+    
+        props.setAlert({
+          show: true,
+          message: `Klart besked skickad`,
+          type: "task"
+        })
   }
 
 

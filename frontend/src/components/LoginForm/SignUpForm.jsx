@@ -3,7 +3,7 @@ import './LoginForm.scss'
 import axios from 'axios'
 
 
-export default function SignUpForm() {
+export default function SignUpForm(props) {
 
   const backend = import.meta.env.VITE_API_URL
 
@@ -23,7 +23,11 @@ export default function SignUpForm() {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      alert("Passwords do not match");
+        props.setAlert({
+          show: true,
+          message: "Passwords do not match",
+          type: "error",
+        })
       return;
     }
 
@@ -34,11 +38,46 @@ export default function SignUpForm() {
     })
       .then(res => {
         console.log(res.data);
-        alert("User registered successfully");
+        props.setAlert({
+          show: true,
+          message: "User registerd successfully",
+          type: "success"
+        })
         resetForm();
       })
       .catch(err => {
         console.log(err);
+        if (err.response.data.error === "Missing data") {
+          props.setAlert({
+            show: true,
+            message: "Fyll i alla fält",
+            type: "error"
+          })
+        } else if (err.response.data.error === "username all ready in use") {
+          props.setAlert({
+            show: true,
+            message: "Användarnamnet är upptaget",
+            type: "error"
+          })
+        } else if (err.response.data.error === "Master not defined") {
+          props.setAlert({
+            show: true,
+            message: "Huvudlösenord saknas",
+            type: "error"
+          })
+        } else if (err.response.data.error === "Master password incorrect") {
+          props.setAlert({
+            show: true,
+            message: "Huvudlösenordet är inkorrekt",
+            type: "error"
+          })
+        } else {
+          props.setAlert({
+            show: true,
+            message: "Något gick fel",
+            type: "error"
+          })
+        }
       })
   }
 

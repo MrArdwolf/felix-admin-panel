@@ -1,42 +1,9 @@
-# examensarbete-beskrivning
-
-### Översiktlig beskrivning:
-
-Applikationer ska vara en admin panel och ett formulär som ska göra det lättare för cykelmekaniker att hantera kunder. Beställare är Felix Cykelmeck.
-
-### Tekniker och programspråk:
-
-- React
-- Scss
-- Node.js
-- Express
-- MongoDB
-
-### Samarbeten:
-
-Jag gör detta projekt själv.
-
-### Kravspecifikation:
-
-#### Applikationen ska:
-
-- lagra data i en databas
-- finnas publicerad på en publik webbplats
-- hantera vy för mobil
-- hantera 1 användarroll: admin
-
-#### En kund ska kunna
-
-- fylla i ett formulär med uppgifter om cykel och kund
-
-#### En administratör (admin) ska kunna
-
-- se en lista på alla kunder
-- lägga till nya delar och grupper av delar
-- skcka sms till kunder med uppgifter om pris och delar
-
-### [Figma skiss](https://www.figma.com/design/F8h7ph0THIHbMQue6TkAGt/examen?node-id=31-385)
-
-
-
-### [Logg bok](Loggbok.md)
+## build arm64
+```
+cd frontend
+docker build --platform linux/arm64 -t [image-name]:[tagname] .
+docker push [image-name]:[tagname]
+cd ../backend
+docker build --platform linux/arm64 -t [image-name]:[tagname] .
+docker push [image-name]:[tagname]
+```

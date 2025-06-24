@@ -99,6 +99,9 @@ async function loginUser(req, res) {
         if (await bcrypt.compare(password, isUserExist.password)) {
             token = jwt.sign({ id: isUserExist._id, username: isUserExist.username, role: isUserExist.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
             refreshToken = jwt.sign({ id: isUserExist._id, username: isUserExist.username, role: isUserExist.role }, process.env.JWT_SECRET, { expiresIn: "30d" });
+        } else {
+            res.statusCode = 400;
+            throw new Error("Password incorrect")
         }
 
         res.cookie("authToken", token, {
@@ -120,7 +123,7 @@ async function loginUser(req, res) {
             status: 200,
             success: true,
             message: "login success",
-            username: isUserExist.username,
+            user: isUserExist,
             token: token,
         });
 
