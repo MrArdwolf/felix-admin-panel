@@ -73,7 +73,7 @@ export default function App() {
           <Route path="/parts" element={<PartsPage authenticate={authenticate} user={user} setAlert={setAlert} />} />
           <Route path="/customers" element={<CustomerPage authenticate={authenticate} user={user} setAlert={setAlert} />} />
           <Route path="/archive" element={<ArchivedPage authenticate={authenticate} user={user} />} />
-          <Route path="/logout" element={<LogoutPage setAlert={setAlert} />} />
+          <Route path="/logout" element={<LogoutPage setAlert={setAlert} setUser={setUser} />} />
         </Routes>
       }
     </BrowserRouter>

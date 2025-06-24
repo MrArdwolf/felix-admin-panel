@@ -15,6 +15,7 @@ export default function LogoutPage(props) {
           type: "task"
         })
         navigate('/auth')
+        props.setUser(null)
     })
     .catch(err => {
       console.log(err)
