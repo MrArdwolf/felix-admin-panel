@@ -19,6 +19,8 @@ async function registerUser(req, res) {
             throw new Error("Missing data")
         }
 
+        const fixedUsername = username.replaceAll(" ", "");
+
         const isMasterExist = await MasterModel.findOne({
             master: "master",
         });
@@ -38,7 +40,7 @@ async function registerUser(req, res) {
         }
 
         const isUsernameAllReadyExist = await UserModel.findOne({
-            username: username,
+            username: fixedUsername,
         });
 
         if (isUsernameAllReadyExist) {
@@ -53,7 +55,7 @@ async function registerUser(req, res) {
 
         // now create the user;
         const newUser = await UserModel.create({
-            username,
+            username: fixedUsername,
             password: hashedPassword,
         });
 
@@ -83,9 +85,11 @@ async function loginUser(req, res) {
             throw new Error("Missing data")
         }
 
+        const fixedUsername = username.replaceAll(" ", "");
+
         // ** Check the (username/user) exist  in database or not ;
         const isUserExist = await UserModel.findOne({
-            username: username,
+            username: fixedUsername,
         });
 
         // ** if there is not any user we will send user not found;
