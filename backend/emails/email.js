@@ -24,5 +24,26 @@ export const customerEmail = (customer) => {
         </body>
         </html>
     `;
+}
 
+export const adminEmail = (customer) => {
+    return `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                .email-container { 
+                    width: 90%; 
+                    font-family: Arial, sans-serif; 
+                    color: #2F2E2E; 
+                }
+                .greeting { font-size: 17px; }
+            </style>
+        </head>
+        <body class="email-container">
+            <h2>Ny inlämnad cykel</h2>
+            <p class="greeting">En cykel har lämnats in med beskrivningen: ${customer.bikeDescription}</p>
+        </body>
+        </html>
+    `;
 }

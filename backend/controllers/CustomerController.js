@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 
 import nodemailer from "nodemailer";
 
-import { customerEmail } from "../emails/email.js";
+import { customerEmail, adminEmail } from "../emails/email.js";
 
 dotenv.config();
 
@@ -74,6 +74,13 @@ async function addCustomer(req, res) {
             to: newCustomer.email,
             subject: "Inlämning av cykel",
             html: customerEmail(newCustomer ),
+        });
+
+        const mailToAdmin = await transporter.sendMail({
+            from: `"Felix Cykelmeck" <${process.env.EMAIL_USER}>`,
+            to: process.env.EMAIL_USER,
+            subject: "Ny inlämnad cykel",
+            html: adminEmail(newCustomer ),
         });
 
         // Send the newCustomer as response;
