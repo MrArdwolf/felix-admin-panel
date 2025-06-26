@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 
 import nodemailer from "nodemailer";
 
+import { customerEmail } from "../emails/email.js";
+
 dotenv.config();
 
 const transporter = nodemailer.createTransport({
@@ -71,17 +73,7 @@ async function addCustomer(req, res) {
             from: `"Felix Cykelmeck" <${process.env.EMAIL_USER}>`,
             to: newCustomer.email,
             subject: "Inlämning av cykel",
-            html: 
-                `<body style="width: 90%; font-family: Arial, Helvetica, sans-serif; color: #2F2E2E; ">
-                    <h2>Hejsan ${newCustomer.name},</h2>
-                    <p style="font-size: 17px;">Tack för att du anförtror din cykel ${newCustomer.bikeNumber} till oss.</p>
-                    <p style="font-size: 17px;">Vi hör av oss så fort vi kan med ett prisförslag.</p>
-                    <br>
-                    <div style="text-align: left; margin: 0; padding: 0; width: 100%;">
-                        <p style="font-size: 17px; margin: 0; padding: 0;">Mvh,</p>
-                        <p style="font-size: 17px; margin: 0; padding: 0;">Felix Cykelmeck</p>
-                    </div>
-                </body>`, // HTML body
+            html: customerEmail(newCustomer ),
         });
 
         // Send the newCustomer as response;
