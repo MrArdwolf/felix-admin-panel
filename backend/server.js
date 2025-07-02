@@ -8,6 +8,7 @@ import MasterRouter from './routes/MasterRouter.js';
 import PartRouter from './routes/PartRouter.js';
 import CustomerRouter from './routes/CustomerRouter.js';
 import ArchivedRouter from './routes/ArchivedRouter.js';
+import ReceiptRouter from './routes/ReceiptRouter.js';
 
 
 dotenv.config();
@@ -50,6 +51,7 @@ server.use("/api/master", MasterRouter);
 server.use("/api/customer", CustomerRouter);
 server.use("/api/archived", ArchivedRouter);
 server.use("/api/part", PartRouter);
+server.use("/api/receipt", ReceiptRouter);
 
 server.all("*", (req, res) => {
     res.statusCode = 404;

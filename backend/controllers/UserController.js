@@ -13,11 +13,13 @@ async function registerUser(req, res) {
         const user = req.body;
         let masterCorrect = false;
 
-        const { username, password, masterPassword } = user;
-        if (!username || !password || !masterPassword) {
+        const { email, username, password, masterPassword } = user;
+        if (!email || !username || !password || !masterPassword) {
             res.statusCode = 400;
             throw new Error("Missing data")
         }
+
+        const fixedEmail = email.replaceAll(" ", "");
 
         const fixedUsername = username.replaceAll(" ", "");
 
@@ -48,6 +50,15 @@ async function registerUser(req, res) {
             throw new Error("username all ready in use")
         }
 
+        const isEmailAllReadyExist = await UserModel.findOne({
+            email: fixedEmail,
+        });
+
+        if (isEmailAllReadyExist) {
+            res.statusCode = 400;
+            throw new Error("Email all ready in use")
+        }
+
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -55,6 +66,7 @@ async function registerUser(req, res) {
 
         // now create the user;
         const newUser = await UserModel.create({
+            email: fixedEmail,
             username: fixedUsername,
             password: hashedPassword,
         });
@@ -101,8 +113,8 @@ async function loginUser(req, res) {
         let token, refreshToken;
 
         if (await bcrypt.compare(password, isUserExist.password)) {
-            token = jwt.sign({ id: isUserExist._id, username: isUserExist.username, role: isUserExist.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
-            refreshToken = jwt.sign({ id: isUserExist._id, username: isUserExist.username, role: isUserExist.role }, process.env.JWT_SECRET, { expiresIn: "30d" });
+            token = jwt.sign({ id: isUserExist._id, email: isUserExist.email, username: isUserExist.username, role: isUserExist.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
+            refreshToken = jwt.sign({ id: isUserExist._id, email: isUserExist.email, username: isUserExist.username, role: isUserExist.role }, process.env.JWT_SECRET, { expiresIn: "30d" });
         } else {
             res.statusCode = 400;
             throw new Error("Password incorrect")
@@ -151,8 +163,8 @@ async function Authenticate(req, res) {
                 throw new Error("invalid token");
             }
 
-            const token = jwt.sign({ id: decoded._id, username: decoded.username, role: decoded.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
-            const refreshToken = jwt.sign({ id: decoded._id, username: decoded.username, role: decoded.role }, process.env.JWT_SECRET, { expiresIn: "30d" });
+            const token = jwt.sign({ id: decoded._id, email: decoded.email, username: decoded.username, role: decoded.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
+            const refreshToken = jwt.sign({ id: decoded._id, email: decoded.email, username: decoded.username, role: decoded.role }, process.env.JWT_SECRET, { expiresIn: "30d" });
 
 
             res.cookie("authToken", token, {

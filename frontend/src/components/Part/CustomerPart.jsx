@@ -61,7 +61,7 @@ export default function Part(props) {
 
   const customPrice = (price) => {
     const otherParts = props.customPartPrice.filter(_part => _part.id !== part._id);
-    props.setCustomPartPrice([...otherParts, { id: part._id, price: price }]);
+    props.setCustomPartPrice([...otherParts, { id: part._id, price: parseInt(price) }]);
     console.log(props.customPartPrice);
     console.log(price);
   }

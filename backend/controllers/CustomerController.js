@@ -2,21 +2,10 @@ import CustomerModel from "../models/CustomerModel.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
-import nodemailer from "nodemailer";
-
-import { customerEmail, adminEmail } from "../emails/email.js";
+import { customerEmail, adminEmail } from "../nodemailer/templates.js";
+import sendMail from "../nodemailer/sendMail.js";
 
 dotenv.config();
-
-const transporter = nodemailer.createTransport({
-    service: "gmail",
-    port: 587,
-    secure: false, // true for 465, false for other ports
-    auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASSWORD,
-    },
-});
 
 let bikeNumbers = []
 
@@ -69,19 +58,19 @@ async function addCustomer(req, res) {
             bikeNumber: bikeNumbers.shift(),
         });
 
-        const info = await transporter.sendMail({
+        sendMail({
             from: `"Felix Cykelmeck" <${process.env.EMAIL_USER}>`,
             to: newCustomer.email,
             subject: "Inlämning av cykel",
-            html: customerEmail(newCustomer ),
+            html: customerEmail(newCustomer),
         });
 
-        const mailToAdmin = await transporter.sendMail({
+        sendMail({
             from: `"Felix Cykelmeck" <${process.env.EMAIL_USER}>`,
             to: process.env.EMAIL_USER,
             subject: "Ny inlämnad cykel",
             html: adminEmail(newCustomer ),
-        });
+        })
 
         // Send the newCustomer as response;
         res.status(200).json({

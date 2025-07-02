@@ -1,13 +1,33 @@
 import React, { useState, useEffect } from 'react'
 import Part from '../Part/ArchivedCustomerPart';
 import './Customer.scss'
+import axios from 'axios';
 
 export default function Customer(props) {
+  const backend = import.meta.env.VITE_API_URL
   const customer = props.archived;
   const [open, setOpen] = useState(false);
   const [markedParts, setMarkedParts] = useState(customer.parts);
   const [customPartPrice, setCustomPartPrice] = useState(customer.partPrices);
   const [openParts, setOpenParts] = useState(false);
+
+  const getReceipt = () => {
+    axios.get(`${backend}/api/receipt/get/${customer._id}`)
+      .then(res => {
+        console.log(res.data);
+        props.setAlert({
+          show: true,
+          message: `Kvitto för ${customer.name} hämtat`,
+          type: "success"
+        })
+      })
+      .catch(err => {
+        console.log(err);
+        if (err.status == 401) {
+          props.authenticate(getReceipt);
+        }
+      })
+  }
 
   return (
     <div className="customer">
@@ -61,8 +81,8 @@ export default function Customer(props) {
           </div>
           <div className="parts-container">
             <div className="parts-container-top">
-            <h3>Delar</h3>
-            <span onClick={() => { setOpenParts(!openParts) }} className={`${openParts ? "open" : ""}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
+              <h3>Delar</h3>
+              <span onClick={() => { setOpenParts(!openParts) }} className={`${openParts ? "open" : ""}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
             </div>
             {openParts && (
               <div className="parts-list">
@@ -84,6 +104,9 @@ export default function Customer(props) {
                 }
               </div>
             )}
+          </div>
+          <div className="buttons">
+            <button className='primary-button' onClick={getReceipt}>Kvitto</button>
           </div>
         </div>
       )}

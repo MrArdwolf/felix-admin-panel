@@ -1,4 +1,6 @@
 import ArchivedModel from "../models/ArchivedModel.js";
+import receiptModel from "../models/ReceiptModel.js";
+import PartModel from "../models/PartModel.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
@@ -29,6 +31,28 @@ async function addArchived(req, res) {
             user = decoded.id;
         });
 
+        const allParts = await PartModel.find();
+
+        const markedParts = parts.map((part1) => ({
+            _id: part1,
+            name: allParts.find((part2) => part2._id.toString() === part1).name,
+            price: allParts.find((part2) => part2._id.toString() === part1).price,
+        }));
+
+        console.log(partPrices);
+        const receiptParts = markedParts.map((part) => {
+            partPrices.forEach(element => {
+                if (element.id === part._id) {
+                    part.price = element.price;
+                }
+            });
+            return {
+                _id: part._id,
+                name: part.name,
+                price: part.price,
+            };
+        });
+
         // now create the Archived;
         const newArchived = await ArchivedModel.create({
             name,
@@ -41,6 +65,15 @@ async function addArchived(req, res) {
             parts,
             partPrices,
         });
+        
+        const receipt = await receiptModel.create({
+            name,
+            email,
+            phone,
+            bikeDescription,
+            parts: receiptParts,
+            customer: newArchived._id,
+        });
 
         // Send the Archived as response;
         res.status(200).json({
@@ -48,6 +81,7 @@ async function addArchived(req, res) {
             success: true,
             message: "Archived created Successfully",
             archived: newArchived,
+            receipt: receipt,
         });
     } catch (error) {
         res.statusCode = 400;

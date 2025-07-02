@@ -7,12 +7,14 @@ export default function SignUpForm(props) {
 
   const backend = import.meta.env.VITE_API_URL
 
+  const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [masterPassword, setMasterPassword] = useState('');
 
   const resetForm = () => {
+    setEmail('');
     setUsername('');
     setPassword('');
     setConfirmPassword('');
@@ -32,6 +34,7 @@ export default function SignUpForm(props) {
     }
 
     axios.post(`${backend}/api/user/auth/register`, {
+      email,
       username,
       password,
       masterPassword
@@ -84,6 +87,10 @@ export default function SignUpForm(props) {
   return (
     <form action="" className="SignUpForm">
       <div className="inputs">
+        <div className="input-row">
+          <label htmlFor="email">Email:</label>
+          <input type="text" id="email" placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} required />
+        </div>
         <div className="input-row">
           <label htmlFor="username">Username:</label>
           <input type="text" id="username" placeholder='Username' value={username} onChange={(e) => setUsername(e.target.value)} required />

@@ -25,7 +25,7 @@ export default function CustomerPage(props) {
     .catch(err => {
       console.log(err);
         if (err.status == 401) {
-          props.authenticate(updateParts);
+          props.authenticate(update);
         }
     })
   }
@@ -40,7 +40,7 @@ export default function CustomerPage(props) {
     .catch(err => {
       console.log(err);
         if (err.status == 401) {
-          props.authenticate(updateCustomers);
+          props.authenticate(update);
         }
     })
 

@@ -3,7 +3,7 @@ import ArchivedCustomer from '../../components/Customer/ArchivedCustomer';
 import axios from 'axios';
 import './ArchivedPage.scss'
 
-export default function ArchivedPage() {
+export default function ArchivedPage(props) {
   const backend = import.meta.env.VITE_API_URL
   const [archivedCustomers, setArchivedCustomers] = useState([]);
   const [parts, setParts] = useState([]);
@@ -24,15 +24,15 @@ export default function ArchivedPage() {
     })
     .catch(err => {
       console.log(err);
-        if (err.status == 401) {
-          props.authenticate(updateParts);
+        if (err.status === 401) {
+          props.authenticate(update);
         }
     })
   }
 
   const updateCustomers = () => {
 
-    
+    console.log("Updating archived customers");
     axios.get(`${backend}/api/archived/get`)
     .then(res => {
       console.log(res.data);
@@ -41,7 +41,7 @@ export default function ArchivedPage() {
     .catch(err => {
       console.log(err);
         if (err.status == 401) {
-          props.authenticate(updateCustomers);
+          props.authenticate(update);
         }
     })
 
@@ -55,7 +55,7 @@ export default function ArchivedPage() {
       <div className="archived-list">
         {archivedCustomers.map(archived => {
           return (
-            <ArchivedCustomer key={archived._id} archived={archived} parts={parts} update={update} authenticate={() => { props.authenticate() }}/>
+            <ArchivedCustomer key={archived._id} archived={archived} parts={parts} update={update} authenticate={() => { props.authenticate() }} setAlert={props.setAlert}/>
           )
         })}
       </div>
