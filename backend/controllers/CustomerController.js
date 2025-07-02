@@ -139,7 +139,7 @@ async function updateCustomer(req, res) {
             throw new Error("No data to update Customer");
         }
 
-        const updatedCustomer = await CustomerModel.findByIdAndUpdate(req.params.id, { parts: body.parts, partPrices: body.partPrices }, { new: true });
+        const updatedCustomer = await CustomerModel.findByIdAndUpdate(req.params.id, { parts: body.parts, partPrices: body.partPrices, priceAccepted: body.priceAccepted }, { new: true });
         res.json({ message: "Customer has been updated", data: updatedCustomer });
     } catch (error) {
         res.statusCode = 400;

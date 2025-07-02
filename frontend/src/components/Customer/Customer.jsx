@@ -12,11 +12,15 @@ export default function Customer(props) {
   const [customPartPrice, setCustomPartPrice] = useState(customer.partPrices || []);
   const [openParts, setOpenParts] = useState(false);
   const [openSmsModal, setOpenSmsModal] = useState(false);
+  const [priceAccepted, setPriceAccepted] = useState(customer.priceAccepted || false);
+  const [showButtons, setShowButtons] = useState(false);
 
   const saveChanges = () => {
+    console.log(priceAccepted)
     axios.patch(`${backend}/api/customer/${customer._id}`, {
       parts: markedParts,
-      partPrices: customPartPrice
+      partPrices: customPartPrice,
+      priceAccepted: priceAccepted
     })
       .then(res => {
         console.log(res.data);
@@ -93,12 +97,12 @@ export default function Customer(props) {
 
 
     window.open(`sms:${parseInt(customer.phone)}?body=${message}`)
-    
-        props.setAlert({
-          show: true,
-          message: `prisförslag skickad`,
-          type: "task"
-        })
+
+    props.setAlert({
+      show: true,
+      message: `prisförslag skickad`,
+      type: "task"
+    })
   }
 
   const sendDoneSMS = (lock) => {
@@ -110,12 +114,12 @@ export default function Customer(props) {
 
 
     window.open(`sms:${parseInt(customer.phone)}?body=${message}`)
-    
-        props.setAlert({
-          show: true,
-          message: `Klart besked skickad`,
-          type: "task"
-        })
+
+    props.setAlert({
+      show: true,
+      message: `Klart besked skickad`,
+      type: "task"
+    })
   }
 
 
@@ -195,14 +199,24 @@ export default function Customer(props) {
               </div>
             )}
           </div>
-          <div className="buttons">
-            <button className='primary-button' onClick={archiveCustomer}>Arkivera</button>
-            <button className='primary-button' onClick={saveChanges}>Spara</button>
-            <button className='primary-button' onClick={() => { setOpenSmsModal(true) }}>SMS</button>
-            {openSmsModal &&
-              <SmsModal customer={customer} sendPriceSMS={sendPriceSMS} sendDoneSMS={sendDoneSMS} closeModal={() => { setOpenSmsModal(false) }} />
-            }
+          <div className="price-accept">
+            <h3>Pris godkänd</h3>
+            <input type="checkbox" name="priceAccepted" id="" checked={priceAccepted} onChange={() => setPriceAccepted(!priceAccepted)} />
           </div>
+
+          <div className="buttons">
+            <button className='primary-button' onClick={saveChanges}>Spara</button>
+            <span className='buttons-menu' onClick={() => setShowButtons(!showButtons)}>{showButtons ? <ion-icon name="close"></ion-icon> : <ion-icon name="ellipsis-horizontal"></ion-icon>}</span>
+          </div>
+          {showButtons && (
+            <div className="buttons-dropdown">
+              <button className='primary-button' onClick={archiveCustomer}>Arkivera</button>
+              <button className='primary-button' onClick={() => { setOpenSmsModal(true) }}>SMS</button>
+              {openSmsModal &&
+                <SmsModal customer={customer} sendPriceSMS={sendPriceSMS} sendDoneSMS={sendDoneSMS} closeModal={() => { setOpenSmsModal(false) }} />
+              }
+            </div>
+          )}
         </div>
       )}
     </div>

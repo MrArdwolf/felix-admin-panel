@@ -36,6 +36,10 @@ const customerSchema = new mongoose.Schema({
     bikeNumber: {
         type: Number,
         required: true
+    },
+    priceAccepted: {
+        type: Boolean,
+        default: false
     }
 });
 
