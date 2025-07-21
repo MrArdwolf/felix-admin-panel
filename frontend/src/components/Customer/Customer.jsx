@@ -11,6 +11,7 @@ export default function Customer(props) {
   const [markedParts, setMarkedParts] = useState(customer.parts || []);
   const [customPartPrice, setCustomPartPrice] = useState(customer.partPrices || []);
   const [openParts, setOpenParts] = useState(false);
+  const [showAllParts, setShowAllParts] = useState(false);
   const [openSmsModal, setOpenSmsModal] = useState(false);
   const [priceAccepted, setPriceAccepted] = useState(customer.priceAccepted || false);
   const [showButtons, setShowButtons] = useState(false);
@@ -155,6 +156,7 @@ export default function Customer(props) {
               <p>{customer.bikeNumber}</p>
             </div>
 
+            { !customer.partToFix && customer.partToFix.length > 0 && (
             <div className="info-line">
               <h4>Saker att kolla på</h4>
               {
@@ -172,12 +174,16 @@ export default function Customer(props) {
                 })
               }
             </div>
+            )}
 
           </div>
           <div className="parts-container">
             <div className="parts-container-top">
               <h3>Delar</h3>
-              <span onClick={() => { setOpenParts(!openParts) }} className={`${openParts ? "open" : ""}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
+              <div className="right">
+                <span onClick={() => { setShowAllParts(!showAllParts) }} >{showAllParts ? <ion-icon name="close-outline"></ion-icon> : <ion-icon name="pencil-outline"></ion-icon>}</span>
+                <span onClick={() => { setOpenParts(!openParts) }} className={`${openParts ? "open" : ""}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
+              </div>
             </div>
             {openParts && (
               <div className="parts-list">
@@ -192,6 +198,7 @@ export default function Customer(props) {
                         setMarkedParts={setMarkedParts}
                         customPartPrice={customPartPrice}
                         setCustomPartPrice={setCustomPartPrice}
+                        showAllParts={showAllParts}
                       />
                     )
                   })
