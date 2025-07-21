@@ -51,12 +51,14 @@ export default function Part(props) {
 
   const markPart = (e) => {
     e.preventDefault();
-    if (marked) {
-      props.setMarkedParts(props.markedParts.filter(id => id !== part._id));
-    } else {
-      props.setMarkedParts([...props.markedParts, part._id]);
+    if (props.showAllParts) {
+      if (marked) {
+        props.setMarkedParts(props.markedParts.filter(id => id !== part._id));
+      } else {
+        props.setMarkedParts([...props.markedParts, part._id]);
+      }
+      setMarked(!marked);
     }
-    setMarked(!marked);
   }
 
   const customPrice = (price) => {
@@ -66,7 +68,19 @@ export default function Part(props) {
     console.log(price);
   }
 
+  const checkMarkedChildren = () => {
+    if (children.length >= 1) {
+      return children.some(child => props.markedParts.includes(child._id));
+    }
+    return false;
+  }
+
+
   if (part.children && part.children.length >= 1) {
+    const markedChildren = checkMarkedChildren();
+    if (!props.showAllParts && !markedChildren) {
+      return null;
+    }
 
     return (
       <div className={"part"}>
@@ -87,6 +101,7 @@ export default function Part(props) {
               setMarkedParts={props.setMarkedParts}
               customPartPrice={props.customPartPrice}
               setCustomPartPrice={props.setCustomPartPrice}
+              showAllParts={props.showAllParts}
               className="child"
             />
           ))}
@@ -94,6 +109,10 @@ export default function Part(props) {
 
       </div >
     )
+  }
+
+  if (!props.showAllParts && !marked) {
+    return;
   }
 
   return (

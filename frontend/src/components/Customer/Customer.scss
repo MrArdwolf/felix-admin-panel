@@ -75,6 +75,11 @@
       .parts-container-top {
         display: flex;
         justify-content: space-between;
+
+        .right {
+          display: flex;
+          gap: 8px;
+        }
       }
 
       .parts-list {
