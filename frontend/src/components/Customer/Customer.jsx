@@ -187,6 +187,9 @@ export default function Customer(props) {
             </div>
             {openParts && (
               <div className="parts-list">
+                { !showAllParts && !markedParts || !showAllParts && markedParts.length === 0 && (
+                  <p>Inga delar valda</p>
+                )}
                 {
                   props.parts.filter(part => !part.parent).map(part => {
                     return (
@@ -194,7 +197,8 @@ export default function Customer(props) {
                         key={part._id}
                         part={part}
                         authenticate={props.authenticate}
-                        page={"customer"} markedParts={markedParts}
+                        page={"customer"}
+                        markedParts={markedParts}
                         setMarkedParts={setMarkedParts}
                         customPartPrice={customPartPrice}
                         setCustomPartPrice={setCustomPartPrice}
