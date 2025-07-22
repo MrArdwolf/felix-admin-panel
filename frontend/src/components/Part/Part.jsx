@@ -17,6 +17,29 @@ export default function Part(props) {
 
   const [openPart, setOpenPart] = useState(true);
 
+  const [formConnections, setFormConnections] = useState(part.formConnections || {
+    puncturedFront: false,
+    puncturedBack: false,
+    changeTireFront: false,
+    changeTireBack: false,
+    changeGearCableFront: false,
+    changeGearCableBack: false,
+    changeBrakeCableFront: false,
+    changeBrakeCableBack: false,
+    adjustGearCableFront: false,
+    adjustGearCableBack: false,
+    adjustBrakeCableFront: false,
+    adjustBrakeCableBack: false,
+    adjustTireFront: false,
+    adjustTireBack: false,
+    changeSpokesFront: false,
+    changeSpokesBack: false,
+    changeChain: false,
+    lubricate: false,
+    pump: false,
+    wash: false,
+    });
+
   useEffect(() => {
     update();
   }, [])
@@ -60,7 +83,7 @@ export default function Part(props) {
           message: `${partName} tillagd`,
           type: "success"
         })
-        
+
         if (!openEdit) {
           setOpenEdit(true);
           openDropDown(setOpenPart, openPart);
@@ -79,7 +102,8 @@ export default function Part(props) {
   const editPart = (e) => {
     axios.patch(`${backend}/api/part/${part._id}`, {
       name: editName,
-      price: editPrice
+      price: editPrice,
+      formConnections: formConnections
     })
       .then(res => {
         console.log(res.data);
@@ -88,7 +112,7 @@ export default function Part(props) {
           message: `${editName} ändrad`,
           type: "task"
         })
-        setPart({ ...part, name: editName, price: editPrice });
+        setPart({ ...part, name: editName, price: editPrice, formConnections: formConnections });
         if (props.updateParent) {
           props.updateParent();
         }
@@ -209,28 +233,114 @@ export default function Part(props) {
 
       </div>
       {openEdit ? null :
-      part.parent ? null :
-        <div className="edit-part-form">
-          <div className="add-top">
-            <h3>Lägg till</h3>
-            <span onClick={() => { openDropDown(setAddButton, addButton) }}>{addButton ? <ion-icon name="add-outline"></ion-icon> : <ion-icon name="close-outline"></ion-icon>}</span>
+        <div className="form-connection">
+          <div className="input-row">
+            <label htmlFor="puncturedFront">Punktering fram</label>
+            <input type="checkbox" name="puncturedFront" id="puncturedFront" onChange={(e) => { setFormConnections({ ...formConnections, puncturedFront: e.target.checked }) }} checked={formConnections.puncturedFront} />
           </div>
-          {addButton ? null :
-            <div className="add-part-form">
-              <div className="input-row">
-                <label htmlFor="name">Namn</label>
-                <input type="text" name="name" id="name" placeholder='Namn' value={partName} onChange={(e) => { setPartName(e.target.value) }} />
-              </div>
-              <div className="input-row">
-                <label htmlFor="price">Pris</label>
-                <input type="text" name="price" id="price" placeholder='Pris' value={partPrice} onChange={(e) => { setPartPrice(e.target.value) }} />
-              </div>
-              <div className="button-row">
-                <span onClick={(e) => { addPart(e) }}><ion-icon name="add-outline"></ion-icon></span>
-              </div>
-            </div>
-          }
+          <div className="input-row">
+            <label htmlFor="puncturedBack">Punktering bak</label>
+            <input type="checkbox" name="puncturedBack" id="puncturedBack" onChange={(e) => { setFormConnections({ ...formConnections, puncturedBack: e.target.checked }) }} checked={formConnections.puncturedBack} />
+          </div>
+          <div className="input-row">
+            <label htmlFor="changeTireFront">Byte däck fram</label>
+            <input type="checkbox" name="changeTireFront" id="changeTireFront" onChange={(e) => { setFormConnections({ ...formConnections, changeTireFront: e.target.checked }) }} checked={formConnections.changeTireFront} />
+          </div>
+          <div className="input-row">
+            <label htmlFor="changeTireBack">Byte däck bak</label>
+            <input type="checkbox" name="changeTireBack" id="changeTireBack" onChange={(e) => { setFormConnections({ ...formConnections, changeTireBack: e.target.checked }) }} checked={formConnections.changeTireBack} />
+          </div>
+          <div className="input-row">
+            <label htmlFor="changeGearCableFront">Byte växelvajer fram</label>
+            <input type="checkbox" name="changeGearCableFront" id="changeGearCableFront" onChange={(e) => { setFormConnections({ ...formConnections, changeGearCableFront: e.target.checked }) }} checked={formConnections.changeGearCableFront} />
+          </div>
+          <div className="input-row">
+            <label htmlFor="changeGearCableBack">Byte växelvajer bak</label>
+            <input type="checkbox" name="changeGearCableBack" id="changeGearCableBack" onChange={(e) => { setFormConnections({ ...formConnections, changeGearCableBack: e.target.checked }) }} checked={formConnections.changeGearCableBack} />
+          </div>
+          <div className="input-row">
+            <label htmlFor="changeBrakeCableFront">Byte bromskabel fram</label>
+            <input type="checkbox" name="changeBrakeCableFront" id="changeBrakeCableFront" onChange={(e) => { setFormConnections({ ...formConnections, changeBrakeCableFront: e.target.checked }) }} checked={formConnections.changeBrakeCableFront} />
+          </div>
+          <div className="input-row">
+            <label htmlFor="changeBrakeCableBack">Byte bromskabel bak</label>
+            <input type="checkbox" name="changeBrakeCableBack" id="changeBrakeCableBack" onChange={(e) => { setFormConnections({ ...formConnections, changeBrakeCableBack: e.target.checked }) }} checked={formConnections.changeBrakeCableBack} />
+          </div>
+          <div className="input-row">
+            <label htmlFor="adjustGearCableFront">Justera växelvajer fram</label>
+            <input type="checkbox" name="adjustGearCableFront" id="adjustGearCableFront" onChange={(e) => { setFormConnections({ ...formConnections, adjustGearCableFront: e.target.checked }) }} checked={formConnections.adjustGearCableFront} />
+          </div>
+          <div className="input-row">
+            <label htmlFor="adjustGearCableBack">Justera växelvajer bak</label>
+            <input type="checkbox" name="adjustGearCableBack" id="adjustGearCableBack" onChange={(e) => { setFormConnections({ ...formConnections, adjustGearCableBack: e.target.checked }) }} checked={formConnections.adjustGearCableBack} />
+          </div>
+          <div className="input-row">
+            <label htmlFor="adjustBrakeCableFront">Justera bromskabel fram</label>
+            <input type="checkbox" name="adjustBrakeCableFront" id="adjustBrakeCableFront" onChange={(e) => { setFormConnections({ ...formConnections, adjustBrakeCableFront: e.target.checked }) }} checked={formConnections.adjustBrakeCableFront} />
+          </div>
+          <div className="input-row">
+            <label htmlFor="adjustBrakeCableBack">Justera bromskabel bak</label>
+            <input type="checkbox" name="adjustBrakeCableBack" id="adjustBrakeCableBack" onChange={(e) => { setFormConnections({ ...formConnections, adjustBrakeCableBack: e.target.checked }) }} checked={formConnections.adjustBrakeCableBack} />
+          </div>
+          <div className="input-row">
+            <label htmlFor="adjustTireFront">Rikta däck fram</label>
+            <input type="checkbox" name="adjustTireFront" id="adjustTireFront" onChange={(e) => { setFormConnections({ ...formConnections, adjustTireFront: e.target.checked }) }} checked={formConnections.adjustTireFront} />
+          </div>
+          <div className="input-row">
+            <label htmlFor="adjustTireBack">Rikta däck bak</label>
+            <input type="checkbox" name="adjustTireBack" id="adjustTireBack" onChange={(e) => { setFormConnections({ ...formConnections, adjustTireBack: e.target.checked }) }} checked={formConnections.adjustTireBack} />
+          </div>
+          <div className="input-row">
+            <label htmlFor="changeSpokesFront">Byte ekrar fram</label>
+            <input type="checkbox" name="changeSpokesFront" id="changeSpokesFront" onChange={(e) => { setFormConnections({ ...formConnections, changeSpokesFront: e.target.checked }) }} checked={formConnections.changeSpokesFront} />
+          </div>
+          <div className="input-row">
+            <label htmlFor="changeSpokesBack">Byte ekrar bak</label>
+            <input type="checkbox" name="changeSpokesBack" id="changeSpokesBack" onChange={(e) => { setFormConnections({ ...formConnections, changeSpokesBack: e.target.checked }) }} checked={formConnections.changeSpokesBack} />
+          </div>
+          <div className="input-row">
+            <label htmlFor="changeChain">Byte kedja</label>
+            <input type="checkbox" name="changeChain" id="changeChain" onChange={(e) => { setFormConnections({ ...formConnections, changeChain: e.target.checked }) }} checked={formConnections.changeChain} />
+          </div>
+          <div className="input-row">
+            <label htmlFor="lubricate">Smörja</label>
+            <input type="checkbox" name="lubricate" id="lubricate" onChange={(e) => { setFormConnections({ ...formConnections, lubricate: e.target.checked }) }} checked={formConnections.lubricate} />
+          </div>
+          <div className="input-row">
+            <label htmlFor="pump">Pumpa</label>
+            <input type="checkbox" name="pump" id="pump" onChange={(e) => { setFormConnections({ ...formConnections, pump: e.target.checked }) }} checked={formConnections.pump} />
+          </div>
+          <div className="input-row">
+            <label htmlFor="wash">Tvätta</label>
+            <input type="checkbox" name="wash" id="wash" onChange={(e) => { setFormConnections({ ...formConnections, wash: e.target.checked }) }} checked={formConnections.wash} />
+          </div>
         </div>
+      }
+
+
+      {openEdit ? null :
+        part.parent ? null :
+          <div className="edit-part-form">
+            <div className="add-top">
+              <h3>Lägg till</h3>
+              <span onClick={() => { openDropDown(setAddButton, addButton) }}>{addButton ? <ion-icon name="add-outline"></ion-icon> : <ion-icon name="close-outline"></ion-icon>}</span>
+            </div>
+            {addButton ? null :
+              <div className="add-part-form">
+                <div className="input-row">
+                  <label htmlFor="name">Namn</label>
+                  <input type="text" name="name" id="name" placeholder='Namn' value={partName} onChange={(e) => { setPartName(e.target.value) }} />
+                </div>
+                <div className="input-row">
+                  <label htmlFor="price">Pris</label>
+                  <input type="text" name="price" id="price" placeholder='Pris' value={partPrice} onChange={(e) => { setPartPrice(e.target.value) }} />
+                </div>
+                <div className="button-row">
+                  <span onClick={(e) => { addPart(e) }}><ion-icon name="add-outline"></ion-icon></span>
+                </div>
+              </div>
+            }
+          </div>
       }
     </div>
   )

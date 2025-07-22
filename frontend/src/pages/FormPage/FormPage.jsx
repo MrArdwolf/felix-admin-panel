@@ -12,7 +12,32 @@ export default function FormPage(props) {
 
 
   const sendFormData = () => {
-    const customer = {
+
+    const FORM_FIELD_MAPPINGS = {
+      puncturedFront: { category: 'partToFix', label: 'Punktering fram' },
+      puncturedBack: { category: 'partToFix', label: 'Punktering bak' },
+      changeTireFront: { category: 'partToFix', label: 'Byte däck fram' },
+      changeTireBack: { category: 'partToFix', label: 'Byte däck bak' },
+      changeGearCableFront: { category: 'partToFix', label: 'Byte växelvajer fram' },
+      changeGearCableBack: { category: 'partToFix', label: 'Byte växelvajer bak' },
+      changeBrakeCableFront: { category: 'partToFix', label: 'Byte bromsvajer fram' },
+      changeBrakeCableBack: { category: 'partToFix', label: 'Byte bromsvajer bak' },
+      adjustGearCableFront: { category: 'partToFix', label: 'Justera växel fram' },
+      adjustGearCableBack: { category: 'partToFix', label: 'Justera växel bak' },
+      adjustBrakeCableFront: { category: 'partToFix', label: 'Justera broms fram' },
+      adjustBrakeCableBack: { category: 'partToFix', label: 'Justera broms bak' },
+      adjustTireFront: { category: 'partToFix', label: 'Rikta hjul fram' },
+      adjustTireBack: { category: 'partToFix', label: 'Rikta hjul bak' },
+      changeSpokesFront: { category: 'partToFix', label: 'Byta eker fram' },
+      changeSpokesBack: { category: 'partToFix', label: 'Byta eker bak' },
+      changeChain: { category: 'alsoDo', label: 'Byte kedja' },
+      lubricate: { category: 'alsoDo', label: 'Smörja' },
+      pump: { category: 'alsoDo', label: 'Pumpa' },
+      wash: { category: 'alsoDo', label: 'Tvätta' },
+    };
+
+    const mapFormDataToCustomer = (formData) => {
+      const customer = {
       name: formData.form1Data.name,
       phone: formData.form1Data.phone,
       email: formData.form1Data.email,
@@ -20,89 +45,39 @@ export default function FormPage(props) {
       partToFix: [],
       alsoDo: [],
       comments: formData.form3Data.comment,
-    }
+      };
 
-    if (formData.form2Data) {
-      if (formData.form2Data.puncturedFront) {
-        customer.partToFix.push('Punktering fram')
-      }
-      if (formData.form2Data.puncturedBack) {
-        customer.partToFix.push('Punktering bak')
-      }
-      if (formData.form2Data.changeTireFront) {
-        customer.partToFix.push('Byte däck fram')
-      }
-      if (formData.form2Data.changeTireBack) {
-        customer.partToFix.push('Byte däck bak')
-      }
-      if (formData.form2Data.changeGearCableFront) {
-        customer.partToFix.push('Byte växelvajer fram')
-      }
-      if (formData.form2Data.changeGearCableBack) {
-        customer.partToFix.push('Byte växelvajer bak')
-      }
-      if (formData.form2Data.changeBrakeCableFront) {
-        customer.partToFix.push('Byte bromsvajer fram')
-      }
-      if (formData.form2Data.changeBrakeCableBack) {
-        customer.partToFix.push('Byte bromsvajer bak')
-      }
-      if (formData.form2Data.adjustGearCableFront) {
-        customer.partToFix.push('Justera växel fram')
-      }
-      if (formData.form2Data.adjustGearCableBack) {
-        customer.partToFix.push('Justera växel bak')
-      }
-      if (formData.form2Data.adjustBrakeCableFront) {
-        customer.partToFix.push('Justera broms fram')
-      }
-      if (formData.form2Data.adjustBrakeCableBack) {
-        customer.partToFix.push('Justera broms bak')
-      }
-      if (formData.form2Data.adjustTireFront) {
-        customer.partToFix.push('Rikta hjul fram')
-      }
-      if (formData.form2Data.adjustTireBack) {
-        customer.partToFix.push('Rikta hjul bak')
-      }
-      if (formData.form2Data.changeSpokesFront) {
-        customer.partToFix.push('Byta eker fram')
-      }
-      if (formData.form2Data.changeSpokesBack) {
-        customer.partToFix.push('Byta eker bak')
-      }
-      if (formData.form2Data.changeChain) {
-        customer.alsoDo.push('Byte kedja')
-      }
-      if (formData.form2Data.lubricate) {
-        customer.alsoDo.push('Smörja')
-      }
-      if (formData.form2Data.pump) {
-        customer.alsoDo.push('Pumpa')
-      }
-      if (formData.form2Data.wash) {
-        customer.alsoDo.push('Tvätta')
-      }
-    }
+      if (formData.form2Data) {
 
+        Object.entries(formData.form2Data).forEach(([key, value]) => {
+          if (value && FORM_FIELD_MAPPINGS[key]) {
+            const { category, label } = FORM_FIELD_MAPPINGS[key];
+            customer[category].push(label);
+          }
+        });
+      }
 
+      return customer;
+    };
+
+    const customer = mapFormDataToCustomer(formData);
     console.log(customer)
     axios.post(`${backend}/api/customer/add`, customer)
       .then(res => {
         console.log(res.data)
-          props.setAlert({
-            show: true,
-            message: `Formuläret har skickats in!`,
-            type: "success"
-          })
+        props.setAlert({
+          show: true,
+          message: `Formuläret har skickats in!`,
+          type: "success"
+        })
       })
       .catch(err => {
         console.log(err)
-          props.setAlert({
-            show: true,
-            message: `Ett fel uppstod!`,
-            type: "error"
-          })
+        props.setAlert({
+          show: true,
+          message: `Ett fel uppstod!`,
+          type: "error"
+        })
       })
   }
 

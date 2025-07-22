@@ -25,6 +25,9 @@ const partSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: "User"
     },
+    formConnections: {
+        type: Object,
+    }
 });
 
 const PartModel = new mongoose.model("Part", partSchema);
