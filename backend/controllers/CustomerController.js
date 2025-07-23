@@ -1,4 +1,5 @@
 import CustomerModel from "../models/CustomerModel.js";
+import FormConnectionModel from "../models/FormConnectionModel.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
@@ -44,7 +45,52 @@ async function addCustomer(req, res) {
             throw new Error("Missing data")
         }
 
+        if (partToFix && !Array.isArray(partToFix)) {
+            res.statusCode = 400;
+            throw new Error("partToFix must be an array");
+        }
+        if (alsoDo && !Array.isArray(alsoDo)) {
+            res.statusCode = 400;
+            throw new Error("alsoDo must be an array");
+        }
 
+        const parts = [];
+
+        if (partToFix && partToFix.length > 0) {
+            const partIdArrays = await Promise.all(partToFix.map(async part => {
+                console.log(part);
+                if (typeof part !== 'string') {
+                    res.statusCode = 400;
+                    throw new Error("partToFix must be an array of strings");
+                }
+                const addPart = await FormConnectionModel.findOne({ label: part });
+                if (!addPart) {
+                    res.statusCode = 400;
+                    throw new Error(`Part ${part} does not exist`);
+                }
+                console.log(addPart);
+                return addPart.part; // array of part IDs
+            }));
+            partIdArrays.forEach(arr => arr.forEach(partId => parts.push(partId)));
+        }
+
+        if (alsoDo && alsoDo.length > 0) {
+            const partIdArrays = await Promise.all(alsoDo.map(async part => {
+                console.log(part);
+                if (typeof part !== 'string') {
+                    res.statusCode = 400;
+                    throw new Error("alsoDo must be an array of strings");
+                }
+                const addPart = await FormConnectionModel.findOne({ label: part });
+                if (!addPart) {
+                    res.statusCode = 400;
+                    throw new Error(`Part ${part} does not exist`);
+                }
+                console.log(addPart);
+                return addPart.part; // array of part IDs
+            }));
+            partIdArrays.forEach(arr => arr.forEach(partId => parts.push(partId)));
+        }
 
         // now create the Customer;
         const newCustomer = await CustomerModel.create({
@@ -56,6 +102,7 @@ async function addCustomer(req, res) {
             alsoDo,
             comments,
             bikeNumber: bikeNumbers.shift(),
+            parts: parts,
         });
 
         sendMail({

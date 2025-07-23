@@ -17,51 +17,47 @@ export default function Part(props) {
 
   const [openPart, setOpenPart] = useState(true);
 
-  const [formConnections, setFormConnections] = useState( {
-    puncturedFront: false,
-    puncturedBack: false,
-    changeTireFront: false,
-    changeTireBack: false,
-    changeGearCableFront: false,
-    changeGearCableBack: false,
-    changeBrakeCableFront: false,
-    changeBrakeCableBack: false,
-    adjustGearCableFront: false,
-    adjustGearCableBack: false,
-    adjustBrakeCableFront: false,
-    adjustBrakeCableBack: false,
-    adjustTireFront: false,
-    adjustTireBack: false,
-    changeSpokesFront: false,
-    changeSpokesBack: false,
-    changeChain: false,
-    lubricate: false,
-    pump: false,
-    wash: false,
-    });
+  const FORM_CONNECTION_MAPPINGS = {
+    puncturedFront: 'Punktering fram',
+    puncturedBack: 'Punktering bak',
+    changeTireFront: 'Byte däck fram',
+    changeTireBack: 'Byte däck bak',
+    changeGearCableFront: 'Byte växelvajer fram',
+    changeGearCableBack: 'Byte växelvajer bak',
+    changeBrakeCableFront: 'Byte bromsvajer fram',
+    changeBrakeCableBack: 'Byte bromsvajer bak',
+    adjustGearCableFront: 'Justera växel fram',
+    adjustGearCableBack: 'Justera växel bak',
+    adjustBrakeCableFront: 'Justera broms fram',
+    adjustBrakeCableBack: 'Justera broms bak',
+    adjustTireFront: 'Rikta hjul fram',
+    adjustTireBack: 'Rikta hjul bak',
+    changeSpokesFront: 'Byta eker fram',
+    changeSpokesBack: 'Byta eker bak',
+    changeChain: 'Byte kedja',
+    lubricate: 'Smörja',
+    pump: 'Pumpa',
+    wash: 'Tvätta',
+  };
 
-    const FORM_CONNECTION_MAPPINGS = {
-      puncturedFront: 'Punktering fram',
-      puncturedBack: 'Punktering bak',
-      changeTireFront: 'Byte däck fram',
-      changeTireBack: 'Byte däck bak',
-      changeGearCableFront: 'Byte växelvajer fram',
-      changeGearCableBack: 'Byte växelvajer bak',
-      changeBrakeCableFront: 'Byte bromsvajer fram',
-      changeBrakeCableBack: 'Byte bromsvajer bak',
-      adjustGearCableFront: 'Justera växel fram',
-      adjustGearCableBack: 'Justera växel bak',
-      adjustBrakeCableFront: 'Justera broms fram',
-      adjustBrakeCableBack: 'Justera broms bak',
-      adjustTireFront: 'Rikta hjul fram',
-      adjustTireBack: 'Rikta hjul bak',
-      changeSpokesFront: 'Byta eker fram',
-      changeSpokesBack: 'Byta eker bak',
-      changeChain: 'Byte kedja',
-      lubricate: 'Smörja',
-      pump: 'Pumpa',
-      wash: 'Tvätta',
-    };
+  const getInitialFormConnections = () => {
+    const initial = {};
+    Object.keys(FORM_CONNECTION_MAPPINGS).forEach(key => {
+      initial[key] = false;
+    });
+    if (part.formConnections && Array.isArray(part.formConnections)) {
+      part.formConnections.forEach(label => {
+        const foundKey = Object.keys(FORM_CONNECTION_MAPPINGS).find(key => FORM_CONNECTION_MAPPINGS[key] === label);
+        if (foundKey) {
+          initial[foundKey] = true;
+        }
+      });
+    }
+    return initial;
+  };
+
+  const [formConnections, setFormConnections] = useState(getInitialFormConnections());
+
 
   useEffect(() => {
     update();
