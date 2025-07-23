@@ -48,6 +48,7 @@ export default function FormPage(props) {
       };
 
       if (formData.form2Data) {
+        console.log(formData.form2Data)
 
         Object.entries(formData.form2Data).forEach(([key, value]) => {
           if (value && FORM_FIELD_MAPPINGS[key]) {

@@ -17,7 +17,7 @@ export default function Part(props) {
 
   const [openPart, setOpenPart] = useState(true);
 
-  const [formConnections, setFormConnections] = useState(part.formConnections || {
+  const [formConnections, setFormConnections] = useState( {
     puncturedFront: false,
     puncturedBack: false,
     changeTireFront: false,
@@ -39,6 +39,29 @@ export default function Part(props) {
     pump: false,
     wash: false,
     });
+
+    const FORM_CONNECTION_MAPPINGS = {
+      puncturedFront: 'Punktering fram',
+      puncturedBack: 'Punktering bak',
+      changeTireFront: 'Byte däck fram',
+      changeTireBack: 'Byte däck bak',
+      changeGearCableFront: 'Byte växelvajer fram',
+      changeGearCableBack: 'Byte växelvajer bak',
+      changeBrakeCableFront: 'Byte bromsvajer fram',
+      changeBrakeCableBack: 'Byte bromsvajer bak',
+      adjustGearCableFront: 'Justera växel fram',
+      adjustGearCableBack: 'Justera växel bak',
+      adjustBrakeCableFront: 'Justera broms fram',
+      adjustBrakeCableBack: 'Justera broms bak',
+      adjustTireFront: 'Rikta hjul fram',
+      adjustTireBack: 'Rikta hjul bak',
+      changeSpokesFront: 'Byta eker fram',
+      changeSpokesBack: 'Byta eker bak',
+      changeChain: 'Byte kedja',
+      lubricate: 'Smörja',
+      pump: 'Pumpa',
+      wash: 'Tvätta',
+    };
 
   useEffect(() => {
     update();
@@ -100,11 +123,29 @@ export default function Part(props) {
   }
 
   const editPart = (e) => {
-    axios.patch(`${backend}/api/part/${part._id}`, {
-      name: editName,
-      price: editPrice,
-      formConnections: formConnections
-    })
+    const mapDataToPart = (formConnections) => {
+      const part = {
+        name: editName,
+        price: editPrice,
+        formConnections: [],
+      };
+
+      if (formConnections) {
+        console.log(formConnections)
+
+        Object.entries(formConnections).forEach(([key, value]) => {
+          if (value && FORM_CONNECTION_MAPPINGS[key]) {
+            const label = FORM_CONNECTION_MAPPINGS[key];
+            part.formConnections.push(label);
+          }
+        });
+      }
+
+      console.log(part);
+      return part;
+    };
+    const formatedPart = mapDataToPart(formConnections);
+    axios.patch(`${backend}/api/part/${part._id}`, formatedPart)
       .then(res => {
         console.log(res.data);
         props.setAlert({

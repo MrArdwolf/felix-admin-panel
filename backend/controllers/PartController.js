@@ -1,6 +1,6 @@
 import PartModel from "../models/PartModel.js";
 import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
+import FormConnectionModel from "../models/FormConnectionModel.js";
 
 
 
@@ -23,7 +23,7 @@ async function addPart(req, res) {
                 throw new Error("Parent not found")
             }
         }
-        
+
         const userToken = req.cookies.authToken;
         let user = null;
         if (!userToken) {
@@ -61,6 +61,7 @@ async function addPart(req, res) {
             part: newPart,
         });
     } catch (error) {
+        res.statusCode = 400;
         res.json({ message: "There was an error", error: error.message });
     }
 }
@@ -84,7 +85,8 @@ async function getParts(req, res) {
 
         const part = await PartModel.find();
         res.json(part);
-    } catch(error) {
+    } catch (error) {
+        res.statusCode = 400;
         res.json({ message: "There was an error", error: error.message });
     }
 }
@@ -108,7 +110,8 @@ async function getPartsByParent(req, res) {
 
         const part = await PartModel.find({ parent: req.params.id }).populate("parent");
         res.json(part);
-    } catch(error) {
+    } catch (error) {
+        res.statusCode = 400;
         res.json({ message: "There was an error", error: error.message });
     }
 }
@@ -120,7 +123,7 @@ async function updatePart(req, res) {
             res.statusCode = 404;
             throw new Error("Part not found");
         }
-        
+
         const userToken = req.cookies.authToken;
         let user = null;
         if (!userToken) {
@@ -143,9 +146,33 @@ async function updatePart(req, res) {
         }
         body.changedLastBy = user;
 
+        function validateFormConnections(formConnections) {
+            formConnections.forEach(connection => {
+                FormConnectionModel.findOne({ label: connection })
+                    .then(existingConnection => {
+                        if (!existingConnection) {
+                            return FormConnectionModel.create({
+                                label: connection,
+                                part: req.params.id,
+                            });
+                        }
+                    })
+                    .catch(err => {
+                        throw new Error(`Error checking form connection: ${err.message}`);
+                    });
+            });
+        }
+
+        if (body.formConnections) {
+            validateFormConnections(body.formConnections);
+
+
+        }
+
         const updatedPart = await PartModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
         res.json({ message: "Part has been updated", data: updatedPart });
     } catch (error) {
+        res.statusCode = 400;
         res.json({ message: "There was an error", error: error.message });
     }
 }
@@ -186,6 +213,7 @@ async function deletePart(req, res) {
         await PartModel.findByIdAndDelete(req.params.id);
         res.json({ message: "Part has been deleted" });
     } catch (error) {
+        res.statusCode = 400;
         res.json({ message: "There was an error", error: error.message });
     }
 }
