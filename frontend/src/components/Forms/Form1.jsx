@@ -11,6 +11,7 @@ export default function Form(props) {
     email: '',
     description: '',
     detailsOrNot: '',
+    servicePackage: 'noServicePackage'
   });
   const [showAlert, setShowAlert] = useState(false);
 
@@ -85,6 +86,52 @@ export default function Form(props) {
               checked={form1Data.detailsOrNot === 'details'}
               onChange={handleChange} />
             <label htmlFor="details"><span>Jag vill ange i mer detalj</span></label>
+          </div>
+        </div>
+        <div className="input-row radio">
+          <label>Servicepaket</label>
+          <div className="inner-row">
+            <input
+              type="radio"
+              id='smallServicePackage'
+              name='servicePackage'
+              value={"smallServicePackage"}
+              checked={form1Data.servicePackage === 'smallServicePackage'}
+              onChange={handleChange} />
+            <label htmlFor="smallServicePackage"><span>Liten service</span></label>
+          </div>
+          <div className="inner-row">
+            <input
+              required
+              type="radio"
+              id='mediumServicePackage'
+              name='servicePackage'
+              value={"mediumServicePackage"}
+              checked={form1Data.servicePackage === 'mediumServicePackage'}
+              onChange={handleChange} />
+            <label htmlFor="mediumServicePackage"><span>Mellan service</span></label>
+          </div>
+          <div className="inner-row">
+            <input
+              required
+              type="radio"
+              id='largeServicePackage'
+              name='servicePackage'
+              value={"largeServicePackage"}
+              checked={form1Data.servicePackage === 'largeServicePackage'}
+              onChange={handleChange} />
+            <label htmlFor="largeServicePackage"><span>Stor service</span></label>
+          </div>
+          <div className="inner-row">
+            <input
+              required
+              type="radio"
+              id='noServicePackage'
+              name='servicePackage'
+              value={"noServicePackage"}
+              checked={form1Data.servicePackage === 'noServicePackage'}
+              onChange={handleChange} />
+            <label htmlFor="noServicePackage"><span>Inget servicepaket</span></label>
           </div>
         </div>
       </div>

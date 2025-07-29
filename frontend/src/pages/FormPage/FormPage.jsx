@@ -45,6 +45,7 @@ export default function FormPage(props) {
       partToFix: [],
       alsoDo: [],
       comments: formData.form3Data.comment,
+      servicePackage: formData.form1Data.servicePackage,
       };
 
       if (formData.form2Data) {

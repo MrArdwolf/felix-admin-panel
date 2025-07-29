@@ -39,7 +39,7 @@ async function addCustomer(req, res) {
     try {
         const customer = req.body;
 
-        const { name, email, phone, bikeDescription, partToFix, alsoDo, comments } = customer;
+        const { name, email, phone, bikeDescription, partToFix, alsoDo, comments, servicePackage } = customer;
         if (!name || !email || !phone || !bikeDescription) {
             res.statusCode = 400;
             throw new Error("Missing data")
@@ -90,6 +90,16 @@ async function addCustomer(req, res) {
                 return addPart.part; // array of part IDs
             }));
             partIdArrays.forEach(arr => arr.forEach(partId => parts.push(partId)));
+        }
+
+        if (servicePackage) {
+            const addPart = await FormConnectionModel.findOne({ label: servicePackage });
+                if (!addPart) {
+                    res.statusCode = 400;
+                    throw new Error(`Part ${servicePackage} does not exist`);
+                }
+                console.log(addPart);
+                parts.push(addPart.part); // add service package part ID
         }
 
         // now create the Customer;

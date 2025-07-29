@@ -14,6 +14,7 @@ export default function Part(props) {
   const [openEdit, setOpenEdit] = useState(true);
   const [editName, setEditName] = useState(part.name);
   const [editPrice, setEditPrice] = useState(part.price);
+  const [openFormConnections, setOpenFormConnections] = useState(true);
 
   const [openPart, setOpenPart] = useState(true);
 
@@ -38,6 +39,10 @@ export default function Part(props) {
     lubricate: 'Smörja',
     pump: 'Pumpa',
     wash: 'Tvätta',
+    smallServicePackage: 'smallServicePackage',
+    mediumServicePackage: 'mediumServicePackage',
+    largeServicePackage: 'largeServicePackage',
+    noServicePackage: 'noServicePackage',
   };
 
   const getInitialFormConnections = () => {
@@ -271,7 +276,12 @@ export default function Part(props) {
       </div>
       {openEdit ? null :
         <div className="form-connection">
-          {Object.keys(FORM_CONNECTION_MAPPINGS).map(key => (
+          <div className="form-connection-top">
+            <h3>kopplingar</h3>
+            <span onClick={() => { openDropDown(setOpenFormConnections, openFormConnections) }} className={openFormConnections ? "" : "open"}><ion-icon name="chevron-down-outline"></ion-icon></span>
+          </div>
+          {openFormConnections ? null :
+          Object.keys(FORM_CONNECTION_MAPPINGS).map(key => (
             <div className="input-row" key={key}>
               <label htmlFor={key}>{FORM_CONNECTION_MAPPINGS[key]}</label>
               <input type="checkbox" name={key} id={key} onChange={(e) => { setFormConnections({ ...formConnections, [key]: e.target.checked }) }} checked={formConnections[key]} />
