@@ -146,6 +146,66 @@
       }
     }
   }
+
+  .form-connection {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0 8px;
+    gap: 4px;
+
+    .form-connection-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      h3 {
+        @include font-part-name;
+      }
+    }
+
+    .input-row {
+      display: flex;
+      justify-content: space-between;
+
+      label {
+        @include font-part-price;
+      }
+
+      input[type="checkbox"] {
+        appearance: none;
+        border: 2px solid $input-background-color;
+        background-color: transparent;
+        width: 20px;
+        height: 20px;
+        border-radius: 3px;
+        color: $input-background-color;
+        font: inherit;
+        display: grid;
+        place-content: center;
+
+        &::before {
+          content: "\2714";
+          width: 20px;
+          height: 20px;
+          transform: scale(0);
+          transform-origin: bottom left;
+          transition: 120ms transform ease-in-out;
+          color: $input-background-color;
+          text-align: center;
+        }
+
+        &:checked::before {
+          transform: scale(1);
+        }
+
+        &:checked {
+          border: $background-color;
+          background-color: $background-color;
+        }
+      }
+    }
+  }
 }
 
 .marked {
@@ -160,6 +220,39 @@
 
 .child {
   background-color: $input-background-color;
+
+  input[type="checkbox"] {
+    appearance: none;
+    border: 2px solid $background-color !important;
+    background-color: transparent;
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    color: $background-color !important;
+    font: inherit;
+    display: grid;
+    place-content: center;
+
+    &::before {
+      content: "\2714";
+      width: 20px;
+      height: 20px;
+      transform: scale(0);
+      transform-origin: bottom left;
+      transition: 120ms transform ease-in-out;
+      color: $background-color !important;
+      text-align: center;
+    }
+
+    &:checked::before {
+      transform: scale(1);
+    }
+
+    &:checked {
+      border: $primary-color !important;
+      background-color: $primary-color !important;
+    }
+  }
 }
 
 .hidden {

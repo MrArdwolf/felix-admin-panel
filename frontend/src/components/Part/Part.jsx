@@ -14,8 +14,55 @@ export default function Part(props) {
   const [openEdit, setOpenEdit] = useState(true);
   const [editName, setEditName] = useState(part.name);
   const [editPrice, setEditPrice] = useState(part.price);
+  const [openFormConnections, setOpenFormConnections] = useState(true);
 
   const [openPart, setOpenPart] = useState(true);
+
+  const FORM_CONNECTION_MAPPINGS = {
+    puncturedFront: 'Punktering fram',
+    puncturedBack: 'Punktering bak',
+    changeTireFront: 'Byte däck fram',
+    changeTireBack: 'Byte däck bak',
+    changeGearCableFront: 'Byte växelvajer fram',
+    changeGearCableBack: 'Byte växelvajer bak',
+    changeBrakeCableFront: 'Byte bromsvajer fram',
+    changeBrakeCableBack: 'Byte bromsvajer bak',
+    adjustGearCableFront: 'Justera växel fram',
+    adjustGearCableBack: 'Justera växel bak',
+    adjustBrakeCableFront: 'Justera broms fram',
+    adjustBrakeCableBack: 'Justera broms bak',
+    adjustTireFront: 'Rikta hjul fram',
+    adjustTireBack: 'Rikta hjul bak',
+    changeSpokesFront: 'Byta eker fram',
+    changeSpokesBack: 'Byta eker bak',
+    changeChain: 'Byte kedja',
+    lubricate: 'Smörja',
+    pump: 'Pumpa',
+    wash: 'Tvätta',
+    smallServicePackage: 'smallServicePackage',
+    mediumServicePackage: 'mediumServicePackage',
+    largeServicePackage: 'largeServicePackage',
+    noServicePackage: 'noServicePackage',
+  };
+
+  const getInitialFormConnections = () => {
+    const initial = {};
+    Object.keys(FORM_CONNECTION_MAPPINGS).forEach(key => {
+      initial[key] = false;
+    });
+    if (part.formConnections && Array.isArray(part.formConnections)) {
+      part.formConnections.forEach(label => {
+        const foundKey = Object.keys(FORM_CONNECTION_MAPPINGS).find(key => FORM_CONNECTION_MAPPINGS[key] === label);
+        if (foundKey) {
+          initial[foundKey] = true;
+        }
+      });
+    }
+    return initial;
+  };
+
+  const [formConnections, setFormConnections] = useState(getInitialFormConnections());
+
 
   useEffect(() => {
     update();
@@ -60,7 +107,7 @@ export default function Part(props) {
           message: `${partName} tillagd`,
           type: "success"
         })
-        
+
         if (!openEdit) {
           setOpenEdit(true);
           openDropDown(setOpenPart, openPart);
@@ -77,10 +124,29 @@ export default function Part(props) {
   }
 
   const editPart = (e) => {
-    axios.patch(`${backend}/api/part/${part._id}`, {
-      name: editName,
-      price: editPrice
-    })
+    const mapDataToPart = (formConnections) => {
+      const part = {
+        name: editName,
+        price: editPrice,
+        formConnections: [],
+      };
+
+      if (formConnections) {
+        console.log(formConnections)
+
+        Object.entries(formConnections).forEach(([key, value]) => {
+          if (value && FORM_CONNECTION_MAPPINGS[key]) {
+            const label = FORM_CONNECTION_MAPPINGS[key];
+            part.formConnections.push(label);
+          }
+        });
+      }
+
+      console.log(part);
+      return part;
+    };
+    const formatedPart = mapDataToPart(formConnections);
+    axios.patch(`${backend}/api/part/${part._id}`, formatedPart)
       .then(res => {
         console.log(res.data);
         props.setAlert({
@@ -88,7 +154,7 @@ export default function Part(props) {
           message: `${editName} ändrad`,
           type: "task"
         })
-        setPart({ ...part, name: editName, price: editPrice });
+        setPart({ ...part, name: editName, price: editPrice, formConnections: formConnections });
         if (props.updateParent) {
           props.updateParent();
         }
@@ -209,28 +275,45 @@ export default function Part(props) {
 
       </div>
       {openEdit ? null :
-      part.parent ? null :
-        <div className="edit-part-form">
-          <div className="add-top">
-            <h3>Lägg till</h3>
-            <span onClick={() => { openDropDown(setAddButton, addButton) }}>{addButton ? <ion-icon name="add-outline"></ion-icon> : <ion-icon name="close-outline"></ion-icon>}</span>
+        <div className="form-connection">
+          <div className="form-connection-top">
+            <h3>kopplingar</h3>
+            <span onClick={() => { openDropDown(setOpenFormConnections, openFormConnections) }} className={openFormConnections ? "" : "open"}><ion-icon name="chevron-down-outline"></ion-icon></span>
           </div>
-          {addButton ? null :
-            <div className="add-part-form">
-              <div className="input-row">
-                <label htmlFor="name">Namn</label>
-                <input type="text" name="name" id="name" placeholder='Namn' value={partName} onChange={(e) => { setPartName(e.target.value) }} />
-              </div>
-              <div className="input-row">
-                <label htmlFor="price">Pris</label>
-                <input type="text" name="price" id="price" placeholder='Pris' value={partPrice} onChange={(e) => { setPartPrice(e.target.value) }} />
-              </div>
-              <div className="button-row">
-                <span onClick={(e) => { addPart(e) }}><ion-icon name="add-outline"></ion-icon></span>
-              </div>
+          {openFormConnections ? null :
+          Object.keys(FORM_CONNECTION_MAPPINGS).map(key => (
+            <div className="input-row" key={key}>
+              <label htmlFor={key}>{FORM_CONNECTION_MAPPINGS[key]}</label>
+              <input type="checkbox" name={key} id={key} onChange={(e) => { setFormConnections({ ...formConnections, [key]: e.target.checked }) }} checked={formConnections[key]} />
             </div>
-          }
+          ))}
         </div>
+      }
+
+
+      {openEdit ? null :
+        part.parent ? null :
+          <div className="edit-part-form">
+            <div className="add-top">
+              <h3>Lägg till</h3>
+              <span onClick={() => { openDropDown(setAddButton, addButton) }}>{addButton ? <ion-icon name="add-outline"></ion-icon> : <ion-icon name="close-outline"></ion-icon>}</span>
+            </div>
+            {addButton ? null :
+              <div className="add-part-form">
+                <div className="input-row">
+                  <label htmlFor="name">Namn</label>
+                  <input type="text" name="name" id="name" placeholder='Namn' value={partName} onChange={(e) => { setPartName(e.target.value) }} />
+                </div>
+                <div className="input-row">
+                  <label htmlFor="price">Pris</label>
+                  <input type="text" name="price" id="price" placeholder='Pris' value={partPrice} onChange={(e) => { setPartPrice(e.target.value) }} />
+                </div>
+                <div className="button-row">
+                  <span onClick={(e) => { addPart(e) }}><ion-icon name="add-outline"></ion-icon></span>
+                </div>
+              </div>
+            }
+          </div>
       }
     </div>
   )

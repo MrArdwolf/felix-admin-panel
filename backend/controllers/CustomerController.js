@@ -1,4 +1,5 @@
 import CustomerModel from "../models/CustomerModel.js";
+import FormConnectionModel from "../models/FormConnectionModel.js";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
@@ -38,13 +39,68 @@ async function addCustomer(req, res) {
     try {
         const customer = req.body;
 
-        const { name, email, phone, bikeDescription, partToFix, alsoDo, comments } = customer;
+        const { name, email, phone, bikeDescription, partToFix, alsoDo, comments, servicePackage } = customer;
         if (!name || !email || !phone || !bikeDescription) {
             res.statusCode = 400;
             throw new Error("Missing data")
         }
 
+        if (partToFix && !Array.isArray(partToFix)) {
+            res.statusCode = 400;
+            throw new Error("partToFix must be an array");
+        }
+        if (alsoDo && !Array.isArray(alsoDo)) {
+            res.statusCode = 400;
+            throw new Error("alsoDo must be an array");
+        }
 
+        const parts = [];
+
+        if (partToFix && partToFix.length > 0) {
+            const partIdArrays = await Promise.all(partToFix.map(async part => {
+                console.log(part);
+                if (typeof part !== 'string') {
+                    res.statusCode = 400;
+                    throw new Error("partToFix must be an array of strings");
+                }
+                const addPart = await FormConnectionModel.findOne({ label: part });
+                if (!addPart) {
+                    res.statusCode = 400;
+                    throw new Error(`Part ${part} does not exist`);
+                }
+                console.log(addPart);
+                return addPart.part; // array of part IDs
+            }));
+            partIdArrays.forEach(arr => arr.forEach(partId => parts.push(partId)));
+        }
+
+        if (alsoDo && alsoDo.length > 0) {
+            const partIdArrays = await Promise.all(alsoDo.map(async part => {
+                console.log(part);
+                if (typeof part !== 'string') {
+                    res.statusCode = 400;
+                    throw new Error("alsoDo must be an array of strings");
+                }
+                const addPart = await FormConnectionModel.findOne({ label: part });
+                if (!addPart) {
+                    res.statusCode = 400;
+                    throw new Error(`Part ${part} does not exist`);
+                }
+                console.log(addPart);
+                return addPart.part; // array of part IDs
+            }));
+            partIdArrays.forEach(arr => arr.forEach(partId => parts.push(partId)));
+        }
+
+        if (servicePackage) {
+            const addPart = await FormConnectionModel.findOne({ label: servicePackage });
+                if (!addPart) {
+                    res.statusCode = 400;
+                    throw new Error(`Part ${servicePackage} does not exist`);
+                }
+                console.log(addPart);
+                parts.push(addPart.part); // add service package part ID
+        }
 
         // now create the Customer;
         const newCustomer = await CustomerModel.create({
@@ -56,6 +112,7 @@ async function addCustomer(req, res) {
             alsoDo,
             comments,
             bikeNumber: bikeNumbers.shift(),
+            parts: parts,
         });
 
         sendMail({
