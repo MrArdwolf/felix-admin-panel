@@ -44,6 +44,10 @@ const customerSchema = new mongoose.Schema({
     mechanicComments: {
         type: String
     },
+    customerConnection: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Customer"
+    }]
 });
 
 const CustomerModel = new mongoose.model("Customer", customerSchema);
