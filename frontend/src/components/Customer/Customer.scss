@@ -93,6 +93,18 @@
       }
     }
 
+    .mechanic-comments {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+
+      textarea {
+        width: 100%;
+        resize: vertical;
+      }
+    }
+
     .buttons {
       display: flex;
       justify-content: space-between;

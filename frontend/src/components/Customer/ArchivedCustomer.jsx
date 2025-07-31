@@ -10,6 +10,8 @@ export default function Customer(props) {
   const [markedParts, setMarkedParts] = useState(customer.parts);
   const [customPartPrice, setCustomPartPrice] = useState(customer.partPrices);
   const [openParts, setOpenParts] = useState(false);
+  const timeCreated = new Date(customer.createdAt);
+  const [mechanicComments, setMechanicComments] = useState(customer.mechanicComments || "");
 
   const getReceipt = () => {
     axios.get(`${backend}/api/receipt/get/${customer._id}`)
@@ -32,7 +34,7 @@ export default function Customer(props) {
   return (
     <div className="customer">
       <div className="customer-top">
-        <h2>{customer.name}</h2>
+        <h2>{customer.name} {timeCreated.toLocaleDateString()}</h2>
         <span onClick={() => { setOpen(!open) }} className={`${open ? "open" : ""}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
       </div>
       {open && (
@@ -55,11 +57,14 @@ export default function Customer(props) {
               <h4>Beskrivning av cykel</h4>
               <p>{customer.bikeDescription}</p>
             </div>
+            { customer.comments && (
             <div className="info-line">
-              <h4>Cykel nummer</h4>
-              <p>{customer.bikeNumber}</p>
+              <h4>Kommentar</h4>
+              <p>{customer.comments}</p>
             </div>
+            )}
 
+            { (customer.partToFix.length > 0 || customer.alsoDo.length > 0) && (
             <div className="info-line">
               <h4>Saker att kolla på</h4>
               {
@@ -77,6 +82,7 @@ export default function Customer(props) {
                 })
               }
             </div>
+            )}
 
           </div>
           <div className="parts-container">
@@ -104,6 +110,10 @@ export default function Customer(props) {
                 }
               </div>
             )}
+          </div>
+          <div className="mechanic-comments">
+            <h3>Dina kommentarer</h3>
+            <textarea name="mechanicComments" id="" rows="5" value={mechanicComments} readOnly></textarea>
           </div>
           <div className="buttons">
             <button className='primary-button' onClick={getReceipt}>Kvitto</button>

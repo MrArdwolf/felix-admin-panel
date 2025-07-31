@@ -40,7 +40,10 @@ const customerSchema = new mongoose.Schema({
     priceAccepted: {
         type: Boolean,
         default: false
-    }
+    },
+    mechanicComments: {
+        type: String
+    },
 });
 
 const CustomerModel = new mongoose.model("Customer", customerSchema);

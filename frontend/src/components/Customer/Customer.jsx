@@ -15,13 +15,15 @@ export default function Customer(props) {
   const [openSmsModal, setOpenSmsModal] = useState(false);
   const [priceAccepted, setPriceAccepted] = useState(customer.priceAccepted || false);
   const [showButtons, setShowButtons] = useState(false);
+  const [mechanicComments, setMechanicComments] = useState(customer.mechanicComments || "");
 
   const saveChanges = () => {
     console.log(priceAccepted)
     axios.patch(`${backend}/api/customer/${customer._id}`, {
       parts: markedParts,
       partPrices: customPartPrice,
-      priceAccepted: priceAccepted
+      priceAccepted: priceAccepted,
+      mechanicComments: mechanicComments
     })
       .then(res => {
         console.log(res.data);
@@ -155,8 +157,14 @@ export default function Customer(props) {
               <h4>Cykel nummer</h4>
               <p>{customer.bikeNumber}</p>
             </div>
+            { customer.comments && (
+            <div className="info-line">
+              <h4>Kommentar</h4>
+              <p>{customer.comments}</p>
+            </div>
+            )}
 
-            { !customer.partToFix && customer.partToFix.length > 0 && (
+            { (customer.partToFix.length > 0 || customer.alsoDo.length > 0) && (
             <div className="info-line">
               <h4>Saker att kolla på</h4>
               {
@@ -209,6 +217,10 @@ export default function Customer(props) {
                 }
               </div>
             )}
+          </div>
+          <div className="mechanic-comments">
+            <h3>Dina kommentarer</h3>
+            <textarea name="mechanicComments" id="" rows="5" value={mechanicComments} onChange={(e) => setMechanicComments(e.target.value)} placeholder='Skriv dina kommentarer här...'></textarea>
           </div>
           <div className="price-accept">
             <h3>Pris godkänd</h3>
