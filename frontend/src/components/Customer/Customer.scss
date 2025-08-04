@@ -93,6 +93,68 @@
       }
     }
 
+    .group-together-customers {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+
+      .group-together-customers-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .group-together-customers-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+
+        .input-row {
+          display: flex;
+          justify-content: space-between;
+
+          label {
+            @include font-part-price;
+          }
+
+          input[type="checkbox"] {
+            appearance: none;
+            border: 2px solid $primary-color;
+            background-color: transparent;
+            width: 20px;
+            height: 20px;
+            border-radius: 3px;
+            color: $secondary-color;
+            font: inherit;
+            display: grid;
+            place-content: center;
+
+            &::before {
+              content: "\2714";
+              width: 20px;
+              height: 20px;
+              transform: scale(0);
+              transform-origin: bottom left;
+              transition: 120ms transform ease-in-out;
+              color: $secondary-color;
+              text-align: center;
+            }
+
+            &:checked::before {
+              transform: scale(1);
+            }
+
+            &:checked {
+              border: $primary-color;
+              background-color: $primary-color;
+            }
+          }
+        }
+      }
+    }
+
     .mechanic-comments {
       display: flex;
       flex-direction: column;
@@ -130,37 +192,37 @@
       align-items: center;
       justify-content: space-between;
       input[type="checkbox"] {
-            appearance: none;
-            border: 2px solid $background-color;
-            background-color: transparent;
-            width: 24px;
-            height: 24px;
-            border-radius: 3px;
-            color: $background-color;
-            font: inherit;
-            display: grid;
-            place-content: center;
+        appearance: none;
+        border: 2px solid $background-color;
+        background-color: transparent;
+        width: 24px;
+        height: 24px;
+        border-radius: 3px;
+        color: $background-color;
+        font: inherit;
+        display: grid;
+        place-content: center;
 
-            &::before {
-              content: "\2714";
-              width: 20px;
-              height: 20px;
-              transform: scale(0);
-              transform-origin: bottom left;
-              transition: 120ms transform ease-in-out;
-              color: $background-color;
-              text-align: center;
-            }
+        &::before {
+          content: "\2714";
+          width: 20px;
+          height: 20px;
+          transform: scale(0);
+          transform-origin: bottom left;
+          transition: 120ms transform ease-in-out;
+          color: $background-color;
+          text-align: center;
+        }
 
-            &:checked::before {
-              transform: scale(1);
-            }
+        &:checked::before {
+          transform: scale(1);
+        }
 
-            &:checked {
-              border: $input-border;
-              background-color: $primary-color;
-            }
-          }
+        &:checked {
+          border: $input-border;
+          background-color: $primary-color;
+        }
+      }
     }
   }
 }

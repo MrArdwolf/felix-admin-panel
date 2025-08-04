@@ -59,11 +59,14 @@ export default function CustomerPage(props) {
       if (customer.customerConnection && customer.customerConnection.length > 0) {
         const connectedCustomers = handleRenderCustomerConnection(customer._id);
         tempConnectedCustomerList.push(connectedCustomers);
-        const nonConnected = customers.filter(c => !connectedCustomers.includes(c));
-        setNonConnectedCustomers(nonConnected);
       }
     });
     setConnectedCustomerList(tempConnectedCustomerList);
+
+    // Flatten all connected customers into a set
+    const connectedIds = new Set(tempConnectedCustomerList.flat().map(c => c._id));
+    const nonConnected = customers.filter(c => !connectedIds.has(c._id));
+    setNonConnectedCustomers(nonConnected);
   }, [customers]);
 
   const handleRenderCustomerConnection = (customerId) => {
@@ -93,7 +96,7 @@ export default function CustomerPage(props) {
           <div className="customer-connection" key={idx}>
             <h3>{customerGroup[0].name} {customerGroup.map(customer => customer.bikeNumber).join(", ")}</h3>
             {customerGroup.map(customer => (
-              <Customer key={customer._id} customer={customer} parts={parts} update={update} authenticate={() => { props.authenticate() }} setAlert={props.setAlert} />
+              <Customer key={customer._id} customer={customer} parts={parts} update={update} authenticate={() => { props.authenticate() }} setAlert={props.setAlert} nonConnectedCustomers={nonConnectedCustomers} customers={customers} connectedCustomerList={connectedCustomerList} />
             ))}
           </div>
         ))}
@@ -105,7 +108,7 @@ export default function CustomerPage(props) {
             return null;
           }
           return (
-            <Customer key={customer._id} customer={customer} parts={parts} update={update} authenticate={() => { props.authenticate() }} setAlert={props.setAlert} />
+            <Customer key={customer._id} customer={customer} parts={parts} update={update} authenticate={() => { props.authenticate() }} setAlert={props.setAlert} nonConnectedCustomers={nonConnectedCustomers} customers={customers} connectedCustomerList={connectedCustomerList} />
           )
         })}
       </div>
