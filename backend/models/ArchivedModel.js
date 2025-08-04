@@ -36,6 +36,9 @@ const archivedSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    mechanicComments: {
+        type: String
     }
 });
 

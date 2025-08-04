@@ -15,13 +15,19 @@ export default function Customer(props) {
   const [openSmsModal, setOpenSmsModal] = useState(false);
   const [priceAccepted, setPriceAccepted] = useState(customer.priceAccepted || false);
   const [showButtons, setShowButtons] = useState(false);
+  const [mechanicComments, setMechanicComments] = useState(customer.mechanicComments || "");
+  const [groupedCustomerIds, setGroupedCustomerIds] = useState(customer.customerConnection || []);
+  const [openGroupSelect, setOpenGroupSelect] = useState(false);
 
   const saveChanges = () => {
     console.log(priceAccepted)
+    console.log(groupedCustomerIds);
     axios.patch(`${backend}/api/customer/${customer._id}`, {
       parts: markedParts,
       partPrices: customPartPrice,
-      priceAccepted: priceAccepted
+      priceAccepted: priceAccepted,
+      mechanicComments: mechanicComments,
+      customerConnection: groupedCustomerIds,
     })
       .then(res => {
         console.log(res.data);
@@ -155,25 +161,31 @@ export default function Customer(props) {
               <h4>Cykel nummer</h4>
               <p>{customer.bikeNumber}</p>
             </div>
+            {customer.comments && (
+              <div className="info-line">
+                <h4>Kommentar</h4>
+                <p>{customer.comments}</p>
+              </div>
+            )}
 
-            { !customer.partToFix && customer.partToFix.length > 0 && (
-            <div className="info-line">
-              <h4>Saker att kolla på</h4>
-              {
-                customer.partToFix.map(part => {
-                  return (
-                    <p key={part}>{part}</p>
-                  )
-                })
-              }
-              {
-                customer.alsoDo.map(part => {
-                  return (
-                    <p key={part}>{part}</p>
-                  )
-                })
-              }
-            </div>
+            {(customer.partToFix.length > 0 || customer.alsoDo.length > 0) && (
+              <div className="info-line">
+                <h4>Saker att kolla på</h4>
+                {
+                  customer.partToFix.map(part => {
+                    return (
+                      <p key={part}>{part}</p>
+                    )
+                  })
+                }
+                {
+                  customer.alsoDo.map(part => {
+                    return (
+                      <p key={part}>{part}</p>
+                    )
+                  })
+                }
+              </div>
             )}
 
           </div>
@@ -187,7 +199,7 @@ export default function Customer(props) {
             </div>
             {openParts && (
               <div className="parts-list">
-                { !showAllParts && !markedParts || !showAllParts && markedParts.length === 0 && (
+                {!showAllParts && !markedParts || !showAllParts && markedParts.length === 0 && (
                   <p>Inga delar valda</p>
                 )}
                 {
@@ -209,6 +221,55 @@ export default function Customer(props) {
                 }
               </div>
             )}
+          </div>
+
+          {(!props.connectedCustomerList.flat().includes(customer) || customer.customerConnection.length > 0) &&
+            <div className="group-together-customers">
+              <div className="group-together-customers-top">
+                <h3>Gruppera kunder</h3>
+                <span onClick={() => { setOpenGroupSelect(!openGroupSelect) }} className={`${openGroupSelect ? "open" : ""}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
+              </div>
+              {openGroupSelect && (
+                <div className="group-together-customers-list">
+              {props.customers
+                .filter(c => c._id !== customer._id)
+                .filter(c => {
+                  // Show if in same group as current customer, or not in any group
+                  const isInSameGroup = props.connectedCustomerList.some(group => group.some(groupCustomer => groupCustomer._id === customer._id) && group.some(groupCustomer => groupCustomer._id === c._id));
+                  const isInOtherGroup = props.connectedCustomerList.some(group => !group.some(groupCustomer => groupCustomer._id === customer._id) && group.some(groupCustomer => groupCustomer._id === c._id));
+                  return isInSameGroup || !isInOtherGroup;
+                })
+                .map(c => {
+                  const checked = groupedCustomerIds.includes(c._id);
+                  return (
+                    <div className="input-row" key={c._id}>
+                      <label htmlFor={c._id}>{c.name} {c.bikeNumber}</label>
+                      <input
+                        type="checkbox"
+                        name={c._id}
+                        id={c._id}
+                        checked={checked}
+                        onChange={e => {
+                          setGroupedCustomerIds(prev => {
+                            if (e.target.checked) {
+                              return [...prev, c._id];
+                            } else {
+                              return prev.filter(id => id !== c._id);
+                            }
+                          })
+                        }}
+                      />
+                    </div>
+                  );
+                })}
+                </div>
+              )}
+            </div>
+          }
+
+          <div className="mechanic-comments">
+            <h3>Dina kommentarer</h3>
+            <textarea name="mechanicComments" id="" rows="5" value={mechanicComments} onChange={(e) => setMechanicComments(e.target.value)} placeholder='Skriv dina kommentarer här...'></textarea>
           </div>
           <div className="price-accept">
             <h3>Pris godkänd</h3>

@@ -10,7 +10,7 @@ async function addArchived(req, res) {
     try {
         const archived = req.body;
 
-        const { name, email, phone, bikeDescription, partToFix, alsoDo, comments, parts, partPrices } = archived;
+        const { name, email, phone, bikeDescription, partToFix, alsoDo, comments, parts, partPrices, mechanicComments } = archived;
         if (!archived) {
             res.statusCode = 400;
             throw new Error("Missing data")
@@ -64,6 +64,7 @@ async function addArchived(req, res) {
             comments,
             parts,
             partPrices,
+            mechanicComments,
         });
         
         const receipt = await receiptModel.create({
