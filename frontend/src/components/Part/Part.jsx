@@ -192,6 +192,60 @@ export default function Part(props) {
       })
   }
 
+  if (children && children.length >= 1 && part.parent) {
+    return (
+      <div className={`part ${props.className || ""} ${openPart ? "" : "part-open"}`}>
+        <div className="part-top">
+          <div className="part-info">
+            {
+              openEdit ? <h3>{part.name}</h3> :
+                <div className="edit-parent-form">
+                  <div className="input-row">
+                    <input type="text" name="name" id="name" placeholder='Namn' value={editName} onChange={(e) => { setEditName(e.target.value) }} />
+                  </div>
+                  <span onClick={(e) => { editPart(e) }}><ion-icon name="save-outline"></ion-icon></span>
+                </div>
+            }
+          </div>
+          <span onClick={() => { openDropDown(setOpenPart, openPart) }} className={`${openPart ? "" : "open"}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
+        </div>
+        {openPart ? null :
+          <div className="part-content">
+            {children.map(child => (
+              <Part part={child} key={child._id} children={children} setChildren={setChildren} authenticate={(req) => { props.authenticate(req) }} updateParent={update} className={props.className === "child part" ? "child2 part" : "child3 part"} setAlert={props.setAlert} />
+            ))}
+
+            <div className="part-bottom">
+              <div className="edit-part-form">
+                <div className="add-top">
+                  <h3>Lägg till</h3>
+                  <span onClick={() => { openDropDown(setAddButton, addButton) }}>{addButton ? <ion-icon name="add-outline"></ion-icon> : <ion-icon name="close-outline"></ion-icon>}</span>
+                </div>
+                {addButton ? null :
+                  <div className="add-part-form">
+                    <div className="input-row">
+                      <label htmlFor="name">Namn</label>
+                      <input type="text" name="name" id="name" placeholder='Namn' value={partName} onChange={(e) => { setPartName(e.target.value) }} />
+                    </div>
+                    <div className="input-row">
+                      <label htmlFor="price">Pris</label>
+                      <input type="text" name="price" id="price" placeholder='Pris' value={partPrice} onChange={(e) => { setPartPrice(e.target.value) }} />
+                    </div>
+                    <div className="button-row">
+                      <span onClick={(e) => { addPart(e) }}><ion-icon name="add-outline"></ion-icon></span>
+                    </div>
+                  </div>
+                }
+              </div>
+
+              <span onClick={() => { openDropDown(setOpenEdit, openEdit) }} className='edit-parent-button'>{openEdit ? <ion-icon name="create-outline"></ion-icon> : <ion-icon name="close-outline"></ion-icon>}</span>
+            </div>
+          </div>
+        }
+      </div >
+    )
+  }
+
   if (children && children.length >= 1) {
 
     return (
@@ -292,7 +346,7 @@ export default function Part(props) {
 
 
       {openEdit ? null :
-        part.parent ? null :
+        props.className === "child3 part" ? null :
           <div className="edit-part-form">
             <div className="add-top">
               <h3>Lägg till</h3>

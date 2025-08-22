@@ -12,6 +12,22 @@
   box-shadow: $button-box-shadow;
   gap: 24px;
 
+  &:has(.part-open) {
+    padding: 0;
+    
+    & > .part-top {
+      padding: 10px 10px 0 10px;
+    }
+    
+    .part-open + .part-bottom {
+      padding: 0 10px 10px 10px;
+    }
+  }
+
+  &.child3 {
+    background-color: $input-background-color;
+  }
+
   span:has(ion-icon) {
     z-index: 1;
     display: flex;
