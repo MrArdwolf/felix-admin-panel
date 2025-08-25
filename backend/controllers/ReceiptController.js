@@ -17,6 +17,7 @@ async function getReceiptByCustomerId(req, res) {
                 throw new Error("Unauthorized", err);
             }
             user = decoded;
+            console.log(decoded);
         });
         
         const receipt = await ReceiptModel.findOne({customer: req.params.id});
@@ -43,6 +44,4 @@ async function getReceiptByCustomerId(req, res) {
 
 export default {
     getReceiptByCustomerId,
-    // getAllArchived,
-    // deleteArchived,
 }

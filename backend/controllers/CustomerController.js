@@ -71,7 +71,7 @@ async function addCustomer(req, res) {
                 console.log(addPart);
                 return addPart.part; // array of part IDs
             }));
-            partIdArrays.forEach(arr => arr.forEach(partId => parts.push(partId)));
+            partIdArrays.forEach(arr => arr.forEach(partId => parts.push({ _id: partId})));
         }
 
         if (alsoDo && alsoDo.length > 0) {
@@ -89,7 +89,7 @@ async function addCustomer(req, res) {
                 console.log(addPart);
                 return addPart.part; // array of part IDs
             }));
-            partIdArrays.forEach(arr => arr.forEach(partId => parts.push(partId)));
+            partIdArrays.forEach(arr => arr.forEach(partId => parts.push({ _id: partId})));
         }
 
         if (servicePackage) {
@@ -99,7 +99,7 @@ async function addCustomer(req, res) {
                     throw new Error(`Part ${servicePackage} does not exist`);
                 }
                 console.log(addPart);
-                parts.push(addPart.part); // add service package part ID
+                parts.push({ _id: addPart.part }); // add service package part ID
         }
 
         // now create the Customer;

@@ -83,25 +83,27 @@ export default function Customer(props) {
 
   const sendPriceSMS = () => {
     console.log(customer);
-    const thingsToFix = props.parts.filter(part => markedParts.includes(part._id));
-    const thingsToFixWithChangedPrice = thingsToFix.map(part => {
+    // Get marked parts with quantity
+    const thingsToFix = markedParts.map(mp => {
+      const part = props.parts.find(p => p._id === mp._id);
+      if (!part) return null;
       const changedPrice = customPartPrice.find(_part => _part.id === part._id);
       return {
         ...part,
-        price: changedPrice ? parseInt(changedPrice.price) : part.price
-      }
-    })
+        price: changedPrice ? parseInt(changedPrice.price) : part.price,
+        quantity: mp.quantity
+      };
+    }).filter(Boolean);
 
-    const totalPrice = thingsToFixWithChangedPrice.reduce((total, part) => total + part.price, 0);
+    const totalPrice = thingsToFix.reduce((total, part) => total + part.price * part.quantity, 0);
 
-    const thingsToFixFormated = thingsToFixWithChangedPrice.map(part => {
-      return part.name + " " + part.price + "kr";
+    const thingsToFixFormated = thingsToFix.map(part => {
+      return "x" + part.quantity + " " + part.name + " " + (part.price * part.quantity) + "kr";
     }).join(', ');
 
     const message = `Hej, vi har nu kollat över er cykel och här är vad vi rekommenderar att göra. Om allt är ok med er så kommer vi påbörja arbetet och återkomma när den är klar. Betalning sker när cykeln är redo att hämtas.%0A%0AAtt göra/byta: ${thingsToFixFormated}%0A%0ATotalpris delar: ${totalPrice}kr%0A%0A%0A/Felix Cykelmeck`;
 
     console.log(totalPrice);
-
 
     window.open(`sms:${parseInt(customer.phone)}?body=${message}`)
 
@@ -128,7 +130,6 @@ export default function Customer(props) {
       type: "task"
     })
   }
-
 
 
   return (
@@ -231,37 +232,37 @@ export default function Customer(props) {
               </div>
               {openGroupSelect && (
                 <div className="group-together-customers-list">
-              {props.customers
-                .filter(c => c._id !== customer._id)
-                .filter(c => {
-                  // Show if in same group as current customer, or not in any group
-                  const isInSameGroup = props.connectedCustomerList.some(group => group.some(groupCustomer => groupCustomer._id === customer._id) && group.some(groupCustomer => groupCustomer._id === c._id));
-                  const isInOtherGroup = props.connectedCustomerList.some(group => !group.some(groupCustomer => groupCustomer._id === customer._id) && group.some(groupCustomer => groupCustomer._id === c._id));
-                  return isInSameGroup || !isInOtherGroup;
-                })
-                .map(c => {
-                  const checked = groupedCustomerIds.includes(c._id);
-                  return (
-                    <div className="input-row" key={c._id}>
-                      <label htmlFor={c._id}>{c.name} {c.bikeNumber}</label>
-                      <input
-                        type="checkbox"
-                        name={c._id}
-                        id={c._id}
-                        checked={checked}
-                        onChange={e => {
-                          setGroupedCustomerIds(prev => {
-                            if (e.target.checked) {
-                              return [...prev, c._id];
-                            } else {
-                              return prev.filter(id => id !== c._id);
-                            }
-                          })
-                        }}
-                      />
-                    </div>
-                  );
-                })}
+                  {props.customers
+                    .filter(c => c._id !== customer._id)
+                    .filter(c => {
+                      // Show if in same group as current customer, or not in any group
+                      const isInSameGroup = props.connectedCustomerList.some(group => group.some(groupCustomer => groupCustomer._id === customer._id) && group.some(groupCustomer => groupCustomer._id === c._id));
+                      const isInOtherGroup = props.connectedCustomerList.some(group => !group.some(groupCustomer => groupCustomer._id === customer._id) && group.some(groupCustomer => groupCustomer._id === c._id));
+                      return isInSameGroup || !isInOtherGroup;
+                    })
+                    .map(c => {
+                      const checked = groupedCustomerIds.includes(c._id);
+                      return (
+                        <div className="input-row" key={c._id}>
+                          <label htmlFor={c._id}>{c.name} {c.bikeNumber}</label>
+                          <input
+                            type="checkbox"
+                            name={c._id}
+                            id={c._id}
+                            checked={checked}
+                            onChange={e => {
+                              setGroupedCustomerIds(prev => {
+                                if (e.target.checked) {
+                                  return [...prev, c._id];
+                                } else {
+                                  return prev.filter(id => id !== c._id);
+                                }
+                              })
+                            }}
+                          />
+                        </div>
+                      );
+                    })}
                 </div>
               )}
             </div>

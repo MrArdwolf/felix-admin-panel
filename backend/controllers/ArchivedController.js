@@ -34,9 +34,10 @@ async function addArchived(req, res) {
         const allParts = await PartModel.find();
 
         const markedParts = parts.map((part1) => ({
-            _id: part1,
-            name: allParts.find((part2) => part2._id.toString() === part1).name,
-            price: allParts.find((part2) => part2._id.toString() === part1).price,
+            _id: part1._id,
+            name: allParts.find((part2) => part2._id.toString() === part1._id.toString()).name,
+            price: allParts.find((part2) => part2._id.toString() === part1._id.toString()).price,
+            quantity: part1.quantity,
         }));
 
         console.log(partPrices);
@@ -50,6 +51,7 @@ async function addArchived(req, res) {
                 _id: part._id,
                 name: part.name,
                 price: part.price,
+                quantity: part.quantity,
             };
         });
 

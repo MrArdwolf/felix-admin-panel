@@ -49,8 +49,12 @@ export const adminEmail = (customer) => {
 }
 
 export const receiptEmail = (receipt) => {
-    const partsList = receipt.parts.map(part => `<li>${part.name} - ${part.price} kr</li>`).join('');
-    const totalCost = receipt.parts.reduce((total, part) => total + part.price, 0);
+    const partsList = receipt.parts.map(part => {
+        if (part.quantity > 1) {
+            return `<li>x${part.quantity} ${part.name} - ${part.price} - ${part.price * part.quantity} kr</li>`;
+        }
+    }).join('');
+    const totalCost = receipt.parts.reduce((total, part) => total + (part.price * part.quantity), 0);
 
 
     return `

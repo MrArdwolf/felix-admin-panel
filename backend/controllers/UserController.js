@@ -119,6 +119,14 @@ async function loginUser(req, res) {
             res.statusCode = 400;
             throw new Error("Password incorrect")
         }
+        
+        jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+            if (err) {
+                res.statusCode = 401;
+                throw new Error("invalid token");
+            }
+            console.log(decoded);
+        });
 
         res.cookie("authToken", token, {
             httpOnly: true,
@@ -162,6 +170,7 @@ async function Authenticate(req, res) {
                 res.statusCode = 401;
                 throw new Error("invalid token");
             }
+            console.log(decoded);
 
             const token = jwt.sign({ id: decoded._id, email: decoded.email, username: decoded.username, role: decoded.role }, process.env.JWT_SECRET, { expiresIn: "1h" });
             const refreshToken = jwt.sign({ id: decoded._id, email: decoded.email, username: decoded.username, role: decoded.role }, process.env.JWT_SECRET, { expiresIn: "30d" });
