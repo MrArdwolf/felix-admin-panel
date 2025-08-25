@@ -11,13 +11,10 @@ export default function Part(props) {
   const changedPrice = props.customPartPrice.find(_part => _part.id === part._id);
   const [partPrice, setPartPrice] = useState(changedPrice ? changedPrice.price : part.price);
   const [openEdit, setOpenEdit] = useState(true);
-  const [marked, setMarked] = useState(() => {
-    let marked = false;
-    if (props.markedParts.includes(part._id)) {
-      marked = true;
-    }
-    return marked;
-  });
+  // Find if this part is marked and get its quantity
+  const markedPartObj = props.markedParts.find(mp => mp._id === part._id);
+  const [marked, setMarked] = useState(!!markedPartObj);
+  const [quantity, setQuantity] = useState(markedPartObj ? markedPartObj.quantity : 1);
 
   const [openPart, setOpenPart] = useState(true);
 
@@ -53,11 +50,19 @@ export default function Part(props) {
     e.preventDefault();
     if (props.showAllParts) {
       if (marked) {
-        props.setMarkedParts(props.markedParts.filter(id => id !== part._id));
+        props.setMarkedParts(props.markedParts.filter(mp => mp._id !== part._id));
       } else {
-        props.setMarkedParts([...props.markedParts, part._id]);
+        props.setMarkedParts([...props.markedParts, { _id: part._id, quantity }]);
       }
       setMarked(!marked);
+    }
+  }
+
+  // Update quantity in markedParts
+  const updateQuantity = (newQuantity) => {
+    setQuantity(newQuantity);
+    if (marked) {
+      props.setMarkedParts(props.markedParts.map(mp => mp._id === part._id ? { ...mp, quantity: newQuantity } : mp));
     }
   }
 
@@ -70,7 +75,7 @@ export default function Part(props) {
 
   const checkMarkedChildren = () => {
     if (children.length >= 1) {
-      return children.some(child => props.markedParts.includes(child._id));
+      return children.some(child => props.markedParts.some(mp => mp._id === child._id));
     }
     return false;
   }
@@ -112,7 +117,7 @@ export default function Part(props) {
   }
 
   if (!props.showAllParts && !marked) {
-    return;
+    return null;
   }
 
   return (
@@ -137,9 +142,24 @@ export default function Part(props) {
             />
           }
 
+          {marked && (
+            <div className="quantity-controls">
+              <button className='text-button' onClick={() => updateQuantity(Math.max(1, quantity - 1))}>-</button>
+              <input
+                type="number"
+                min={1}
+                value={quantity}
+                onChange={e => updateQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+                style={{ width: '40px', textAlign: 'center' }}
+              />
+              <button className='text-button' onClick={() => updateQuantity(quantity + 1)}>+</button>
+            </div>
+          )}
+
         </div>
         <span onClick={() => { openDropDown(setOpenEdit, openEdit) }}>{openEdit ? <ion-icon name="create-outline"></ion-icon> : <ion-icon name="close-outline"></ion-icon>}</span>
       </div>
+      
     </div>
   )
 }

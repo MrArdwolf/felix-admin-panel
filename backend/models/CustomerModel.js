@@ -27,11 +27,17 @@ const customerSchema = new mongoose.Schema({
         type: String
     },
     parts: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Part"
+        part: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Part"
+        },
+        quantity: {
+            type: Number,
+            default: 1
+        }
     }],
     partPrices: [{
-        
+
     }],
     bikeNumber: {
         type: Number,
