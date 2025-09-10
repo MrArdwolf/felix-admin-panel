@@ -96,7 +96,7 @@ export default function CustomerPage(props) {
           <div className="customer-connection" key={idx}>
             <h3>{customerGroup[0].name} {customerGroup.map(customer => customer.bikeNumber).join(", ")}</h3>
             {customerGroup.map(customer => (
-              <Customer key={customer._id} customer={customer} parts={parts} update={update} authenticate={() => { props.authenticate() }} setAlert={props.setAlert} nonConnectedCustomers={nonConnectedCustomers} customers={customers} connectedCustomerList={connectedCustomerList} />
+              <Customer key={customer._id} customer={customer} parts={parts} allParts={parts} update={update} authenticate={() => { props.authenticate() }} setAlert={props.setAlert} nonConnectedCustomers={nonConnectedCustomers} customers={customers} connectedCustomerList={connectedCustomerList} />
             ))}
           </div>
         ))}
@@ -108,7 +108,7 @@ export default function CustomerPage(props) {
             return null;
           }
           return (
-            <Customer key={customer._id} customer={customer} parts={parts} update={update} authenticate={() => { props.authenticate() }} setAlert={props.setAlert} nonConnectedCustomers={nonConnectedCustomers} customers={customers} connectedCustomerList={connectedCustomerList} />
+            <Customer key={customer._id} customer={customer} parts={parts} allParts={parts} update={update} authenticate={() => { props.authenticate() }} setAlert={props.setAlert} nonConnectedCustomers={nonConnectedCustomers} customers={customers} connectedCustomerList={connectedCustomerList} />
           )
         })}
       </div>

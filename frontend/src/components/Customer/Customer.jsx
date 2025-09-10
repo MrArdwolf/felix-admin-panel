@@ -209,6 +209,7 @@ export default function Customer(props) {
                       <Part
                         key={part._id}
                         part={part}
+                        allParts={props.allParts}
                         authenticate={props.authenticate}
                         page={"customer"}
                         markedParts={markedParts}
