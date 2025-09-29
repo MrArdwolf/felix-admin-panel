@@ -203,11 +203,11 @@ export default function Part(props) {
                   <div className="input-row">
                     <input type="text" name="name" id="name" placeholder='Namn' value={editName} onChange={(e) => { setEditName(e.target.value) }} />
                   </div>
-                  <span onClick={(e) => { editPart(e) }}><ion-icon name="save-outline"></ion-icon></span>
+                  <span className='secondary-button' onClick={(e) => { editPart(e) }}><ion-icon name="save-outline"></ion-icon></span>
                 </div>
             }
           </div>
-          <span onClick={() => { openDropDown(setOpenPart, openPart) }} className={`${openPart ? "" : "open"}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
+          <span onClick={() => { openDropDown(setOpenPart, openPart) }} className={`secondary-button ${openPart ? "" : "open"}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
         </div>
         {openPart ? null :
           <div className="part-content">
@@ -219,7 +219,7 @@ export default function Part(props) {
               <div className="edit-part-form">
                 <div className="add-top">
                   <h3>Lägg till</h3>
-                  <span onClick={() => { openDropDown(setAddButton, addButton) }}>{addButton ? <ion-icon name="add-outline"></ion-icon> : <ion-icon name="close-outline"></ion-icon>}</span>
+                  <span className='primary-button' onClick={() => { openDropDown(setAddButton, addButton) }}>{addButton ? <ion-icon name="add-outline"></ion-icon> : <ion-icon name="close-outline"></ion-icon>}</span>
                 </div>
                 {addButton ? null :
                   <div className="add-part-form">
@@ -232,13 +232,13 @@ export default function Part(props) {
                       <input type="text" name="price" id="price" placeholder='Pris' value={partPrice} onChange={(e) => { setPartPrice(e.target.value) }} />
                     </div>
                     <div className="button-row">
-                      <span onClick={(e) => { addPart(e) }}><ion-icon name="add-outline"></ion-icon></span>
+                      <span className='primary-button' onClick={(e) => { addPart(e) }}><ion-icon name="add-outline"></ion-icon></span>
                     </div>
                   </div>
                 }
               </div>
 
-              <span onClick={() => { openDropDown(setOpenEdit, openEdit) }} className='edit-parent-button'>{openEdit ? <ion-icon name="create-outline"></ion-icon> : <ion-icon name="close-outline"></ion-icon>}</span>
+              <span onClick={() => { openDropDown(setOpenEdit, openEdit) }} className='secondary-button edit-parent-button'>{openEdit ? <ion-icon name="create-outline"></ion-icon> : <ion-icon name="close-outline"></ion-icon>}</span>
             </div>
           </div>
         }
@@ -258,11 +258,11 @@ export default function Part(props) {
                   <div className="input-row">
                     <input type="text" name="name" id="name" placeholder='Namn' value={editName} onChange={(e) => { setEditName(e.target.value) }} />
                   </div>
-                  <span onClick={(e) => { editPart(e) }}><ion-icon name="save-outline"></ion-icon></span>
+                  <span className='secondary-button' onClick={(e) => { editPart(e) }}><ion-icon name="save-outline"></ion-icon></span>
                 </div>
             }
           </div>
-          <span onClick={() => { openDropDown(setOpenPart, openPart) }} className={`${openPart ? "" : "open"}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
+          <span onClick={() => { openDropDown(setOpenPart, openPart) }} className={`secondary-button ${openPart ? "" : "open"}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
         </div>
         {openPart ? null :
           <div className="part-content">
@@ -274,7 +274,7 @@ export default function Part(props) {
               <div className="edit-part-form">
                 <div className="add-top">
                   <h3>Lägg till</h3>
-                  <span onClick={() => { openDropDown(setAddButton, addButton) }}>{addButton ? <ion-icon name="add-outline"></ion-icon> : <ion-icon name="close-outline"></ion-icon>}</span>
+                  <span className='primary-button' onClick={() => { openDropDown(setAddButton, addButton) }}>{addButton ? <ion-icon name="add-outline"></ion-icon> : <ion-icon name="close-outline"></ion-icon>}</span>
                 </div>
                 {addButton ? null :
                   <div className="add-part-form">
@@ -287,13 +287,13 @@ export default function Part(props) {
                       <input type="text" name="price" id="price" placeholder='Pris' value={partPrice} onChange={(e) => { setPartPrice(e.target.value) }} />
                     </div>
                     <div className="button-row">
-                      <span onClick={(e) => { addPart(e) }}><ion-icon name="add-outline"></ion-icon></span>
+                      <span className='primary-button' onClick={(e) => { addPart(e) }}><ion-icon name="add-outline"></ion-icon></span>
                     </div>
                   </div>
                 }
               </div>
 
-              <span onClick={() => { openDropDown(setOpenEdit, openEdit) }} className='edit-parent-button'>{openEdit ? <ion-icon name="create-outline"></ion-icon> : <ion-icon name="close-outline"></ion-icon>}</span>
+              <span onClick={() => { openDropDown(setOpenEdit, openEdit) }} className='secondary-button edit-parent-button'>{openEdit ? <ion-icon name="create-outline"></ion-icon> : <ion-icon name="close-outline"></ion-icon>}</span>
             </div>
           </div>
         }
@@ -317,10 +317,10 @@ export default function Part(props) {
                 <input type="text" name="name" id="name" placeholder='Namn' value={editPrice} onChange={(e) => { setEditPrice(e.target.value) }} />
               </div>
           }
-          {openEdit ? "" : <span onClick={deletePart}><ion-icon name="trash-outline"></ion-icon></span>}
+          {openEdit ? "" : <span className='secondary-button' onClick={deletePart}><ion-icon name="trash-outline"></ion-icon></span>}
         </div>
 
-        <span onClick={() => {
+        <span className='secondary-button' onClick={() => {
           openDropDown(setOpenEdit, openEdit)
           if (!openEdit) {
             editPart()
@@ -332,7 +332,7 @@ export default function Part(props) {
         <div className="form-connection">
           <div className="form-connection-top">
             <h3>kopplingar</h3>
-            <span onClick={() => { openDropDown(setOpenFormConnections, openFormConnections) }} className={openFormConnections ? "" : "open"}><ion-icon name="chevron-down-outline"></ion-icon></span>
+            <span onClick={() => { openDropDown(setOpenFormConnections, openFormConnections) }} className={`secondary-button ${openFormConnections ? "" : "open"}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
           </div>
           {openFormConnections ? null :
           Object.keys(FORM_CONNECTION_MAPPINGS).map(key => (

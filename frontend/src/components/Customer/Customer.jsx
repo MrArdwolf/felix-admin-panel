@@ -117,7 +117,12 @@ export default function Customer(props) {
   const sendDoneSMS = (lock) => {
     console.log(customer);
 
-    const message = `Hej, cykeln är nu redo att hämtas. Om du swishar till 1233740875 så ställer vi ut cykeln bakom staketet. Hoppas du är nöjd med servicen och om du vill får du gärna lämna en recension på Google😊 Koden till låset är ${lock}%0A%0A%0Ahttps://g.page/r/CYBOBRAf1c9oEAE/review/%0A%0A%0AFelix Cykelmeck`;
+    let message = `Hej, cykeln är nu redo att hämtas. Om du swishar till 1233740875 så ställer vi ut cykeln bakom staketet. Hoppas du är nöjd med servicen och om du vill får du gärna lämna en recension på Google😊 Koden till låset är ${lock}%0A%0A%0Ahttps://g.page/r/CYBOBRAf1c9oEAE/review/%0A%0A%0AFelix Cykelmeck`;
+
+    if (lock === "nothing") {
+      message = `Hej, cykeln är nu redo att hämtas. Om du swishar till 1233740875 så ställer vi ut cykeln bakom staketet. Hoppas du är nöjd med servicen och om du vill får du gärna lämna en recension på Google😊 %0A%0A%0Ahttps://g.page/r/CYBOBRAf1c9oEAE/review/%0A%0A%0AFelix Cykelmeck`;
+    }
+
 
     console.log(message);
 
@@ -136,7 +141,7 @@ export default function Customer(props) {
     <div className="customer">
       <div className="customer-top">
         <h2>{customer.name} {customer.bikeNumber}</h2>
-        <span onClick={() => { setOpen(!open) }} className={`${open ? "open" : ""}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
+        <span onClick={() => { setOpen(!open) }} className={`primary-button ${open ? "open" : ""}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
       </div>
       {open && (
         <div className='customer-content'>
@@ -194,8 +199,8 @@ export default function Customer(props) {
             <div className="parts-container-top">
               <h3>Delar</h3>
               <div className="right">
-                <span onClick={() => { setShowAllParts(!showAllParts) }} >{showAllParts ? <ion-icon name="close-outline"></ion-icon> : <ion-icon name="pencil-outline"></ion-icon>}</span>
-                <span onClick={() => { setOpenParts(!openParts) }} className={`${openParts ? "open" : ""}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
+                <span onClick={() => { setShowAllParts(!showAllParts) }} className='primary-button' >{showAllParts ? <ion-icon name="close-outline"></ion-icon> : <ion-icon name="pencil-outline"></ion-icon>}</span>
+                <span onClick={() => { setOpenParts(!openParts) }} className={`primary-button ${openParts ? "open" : ""}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
               </div>
             </div>
             {openParts && (
@@ -229,7 +234,7 @@ export default function Customer(props) {
             <div className="group-together-customers">
               <div className="group-together-customers-top">
                 <h3>Gruppera kunder</h3>
-                <span onClick={() => { setOpenGroupSelect(!openGroupSelect) }} className={`${openGroupSelect ? "open" : ""}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
+                <span onClick={() => { setOpenGroupSelect(!openGroupSelect) }} className={`primary-button ${openGroupSelect ? "open" : ""}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
               </div>
               {openGroupSelect && (
                 <div className="group-together-customers-list">

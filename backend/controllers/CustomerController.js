@@ -12,7 +12,7 @@ let bikeNumbers = []
 
 function generateBikeNr() {
     let nr = 1;
-    while(bikeNumbers.length < 50) {
+    while(bikeNumbers.length < 30) {
         bikeNumbers.push(nr);
         nr++;
     }

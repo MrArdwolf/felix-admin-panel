@@ -21,6 +21,7 @@ export default function SmsModal(props) {
               <option value="059">Gul</option>
               <option value="024">Silver</option>
               <option value="692">Svart</option>
+              <option value="nothing">Inget lås</option>
             </select>
           </div>
           <div className="buttons">

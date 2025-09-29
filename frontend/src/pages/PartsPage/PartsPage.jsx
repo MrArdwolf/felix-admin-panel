@@ -86,7 +86,7 @@ export default function PartsPage(props) {
 
           <div className="add-top">
             <h3>Lägg till</h3>
-            <span onClick={openAddPart}>{addButton ? <ion-icon name="add-outline"></ion-icon> : <ion-icon name="close-outline"></ion-icon>}</span>
+            <span className='primary-button' onClick={openAddPart}>{addButton ? <ion-icon name="add-outline"></ion-icon> : <ion-icon name="close-outline"></ion-icon>}</span>
           </div>
           {addButton ? null :
             <div className="add-part-form">
@@ -99,7 +99,7 @@ export default function PartsPage(props) {
                 <input type="text" name="price" id="price" placeholder='Pris' value={partPrice} onChange={(e) => { setPartPrice(e.target.value) }} />
               </div>
               <div className="button-row">
-                <span onClick={(e) => { addPart(e) }}><ion-icon name="add-outline"></ion-icon></span>
+                <span className='primary-button' onClick={(e) => { addPart(e) }}><ion-icon name="add-outline"></ion-icon></span>
               </div>
             </div>
           }
