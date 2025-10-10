@@ -93,6 +93,7 @@ async function addCustomer(req, res) {
         }
 
         if (servicePackage) {
+            if (servicePackage !== "noServicePackage") {
             const addPart = await FormConnectionModel.findOne({ label: servicePackage });
                 if (!addPart) {
                     res.statusCode = 400;
@@ -100,6 +101,7 @@ async function addCustomer(req, res) {
                 }
                 console.log(addPart);
                 parts.push({ _id: addPart.part }); // add service package part ID
+            }
         }
 
         // now create the Customer;
