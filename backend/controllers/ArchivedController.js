@@ -15,6 +15,7 @@ async function addArchived(req, res) {
             res.statusCode = 400;
             throw new Error("Missing data")
         }
+        console.log(name)
         
         const userToken = req.cookies.authToken;
         let user = null;
@@ -33,12 +34,15 @@ async function addArchived(req, res) {
 
         const allParts = await PartModel.find();
 
-        const markedParts = parts.map((part1) => ({
-            _id: part1._id,
-            name: allParts.find((part2) => part2._id.toString() === part1._id.toString()).name,
-            price: allParts.find((part2) => part2._id.toString() === part1._id.toString()).price,
-            quantity: part1.quantity,
-        }));
+        const markedParts = parts.map((part1) => {
+            const foundPart = allParts.find((part2) => part2._id.toString() === part1._id.toString());
+            return {
+                _id: part1._id,
+                name: foundPart ? foundPart.name : "Unknown",
+                price: foundPart ? foundPart.price : 0,
+                quantity: part1.quantity,
+            };
+        });
 
         console.log(partPrices);
         const receiptParts = markedParts.map((part) => {
@@ -89,6 +93,7 @@ async function addArchived(req, res) {
     } catch (error) {
         res.statusCode = 400;
         res.json({ message: "There was an error", error: error.message });
+        console.log(error);
     }
 }
 

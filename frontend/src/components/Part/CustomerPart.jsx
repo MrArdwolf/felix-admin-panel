@@ -38,6 +38,15 @@ export default function Part(props) {
 
   const [openPart, setOpenPart] = useState(true);
 
+  // When global openParts flag is set, open any part that is marked or has a marked descendant
+  useEffect(() => {
+    if (!props.openParts) return;
+    const shouldOpen = marked || checkMarkedChildren();
+    if (shouldOpen) {
+      setOpenPart(false); // false == expanded
+    }
+  }, [props.openParts, props.markedParts]);
+
   // No per-part fetching, all children are included in props.part
 
   const openDropDown = (setButton, button) => {

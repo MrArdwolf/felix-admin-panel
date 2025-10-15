@@ -20,6 +20,7 @@ export default function Customer(props) {
   const [openGroupSelect, setOpenGroupSelect] = useState(false);
 
   const saveChanges = () => {
+    setShowAllParts(false);
     console.log(priceAccepted)
     console.log(groupedCustomerIds);
     axios.patch(`${backend}/api/customer/${customer._id}`, {
@@ -222,6 +223,7 @@ export default function Customer(props) {
                         customPartPrice={customPartPrice}
                         setCustomPartPrice={setCustomPartPrice}
                         showAllParts={showAllParts}
+                        openParts={openParts}
                       />
                     )
                   })
