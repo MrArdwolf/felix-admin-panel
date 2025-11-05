@@ -39,7 +39,11 @@ const archivedSchema = new mongoose.Schema({
     },
     mechanicComments: {
         type: String
-    }
+    },
+        customerConnection: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Customer"
+        }]
 });
 
 const ArchivedModel = new mongoose.model("Archived", archivedSchema);

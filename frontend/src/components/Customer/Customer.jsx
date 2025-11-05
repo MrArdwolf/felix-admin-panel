@@ -106,7 +106,7 @@ export default function Customer(props) {
 
     console.log(totalPrice);
 
-    window.open(`sms:${parseInt(customer.phone)}?body=${message}`)
+    window.open(`sms:${(customer.phone)}?body=${message}`)
 
     props.setAlert({
       show: true,
@@ -128,7 +128,7 @@ export default function Customer(props) {
     console.log(message);
 
 
-    window.open(`sms:${parseInt(customer.phone)}?body=${message}`)
+    window.open(`sms:${(customer.phone)}?body=${message}`)
 
     props.setAlert({
       show: true,

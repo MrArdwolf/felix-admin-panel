@@ -155,6 +155,14 @@ async function updatePart(req, res) {
                                 label: connection,
                                 part: req.params.id,
                             });
+                        } else {
+                            // If the connection exists but is not linked to this part, update it
+                            if (!existingConnection.part.includes(req.params.id)) {
+                                FormConnectionModel.updateOne({ _id: existingConnection._id }, { part: [...existingConnection.part, req.params.id] })
+                                    .catch(err => {
+                                        throw new Error(`Error updating form connection: ${err.message}`);
+                                    });
+                            }
                         }
                     })
                     .catch(err => {
@@ -165,8 +173,24 @@ async function updatePart(req, res) {
 
         if (body.formConnections) {
             validateFormConnections(body.formConnections);
-
-
+            if (body.formConnections.length === 0) {
+                // If no formConnections provided, clear existing connections for this part
+                console.log("No form connections provided, clearing existing connections.");
+                const existingConnections = await FormConnectionModel.find({ part: req.params.id });
+                existingConnections.forEach(async (connection) => {
+                    await FormConnectionModel.updateOne({ _id: connection._id }, { part: connection.part.filter(p => p.toString() !== req.params.id) });
+                });
+            }
+            if (Part.formConnections && Part.formConnections.length > 0) {
+                // Remove part from old connections that are no longer associated
+                const connectionsToRemove = Part.formConnections.filter(conn => !body.formConnections.includes(conn));
+                connectionsToRemove.forEach(async (connection) => {
+                    const existingConnection = await FormConnectionModel.findOne({ label: connection });
+                    if (existingConnection) {
+                        await FormConnectionModel.updateOne({ _id: existingConnection._id }, { part: existingConnection.part.filter(p => p.toString() !== req.params.id) });
+                    }
+                });
+            }
         }
 
         const updatedPart = await PartModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
