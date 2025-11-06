@@ -198,8 +198,10 @@ export default function CustomerPage(props) {
       <div className="customer-list">
         {connectedCustomerList.map((customerGroup, idx) => (
           <div className="customer-connection" key={idx}>
+            <div className="customer-group-top">
             <h3>{customerGroup[0].name} {customerGroup.map(customer => customer.bikeNumber).join(", ")}</h3>
             <span className='buttons-menu' onClick={() => setShowButtons(!showButtons)}>{showButtons ? <ion-icon name="close"></ion-icon> : <ion-icon name="ellipsis-horizontal"></ion-icon>}</span>
+            </div>
             {showButtons && (
               <div className="buttons-dropdown">
                 <button className='primary-button' onClick={() => archiveCustomer(customerGroup)}>Arkivera</button>

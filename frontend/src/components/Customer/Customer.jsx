@@ -6,7 +6,7 @@ import SmsModal from '../SmsModal/SmsModal';
 
 export default function Customer(props) {
   const backend = import.meta.env.VITE_API_URL
-  const customer = props.customer;
+  const [customer, setCustomer] = useState(props.customer);
   const [open, setOpen] = useState(false);
   const [markedParts, setMarkedParts] = useState(customer.parts || []);
   const [customPartPrice, setCustomPartPrice] = useState(customer.partPrices || []);
@@ -18,6 +18,7 @@ export default function Customer(props) {
   const [mechanicComments, setMechanicComments] = useState(customer.mechanicComments || "");
   const [groupedCustomerIds, setGroupedCustomerIds] = useState(customer.customerConnection || []);
   const [openGroupSelect, setOpenGroupSelect] = useState(false);
+  const [editCustomerInfo, setEditCustomerInfo] = useState(false);
 
   const saveChanges = () => {
     setShowAllParts(false);
@@ -29,6 +30,10 @@ export default function Customer(props) {
       priceAccepted: priceAccepted,
       mechanicComments: mechanicComments,
       customerConnection: groupedCustomerIds,
+      customerInfo: {
+        email: customer.email,
+        phone: customer.phone
+      }
     })
       .then(res => {
         console.log(res.data);
@@ -139,34 +144,47 @@ export default function Customer(props) {
 
 
   return (
-    <div className="customer">
+    <div className={`customer ${priceAccepted ? "price-accepted" : ""}`}>
       <div className="customer-top">
         <h2>{customer.name} {customer.bikeNumber}</h2>
         <span onClick={() => { setOpen(!open) }} className={`primary-button ${open ? "open" : ""}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
       </div>
       {open && (
         <div className='customer-content'>
-          <h3>Info</h3>
+          <div className="customer-info-top">
+            <h3>Info</h3>
+            <div className="right">
+              <span onClick={() => { setEditCustomerInfo(!editCustomerInfo) }} className='primary-button' >{editCustomerInfo ? <ion-icon name="close-outline"></ion-icon> : <ion-icon name="pencil-outline"></ion-icon>}</span>
+            </div>
+          </div>
           <div className="info-content">
             <div className="info-line">
               <h4>Namn</h4>
-              <p>{customer.name}</p>
+                <p>{customer.name}</p>
             </div>
             <div className="info-line">
               <h4>Email</h4>
-              <p>{customer.email}</p>
+              {editCustomerInfo ? (
+                <input type="text" value={customer.email} onChange={(e) => setCustomer({ ...customer, email: e.target.value })} />
+              ) : (
+                <p>{customer.email}</p>
+              )}
             </div>
             <div className="info-line">
               <h4>Mobilnummer</h4>
-              <p>{customer.phone}</p>
+              {editCustomerInfo ? (
+                <input type="text" value={customer.phone} onChange={(e) => setCustomer({ ...customer, phone: e.target.value })} />
+              ) : (
+                <p>{customer.phone}</p>
+              )}
             </div>
             <div className="info-line">
               <h4>Beskrivning av cykel</h4>
-              <p>{customer.bikeDescription}</p>
+                <p>{customer.bikeDescription}</p>
             </div>
             <div className="info-line">
               <h4>Cykel nummer</h4>
-              <p>{customer.bikeNumber}</p>
+                <p>{customer.bikeNumber}</p>
             </div>
             {customer.comments && (
               <div className="info-line">

@@ -49,6 +49,22 @@
         gap: 12px;
         align-items: center;
 
+        &:has(.locks) {
+          align-items: flex-start;
+        }
+
+        .locks {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+
+          .lock-selection {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+          }
+        }
+
         select {
           padding: 8px 12px;
           border-radius: 8px;

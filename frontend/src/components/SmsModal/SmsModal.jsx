@@ -7,7 +7,9 @@ export default function SmsModal(props) {
   const [locks, setLocks] = useState([{}]);
 
   useEffect(() => {
-    setInitialLocks();
+    if (!props.customer) {
+      setInitialLocks();
+    }
   }, []);
 
   const setInitialLocks = () => {
@@ -29,6 +31,7 @@ export default function SmsModal(props) {
             <div className="input-row">
 
               <label htmlFor="lock">Lås:</label>
+              <div className="locks">
               {props.customerGroup.map((customer) => (
                 <div key={customer._id} className="lock-selection">
                   <span>{customer.bikeNumber}:</span>
@@ -41,6 +44,7 @@ export default function SmsModal(props) {
                   </select>
                 </div>
               ))}
+              </div>
             </div>
             <div className="buttons">
               <button className='secondary-button' onClick={props.closeModal}>Avbryt</button>

@@ -7,6 +7,25 @@
   align-items: center;
   width: 100%;
 
+  .customer-group-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    span {
+      font-size: 30px;
+      cursor: pointer;
+    }
+  }
+
+  .buttons-dropdown {
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+
+
+  }
+
   h1 {
     @include font-title;
   }
