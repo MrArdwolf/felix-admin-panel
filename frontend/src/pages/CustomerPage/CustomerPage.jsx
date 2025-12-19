@@ -177,7 +177,7 @@ export default function CustomerPage(props) {
 
     console.log(locksToUse);
 
-    let message = `Hej, cyklarna är nu redo att hämtas. Om du swishar till 1233740875 så ställer vi ut cyklarna bakom staketet. Hoppas du är nöjd med servicen och om du vill får du gärna lämna en recension på Google😊 Koden till låsen är:%0A%0A${locksToUse.join("%0A")}%0A%0A%0Ahttps://g.page/r/CYBOBRAf1c9oEAE/review/%0A%0A%0AFelix Cykelmeck`;
+    let message = `Hej, cyklarna är nu redo att hämtas. Om du swishar till 1233740875 så ställer vi ut cyklarna bakom staketet. Hoppas du är nöjd med servicen och om du vill får du gärna lämna en recension på Google😊 Koden till låsen är:%0A%0A${locksToUse.join("%0A")}%0A%0A%0Ahttps://g.page/r/CYBOBRAf1c9oEAE/review/%0A%0AAlla reparationer kommer med 1 månads garanti, så har ni några problem tveka inte att höra av er.%0A%0A%0AFelix Cykelmeck`;
 
     if (locks.filter(lock => lock.lock && lock.lock !== "nothing").length === 0) {
       message = `Hej, cyklarna är nu redo att hämtas. Om du swishar till 1233740875 så ställer vi ut cyklarna bakom staketet. Hoppas du är nöjd med servicen och om du vill får du gärna lämna en recension på Google😊 %0A%0A%0Ahttps://g.page/r/CYBOBRAf1c9oEAE/review/%0A%0A%0AFelix Cykelmeck`;
