@@ -252,7 +252,26 @@ export default function Customer(props) {
                   <p>Inga delar valda</p>
                 )}
                 {
-                  props.parts.filter(part => !part.parent).map(part => {
+                  props.parts.filter(part => !part.parent).filter(part => part.favorite).map(part => {
+                    return (
+                      <Part
+                        key={part._id}
+                        part={part}
+                        allParts={props.allParts}
+                        authenticate={props.authenticate}
+                        page={"customer"}
+                        markedParts={markedParts}
+                        setMarkedParts={setMarkedParts}
+                        customPartPrice={customPartPrice}
+                        setCustomPartPrice={setCustomPartPrice}
+                        showAllParts={showAllParts}
+                        openParts={openParts}
+                      />
+                    )
+                  })
+                }
+                {
+                  props.parts.filter(part => !part.parent).filter(part => !part.favorite).map(part => {
                     return (
                       <Part
                         key={part._id}

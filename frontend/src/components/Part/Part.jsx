@@ -14,6 +14,7 @@ export default function Part(props) {
   const [openEdit, setOpenEdit] = useState(true);
   const [editName, setEditName] = useState(part.name);
   const [editPrice, setEditPrice] = useState(part.price);
+  const [favorite, setFavorite] = useState(part.favorite || false);
   const [openFormConnections, setOpenFormConnections] = useState(true);
 
   const [openPart, setOpenPart] = useState(true);
@@ -129,6 +130,7 @@ export default function Part(props) {
         name: editName,
         price: editPrice,
         formConnections: [],
+        favorite: favorite
       };
 
       if (formConnections) {
@@ -154,7 +156,7 @@ export default function Part(props) {
           message: `${editName} ändrad`,
           type: "task"
         })
-        setPart({ ...part, name: editName, price: editPrice, formConnections: formConnections });
+        setPart({ ...part, name: editName, price: editPrice, formConnections: formConnections, favorite: favorite });
         if (props.updateParent) {
           props.updateParent();
         }
@@ -215,6 +217,13 @@ export default function Part(props) {
               <Part part={child} key={child._id} children={children} setChildren={setChildren} authenticate={(req) => { props.authenticate(req) }} updateParent={update} className={props.className === "child part" ? "child2 part" : "child3 part"} setAlert={props.setAlert} />
             ))}
 
+            {openEdit ? null :
+              <div className="favorite">
+                <label htmlFor="favorite">Favorit</label>
+                <input type="checkbox" name="favorite" id="favorite" onChange={(e) => { setFavorite(!favorite) }} checked={favorite} />
+              </div>
+            }
+
             <div className="part-bottom">
               <div className="edit-part-form">
                 <div className="add-top">
@@ -269,6 +278,13 @@ export default function Part(props) {
             {children.map(child => (
               <Part part={child} key={child._id} children={children} setChildren={setChildren} authenticate={(req) => { props.authenticate(req) }} updateParent={update} className="child part" setAlert={props.setAlert} />
             ))}
+
+            {openEdit ? null :
+              <div className="favorite">
+                <label htmlFor="favorite">Favorit</label>
+                <input type="checkbox" name="favorite" id="favorite" onChange={(e) => { setFavorite(!favorite) }} checked={favorite} />
+              </div>
+            }
 
             <div className="part-bottom">
               <div className="edit-part-form">
@@ -335,12 +351,19 @@ export default function Part(props) {
             <span onClick={() => { openDropDown(setOpenFormConnections, openFormConnections) }} className={`secondary-button ${openFormConnections ? "" : "open"}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
           </div>
           {openFormConnections ? null :
-          Object.keys(FORM_CONNECTION_MAPPINGS).map(key => (
-            <div className="input-row" key={key}>
-              <label htmlFor={key}>{FORM_CONNECTION_MAPPINGS[key]}</label>
-              <input type="checkbox" name={key} id={key} onChange={(e) => { setFormConnections({ ...formConnections, [key]: e.target.checked }) }} checked={formConnections[key]} />
-            </div>
-          ))}
+            Object.keys(FORM_CONNECTION_MAPPINGS).map(key => (
+              <div className="input-row" key={key}>
+                <label htmlFor={key}>{FORM_CONNECTION_MAPPINGS[key]}</label>
+                <input type="checkbox" name={key} id={key} onChange={(e) => { setFormConnections({ ...formConnections, [key]: e.target.checked }) }} checked={formConnections[key]} />
+              </div>
+            ))}
+        </div>
+      }
+
+      {openEdit ? null :
+        <div className="favorite">
+          <label htmlFor="favorite">Favorit</label>
+          <input type="checkbox" name="favorite" id="favorite" onChange={(e) => { setFavorite(!favorite) }} checked={favorite} />
         </div>
       }
 

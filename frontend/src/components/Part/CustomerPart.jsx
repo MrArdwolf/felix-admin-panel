@@ -141,7 +141,22 @@ export default function Part(props) {
           <span onClick={() => { openDropDown(setOpenPart, openPart) }} className={`${openPart ? "" : "open"}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
         </div>
         <div className={`part-content ${openPart ? "hidden" : ""}`}>
-          {children.map(child => (
+          {children.filter(child => child.favorite).map(child => (
+            <Part
+              part={child}
+              key={child._id}
+              authenticate={props.authenticate}
+              markedParts={props.markedParts}
+              setMarkedParts={props.setMarkedParts}
+              customPartPrice={props.customPartPrice}
+              setCustomPartPrice={props.setCustomPartPrice}
+              showAllParts={props.showAllParts}
+              allParts={allParts}
+              className="child"
+            />
+          ))}
+
+          {children.filter(child => !child.favorite).map(child => (
             <Part
               part={child}
               key={child._id}

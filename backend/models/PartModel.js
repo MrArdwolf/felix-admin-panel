@@ -27,7 +27,11 @@ const partSchema = new mongoose.Schema({
     },
     formConnections: [{
         type: Object
-    }]
+    }],
+    favorite: {
+        type: Boolean,
+        default: false
+    }
 });
 
 const PartModel = new mongoose.model("Part", partSchema);
