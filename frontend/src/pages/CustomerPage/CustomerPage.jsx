@@ -151,7 +151,8 @@ export default function CustomerPage(props) {
     }).join(', ');
 
     CGTotalPrice.push(totalPrice);
-    const message = `Cykel ${index + 1}: ${thingsToFixFormated}%0A%0ATotalpris delar: ${totalPrice}kr%0A%0A%0A`;
+    console.log(customer);
+    const message = `Cykel ${customer.bikeDescription}: ${thingsToFixFormated}%0A%0ATotalpris delar: ${totalPrice}kr%0A%0A%0A`;
     messageArray.push(message);
     });
 
