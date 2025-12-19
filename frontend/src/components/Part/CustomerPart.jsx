@@ -38,14 +38,13 @@ export default function Part(props) {
 
   const [openPart, setOpenPart] = useState(true);
 
-  // When global openParts flag is set, open any part that is marked or has a marked descendant
+  // When any descendant is marked, open the part
   useEffect(() => {
-    if (!props.openParts) return;
     const shouldOpen = marked || checkMarkedChildren();
     if (shouldOpen) {
       setOpenPart(false); // false == expanded
     }
-  }, [props.openParts, props.markedParts]);
+  }, [props.markedParts, marked]);
 
   // No per-part fetching, all children are included in props.part
 
