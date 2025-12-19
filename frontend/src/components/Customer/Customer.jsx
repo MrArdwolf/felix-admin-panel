@@ -87,9 +87,7 @@ export default function Customer(props) {
       })
   }
 
-  const sendPriceSMS = () => {
-    console.log(customer);
-    // Get marked parts with quantity
+  const priceFormating = () => {
     const thingsToFix = markedParts.map(mp => {
       const part = props.parts.find(p => p._id === mp._id);
       if (!part) return null;
@@ -106,6 +104,14 @@ export default function Customer(props) {
     const thingsToFixFormated = thingsToFix.map(part => {
       return "x" + part.quantity + " " + part.name + " " + (part.price * part.quantity) + "kr";
     }).join(', ');
+
+    return { thingsToFixFormated, totalPrice };
+  }
+
+  const sendPriceSMS = () => {
+    console.log(customer);
+
+    const { thingsToFixFormated, totalPrice } = priceFormating();
 
     const message = `Hej, vi har nu kollat över er cykel och här är vad vi rekommenderar att göra. Om allt är ok med er så kommer vi påbörja arbetet och återkomma när den är klar. Betalning sker när cykeln är redo att hämtas.%0A%0AAtt göra/byta: ${thingsToFixFormated}%0A%0ATotalpris delar: ${totalPrice}kr%0A%0A%0A/Felix Cykelmeck`;
 
@@ -248,6 +254,9 @@ export default function Customer(props) {
                 }
               </div>
             )}
+          </div>
+          <div className="total-price">
+            <h3>Total pris: {priceFormating().totalPrice} kr</h3>
           </div>
 
           {(!props.connectedCustomerList.flat().includes(customer) || customer.customerConnection.length > 0) &&
