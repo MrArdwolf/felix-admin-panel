@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, use } from 'react'
 import Part from '../Part/CustomerPart';
 import axios from 'axios';
 import './Customer.scss'
@@ -14,20 +14,26 @@ export default function Customer(props) {
   const [showAllParts, setShowAllParts] = useState(false);
   const [openSmsModal, setOpenSmsModal] = useState(false);
   const [priceAccepted, setPriceAccepted] = useState(customer.priceAccepted || false);
+  const [priceSent, setPriceSent] = useState(customer.priceSent || false);
+  const [bikeDone, setBikeDone] = useState(customer.bikeDone || false);
   const [showButtons, setShowButtons] = useState(false);
   const [mechanicComments, setMechanicComments] = useState(customer.mechanicComments || "");
   const [groupedCustomerIds, setGroupedCustomerIds] = useState(customer.customerConnection || []);
   const [openGroupSelect, setOpenGroupSelect] = useState(false);
   const [editCustomerInfo, setEditCustomerInfo] = useState(false);
 
+
   const saveChanges = () => {
     setShowAllParts(false);
     console.log(priceAccepted)
     console.log(groupedCustomerIds);
+    console.log(priceSent);
     axios.patch(`${backend}/api/customer/${customer._id}`, {
       parts: markedParts,
       partPrices: customPartPrice,
       priceAccepted: priceAccepted,
+      priceSent: priceSent,
+      bikeDone: bikeDone,
       mechanicComments: mechanicComments,
       customerConnection: groupedCustomerIds,
       customerInfo: {
@@ -50,7 +56,7 @@ export default function Customer(props) {
           props.authenticate(saveChanges);
         }
       })
-  }
+  };
 
   const archiveCustomer = () => {
     axios.post(`${backend}/api/archived/add`,
@@ -148,9 +154,21 @@ export default function Customer(props) {
     })
   }
 
+  const priceAcceptedIndication = () => {
+    if (bikeDone) {
+      return "bike-done";
+    } else if (priceAccepted) {
+      return "price-accepted";
+    } else if (priceSent === true && !priceAccepted) {
+      return "price-acceptance-pending";
+    } else {
+      return "";
+    }
+  }
+
 
   return (
-    <div className={`customer ${priceAccepted ? "price-accepted" : ""}`}>
+    <div className={`customer ${priceAcceptedIndication()}`}>
       <div className="customer-top">
         <h2>{customer.name} {customer.bikeNumber}</h2>
         <span onClick={() => { setOpen(!open) }} className={`primary-button ${open ? "open" : ""}`}><ion-icon name="chevron-down-outline"></ion-icon></span>
@@ -310,6 +328,14 @@ export default function Customer(props) {
           <div className="price-accept">
             <h3>Pris godkänd</h3>
             <input type="checkbox" name="priceAccepted" id="" checked={priceAccepted} onChange={() => setPriceAccepted(!priceAccepted)} />
+          </div>
+          <div className="price-accept">
+            <h3>Pris SMS skickat</h3>
+            <input type="checkbox" name="priceSent" id="" checked={priceSent} onChange={() => setPriceSent(!priceSent)} />
+          </div>
+          <div className="price-accept">
+            <h3>Cykel klar</h3>
+            <input type="checkbox" name="bikeDone" id="" checked={bikeDone} onChange={() => setBikeDone(!bikeDone)} />
           </div>
 
           <div className="buttons">

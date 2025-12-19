@@ -47,6 +47,14 @@ const customerSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    priceSent: {
+        type: Boolean,
+        default: false
+    },
+    bikeDone: {
+        type: Boolean,
+        default: false
+    },
     mechanicComments: {
         type: String
     },
