@@ -363,8 +363,8 @@ export default function Customer(props) {
           </div>
           {showButtons && (
             <div className="buttons-dropdown">
-              <button className='primary-button' onClick={archiveCustomer}>Arkivera</button>
               <button className='primary-button' onClick={() => { setOpenSmsModal(true) }}>SMS</button>
+              <button className='primary-button' onClick={archiveCustomer}>Arkivera</button>
               {openSmsModal &&
                 <SmsModal customer={customer} sendPriceSMS={sendPriceSMS} sendDoneSMS={sendDoneSMS} closeModal={() => { setOpenSmsModal(false) }} />
               }
