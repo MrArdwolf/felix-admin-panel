@@ -135,10 +135,12 @@ export default function Customer(props) {
   const sendDoneSMS = (lock) => {
     console.log(customer);
 
-    let message = `Hej, cykeln är nu redo att hämtas. Om du swishar till 1233740875 så ställer vi ut cykeln bakom staketet. Hoppas du är nöjd med servicen och om du vill får du gärna lämna en recension på Google😊 Koden till låset är ${lock}%0A%0A%0Ahttps://g.page/r/CYBOBRAf1c9oEAE/review/%0A%0A%0AFelix Cykelmeck`;
+    const { thingsToFixFormated, totalPrice } = priceFormating();
+
+    let message = `Hej, cykeln är nu redo att hämtas. Totalpris för cykel: ${totalPrice}kr.%0A%0AOm du swishar till 1233740875 så ställer vi ut cykeln bakom staketet. Hoppas du är nöjd med servicen och om du vill får du gärna lämna en recension på Google😊 Koden till låset är ${lock}%0A%0A%0Ahttps://g.page/r/CYBOBRAf1c9oEAE/review/%0A%0A%0AFelix Cykelmeck`;
 
     if (lock === "nothing") {
-      message = `Hej, cykeln är nu redo att hämtas. Om du swishar till 1233740875 så ställer vi ut cykeln bakom staketet. Hoppas du är nöjd med servicen och om du vill får du gärna lämna en recension på Google😊 %0A%0A%0Ahttps://g.page/r/CYBOBRAf1c9oEAE/review/%0A%0A%0AFelix Cykelmeck`;
+      message = `Hej, cykeln är nu redo att hämtas. Totalpris för cykel: ${totalPrice}kr.%0A%0AOm du swishar till 1233740875 så ställer vi ut cykeln bakom staketet. Hoppas du är nöjd med servicen och om du vill får du gärna lämna en recension på Google😊 %0A%0A%0Ahttps://g.page/r/CYBOBRAf1c9oEAE/review/%0A%0A%0AFelix Cykelmeck`;
     }
 
 

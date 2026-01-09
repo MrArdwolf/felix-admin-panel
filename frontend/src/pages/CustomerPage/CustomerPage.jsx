@@ -177,14 +177,46 @@ export default function CustomerPage(props) {
 
     console.log(locksToUse);
 
-    let message = `Hej, cyklarna är nu redo att hämtas. Om du swishar till 1233740875 så ställer vi ut cyklarna bakom staketet. Hoppas du är nöjd med servicen och om du vill får du gärna lämna en recension på Google😊 Koden till låsen är:%0A%0A${locksToUse.join("%0A")}%0A%0A%0Ahttps://g.page/r/CYBOBRAf1c9oEAE/review/%0A%0AAlla reparationer kommer med 1 månads garanti, så har ni några problem tveka inte att höra av er.%0A%0A%0AFelix Cykelmeck`;
+    const messageArray = [`Hej, cyklarna är nu redo att hämtas. Totalpris för cyklarna:%0A%0A`];
+
+    
+
+    const CGTotalPrice = [0];
+
+    customerGroup.forEach((customer, index) => {
+    console.log(customer);
+    // Get marked parts with quantity
+    const thingsToFix = customer.parts.map(mp => {
+      const part = parts.find(p => p._id === mp._id);
+      if (!part) return null;
+      const changedPrice = customer.partPrices.find(_part => _part.id === part._id);
+      return {
+        ...part,
+        price: changedPrice ? parseInt(changedPrice.price) : part.price,
+        quantity: mp.quantity
+      };
+    }).filter(Boolean);
+
+    const totalPrice = thingsToFix.reduce((total, part) => total + part.price * part.quantity, 0);
+
+    CGTotalPrice.push(totalPrice);
+    console.log(customer);
+    const message = `Cykel ${customer.bikeDescription}: Totalpris ${totalPrice}kr%0A%0A`;
+    messageArray.push(message);
+    });
+
+    console.log(CGTotalPrice);
+
+    messageArray.push(`Totalpris alla cyklar: ${CGTotalPrice.reduce((a, b) => a + b, 0)}kr%0A%0A`);
 
     if (locks.filter(lock => lock.lock && lock.lock !== "nothing").length === 0) {
-      message = `Hej, cyklarna är nu redo att hämtas. Om du swishar till 1233740875 så ställer vi ut cyklarna bakom staketet. Hoppas du är nöjd med servicen och om du vill får du gärna lämna en recension på Google😊 %0A%0A%0Ahttps://g.page/r/CYBOBRAf1c9oEAE/review/%0A%0A%0AFelix Cykelmeck`;
+      messageArray.push(`Om du swishar till 1233740875 så ställer vi ut cyklarna bakom staketet. Hoppas du är nöjd med servicen och om du vill får du gärna lämna en recension på Google😊 %0A%0A%0Ahttps://g.page/r/CYBOBRAf1c9oEAE/review/%0A%0A%0AFelix Cykelmeck`);
+    } else {
+      messageArray.push(`Om du swishar till 1233740875 så ställer vi ut cyklarna bakom staketet. Hoppas du är nöjd med servicen och om du vill får du gärna lämna en recension på Google😊 Koden till låsen är:%0A%0A${locksToUse.join("%0A")}%0A%0A%0Ahttps://g.page/r/CYBOBRAf1c9oEAE/review/%0A%0AAlla reparationer kommer med 1 månads garanti, så har ni några problem tveka inte att höra av er.%0A%0A%0AFelix Cykelmeck`)
     }
 
 
-    console.log(message);
+    const message = messageArray.join("");
 
 
     window.open(`sms:${(customerGroup[0].phone)}?body=${message}`)
