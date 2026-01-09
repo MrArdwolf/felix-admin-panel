@@ -49,7 +49,11 @@ const archivedSchema = new mongoose.Schema({
         customerConnection: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: "Customer"
-        }]
+        }],
+    submittedAt: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 const ArchivedModel = new mongoose.model("Archived", archivedSchema);

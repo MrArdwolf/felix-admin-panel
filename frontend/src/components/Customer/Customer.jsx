@@ -212,6 +212,10 @@ export default function Customer(props) {
               <h4>Cykel nummer</h4>
                 <p>{customer.bikeNumber}</p>
             </div>
+            <div className="info-line">
+              <h4>inlämningsdatum</h4>
+                <p>{new Date(customer.submittedAt).toLocaleDateString()}</p>
+            </div>
             {customer.comments && (
               <div className="info-line">
                 <h4>Kommentar</h4>

@@ -61,7 +61,11 @@ const customerSchema = new mongoose.Schema({
     customerConnection: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Customer"
-    }]
+    }],
+    submittedAt: {
+        type: Date,
+        default: Date.now
+    }
 });
 
 const CustomerModel = new mongoose.model("Customer", customerSchema);
