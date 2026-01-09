@@ -11,4 +11,6 @@ CustomerRouter.patch("/:id", CustomerController.updateCustomer);
 
 CustomerRouter.delete("/:id", CustomerController.deleteCustomer);
 
+CustomerRouter.post("/recreate", CustomerController.recreateCustomer);
+
 export default CustomerRouter;

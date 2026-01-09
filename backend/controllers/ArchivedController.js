@@ -59,20 +59,12 @@ async function addArchived(req, res) {
             };
         });
 
+        delete archived._id;
+
         // now create the Archived;
-        const newArchived = await ArchivedModel.create({
-            name,
-            email,
-            phone,
-            bikeDescription,
-            partToFix,
-            alsoDo,
-            comments,
-            parts,
-            partPrices,
-            mechanicComments,
-            customerConnection,
-        });
+        const newArchived = await ArchivedModel.create(
+            archived
+        );
         
         const receipt = await receiptModel.create({
             name,

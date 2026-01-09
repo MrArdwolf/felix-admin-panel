@@ -55,7 +55,7 @@ export default function ArchivedPage(props) {
       <div className="archived-list">
         {archivedCustomers.map(archived => {
           return (
-            <ArchivedCustomer key={archived._id} archived={archived} parts={parts} update={update} authenticate={() => { props.authenticate() }} setAlert={props.setAlert}/>
+            <ArchivedCustomer key={archived._id} archived={archived} parts={parts} allParts={parts} update={update} authenticate={() => { props.authenticate() }} setAlert={props.setAlert}/>
           )
         })}
       </div>

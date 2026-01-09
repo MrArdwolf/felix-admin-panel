@@ -10,6 +10,7 @@ export default function Customer(props) {
   const [markedParts, setMarkedParts] = useState(customer.parts);
   const [customPartPrice, setCustomPartPrice] = useState(customer.partPrices);
   const [openParts, setOpenParts] = useState(false);
+  const [showAllParts, setShowAllParts] = useState(false);
   const timeCreated = new Date(customer.createdAt);
   const [mechanicComments, setMechanicComments] = useState(customer.mechanicComments || "");
 
@@ -27,6 +28,45 @@ export default function Customer(props) {
         console.log(err);
         if (err.status == 401) {
           props.authenticate(getReceipt);
+        }
+      })
+  }
+
+  const recreateCustomer = () => {
+    axios.post(`${backend}/api/customer/recreate`, 
+      customer
+    )
+      .then(res => {
+        console.log(res.data);
+        props.setAlert({
+          show: true,
+          message: `Kund ${customer.name} återskapad`,
+          type: "success"
+        })
+        // deleteArchivedCustomer();
+      })
+      .catch(err => {
+        console.log(err);
+        if (err.status == 401) {
+          props.authenticate(recreateCustomer);
+        }
+      })
+  }
+
+  const deleteArchivedCustomer = () => {
+    axios.delete(`${backend}/api/archived/${customer._id}`)
+      .then(res => {
+        console.log(res.data);
+        props.setAlert({
+          show: true,
+          message: `Arkiverad kund ${customer.name} raderad`,
+          type: "success"
+        })
+      })
+      .catch(err => {
+        console.log(err);
+        if (err.status == 401) {
+          props.authenticate(deleteArchivedCustomer);
         }
       })
   }
@@ -98,12 +138,15 @@ export default function Customer(props) {
                       <Part
                         key={part._id}
                         part={part}
+                        allParts={props.allParts}
                         authenticate={props.authenticate}
                         page={"customer"}
                         markedParts={markedParts}
                         setMarkedParts={setMarkedParts}
                         customPartPrice={customPartPrice}
                         setCustomPartPrice={setCustomPartPrice}
+                        showAllParts={showAllParts}
+                        openParts={openParts}
                       />
                     )
                   })
@@ -117,6 +160,7 @@ export default function Customer(props) {
           </div>
           <div className="buttons">
             <button className='primary-button' onClick={getReceipt}>Kvitto</button>
+            <button className='primary-button' onClick={recreateCustomer}>Återskapa</button>
           </div>
         </div>
       )}

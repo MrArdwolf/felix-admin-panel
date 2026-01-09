@@ -241,6 +241,35 @@ async function deleteCustomer(req, res) {
     }
 }
 
+async function recreateCustomer(req, res) {
+        try {
+        const customer = req.body;
+        customer.bikeNumber = bikeNumbers.shift();
+
+        const { name, email, phone, bikeDescription, partToFix, alsoDo, comments, parts, partPrices, mechanicComments } = customer;
+        if (!name || !email || !phone || !bikeDescription) {
+            res.statusCode = 400;
+            throw new Error("Missing data")
+        }
+
+        // now create the Customer;
+        const newCustomer = await CustomerModel.create(
+            customer
+        );
+
+        // Send the newCustomer as response;
+        res.status(200).json({
+            status: 201,
+            success: true,
+            message: "Customer created Successfully",
+            customer: newCustomer,
+        });
+    } catch (error) {
+        res.statusCode = 400;
+        res.json({ message: "There was an error", error: error.message });
+    }
+}
+
 
 
 
@@ -250,4 +279,5 @@ export default {
     getCustomers,
     updateCustomer,
     deleteCustomer,
+    recreateCustomer,
 }
