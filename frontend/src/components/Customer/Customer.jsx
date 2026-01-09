@@ -345,12 +345,12 @@ export default function Customer(props) {
             <textarea name="mechanicComments" id="" rows="5" value={mechanicComments} onChange={(e) => setMechanicComments(e.target.value)} placeholder='Skriv dina kommentarer här...'></textarea>
           </div>
           <div className="price-accept">
-            <h3>Pris godkänd</h3>
-            <input type="checkbox" name="priceAccepted" id="" checked={priceAccepted} onChange={() => setPriceAccepted(!priceAccepted)} />
-          </div>
-          <div className="price-accept">
             <h3>Pris SMS skickat</h3>
             <input type="checkbox" name="priceSent" id="" checked={priceSent} onChange={() => setPriceSent(!priceSent)} />
+          </div>
+          <div className="price-accept">
+            <h3>Pris godkänd</h3>
+            <input type="checkbox" name="priceAccepted" id="" checked={priceAccepted} onChange={() => setPriceAccepted(!priceAccepted)} />
           </div>
           <div className="price-accept">
             <h3>Cykel klar</h3>
