@@ -43,7 +43,7 @@ export default function Customer(props) {
           message: `Kund ${customer.name} återskapad`,
           type: "success"
         })
-        // deleteArchivedCustomer();
+        deleteArchivedCustomer();
       })
       .catch(err => {
         console.log(err);
@@ -57,6 +57,7 @@ export default function Customer(props) {
     axios.delete(`${backend}/api/archived/${customer._id}`)
       .then(res => {
         console.log(res.data);
+        props.update();
         props.setAlert({
           show: true,
           message: `Arkiverad kund ${customer.name} raderad`,

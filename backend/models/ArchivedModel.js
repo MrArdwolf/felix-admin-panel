@@ -28,16 +28,16 @@ const archivedSchema = new mongoose.Schema({
     },
     parts: [{
         part: {
-                    type: mongoose.Schema.Types.ObjectId,
-                    ref: "Part"
-                },
-                quantity: {
-                    type: Number,
-                    default: 1
-                }
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Part"
+        },
+        quantity: {
+            type: Number,
+            default: 1
+        }
     }],
     partPrices: [{
-        
+
     }],
     createdAt: {
         type: Date,
@@ -46,10 +46,10 @@ const archivedSchema = new mongoose.Schema({
     mechanicComments: {
         type: String
     },
-        customerConnection: [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Customer"
-        }],
+    customerConnection: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Customer"
+    }],
     submittedAt: {
         type: Date,
         default: Date.now

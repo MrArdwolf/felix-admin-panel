@@ -44,6 +44,7 @@ export default function Customer(props) {
       .then(res => {
         console.log(res.data);
         props.update();
+        getCustomerById();
         props.setAlert({
           show: true,
           message: `${customer.name} ${customer.bikeNumber} sparad`,
@@ -58,7 +59,22 @@ export default function Customer(props) {
       })
   };
 
+  const getCustomerById = () => {
+    axios.get(`${backend}/api/customer/${customer._id}`)
+      .then(res => {
+        console.log(res.data);
+        setCustomer(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+        if (err.status == 401) {
+          props.authenticate(getCustomerById);
+        }
+      })
+  }
+
   const archiveCustomer = () => {
+    console.log(customer);
     axios.post(`${backend}/api/archived/add`,
       customer
     )

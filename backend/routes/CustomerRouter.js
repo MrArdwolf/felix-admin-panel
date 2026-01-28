@@ -7,6 +7,8 @@ CustomerRouter.post("/add", CustomerController.addCustomer);
 
 CustomerRouter.get("/get", CustomerController.getCustomers);
 
+CustomerRouter.get("/:id", CustomerController.getCustomerById);
+
 CustomerRouter.patch("/:id", CustomerController.updateCustomer);
 
 CustomerRouter.delete("/:id", CustomerController.deleteCustomer);

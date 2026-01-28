@@ -16,6 +16,8 @@ async function addArchived(req, res) {
             throw new Error("Missing data")
         }
         console.log(name)
+
+        console.log(req.body);
         
         const userToken = req.cookies.authToken;
         let user = null;
@@ -33,6 +35,8 @@ async function addArchived(req, res) {
         });
 
         const allParts = await PartModel.find();
+
+        console.log(parts);
 
         const markedParts = parts.map((part1) => {
             const foundPart = allParts.find((part2) => part2._id.toString() === part1._id.toString());

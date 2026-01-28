@@ -169,6 +169,20 @@ async function getCustomers(req, res) {
     }
 }
 
+async function getCustomerById(req, res) {
+    try {
+        const customer = await CustomerModel.findById(req.params.id);
+        if (!customer) {
+            res.statusCode = 404;
+            throw new Error("Customer not found");
+        }
+        res.json(customer);
+    } catch (error) {
+        res.statusCode = 400;
+        res.json({ message: "There was an error", error: error.message });
+    }
+}
+
 async function updateCustomer(req, res) {
     try {
         const customer = await CustomerModel.findById(req.params.id);
@@ -277,6 +291,7 @@ async function recreateCustomer(req, res) {
 export default {
     addCustomer,
     getCustomers,
+    getCustomerById,
     updateCustomer,
     deleteCustomer,
     recreateCustomer,
