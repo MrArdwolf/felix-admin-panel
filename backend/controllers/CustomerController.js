@@ -29,7 +29,7 @@ async function removeBikeNumber() {
             })
         }
     } catch (error) {
-        console.log(error);
+        console.error(error);
     }
 }
 
@@ -141,6 +141,7 @@ async function addCustomer(req, res) {
     } catch (error) {
         res.statusCode = 400;
         res.json({ message: "There was an error", error: error.message });
+        console.error(error);
     }
 }
 
@@ -166,6 +167,7 @@ async function getCustomers(req, res) {
     } catch (error) {
         res.statusCode = 400;
         res.json({ message: "There was an error", error: error.message });
+        console.error(error);
     }
 }
 
@@ -180,6 +182,7 @@ async function getCustomerById(req, res) {
     } catch (error) {
         res.statusCode = 400;
         res.json({ message: "There was an error", error: error.message });
+        console.error(error);
     }
 }
 
@@ -217,6 +220,7 @@ async function updateCustomer(req, res) {
     } catch (error) {
         res.statusCode = 400;
         res.json({ message: "There was an error", error: error.message });
+        console.error(error);
     }
 }
 
@@ -252,6 +256,7 @@ async function deleteCustomer(req, res) {
     } catch (error) {
         res.statusCode = 400;
         res.json({ message: "There was an error", error: error.message });
+        console.error(error);
     }
 }
 
@@ -281,6 +286,7 @@ async function recreateCustomer(req, res) {
     } catch (error) {
         res.statusCode = 400;
         res.json({ message: "There was an error", error: error.message });
+        console.error(error);
     }
 }
 
