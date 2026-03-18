@@ -15,12 +15,19 @@ export default function Form(props) {
   });
   const [showAlert, setShowAlert] = useState(false);
 
+  const phoneRegex = /^(?:\+46|0)7\d{8}$/;
+
   const nextForm = (e) => {
     e.preventDefault();
-    // props.setStep(props.step + 1);
-    console.log(form1Data);
+    if (!phoneRegex.test(form1Data.phone)) {
+      alert('Vänligen ange ett giltigt svenskt mobilnummer: 0712345678, +46712345678 eller +46 71-234 56 78.');
+      return;
+    }
+    if (!e.currentTarget.checkValidity()) {
+      e.currentTarget.reportValidity();
+      return;
+    }
     props.setFormData({ ...props.formData, form1Data: form1Data });
-    console.log(props.formData);
     if (form1Data.detailsOrNot === 'details') {
       props.setStep(2);
     } else {
@@ -29,7 +36,13 @@ export default function Form(props) {
   }
 
   const handleChange = (e) => {
-    setForm1Data({ ...form1Data, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    if (name === 'phone') {
+      const cleanValue = value.replace(/[\s-]/g, '');
+      setForm1Data({ ...form1Data, [name]: cleanValue });
+      return;
+    }
+    setForm1Data({ ...form1Data, [name]: value });
   }
 
   const resetForm = () => {
@@ -54,7 +67,16 @@ export default function Form(props) {
         </div>
         <div className="input-row">
           <label htmlFor="phone">Mobilnummer*</label>
-          <input type="tel" id="phone" onChange={handleChange} name="phone" pattern="(\+[0-9]{2}|0)[0-9]{9}" title='t.ex. 0712345678 eller +46712345678' value={form1Data.phone} required />
+          <input
+            type="tel"
+            id="phone"
+            onChange={handleChange}
+            name="phone"
+            pattern="^(?:\+46|0)7\d{8}$"
+            title='t.ex. 0712345678, +46712345678 eller +46 71-234 56 78'
+            value={form1Data.phone}
+            required
+          />
         </div>
         <div className="input-row">
           <label htmlFor="email">Email*</label>
