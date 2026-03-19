@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Customer from '../../components/Customer/Customer';
 import axios from 'axios';
 import './CustomerPage.scss'
-import SmsModal from '../../components/SmsModal/SmsModal';
-import CustomerGroup from '../../components/CustomerGroup/customerGroup';
+import CustomerGroup from '../../components/CustomerGroup/CustomerGroup';
 
 export default function CustomerPage(props) {
   const backend = import.meta.env.VITE_API_URL
