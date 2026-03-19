@@ -36,7 +36,7 @@ export default function SmsModal(props) {
                 <div key={customer._id} className="lock-selection">
                   <span>{customer.bikeNumber}:</span>
                   <select name="lock" id="lock" onChange={(e) => { setLocks([...locks.filter(l => l.customerId !== customer._id), { customerId: customer._id, lock: e.target.value }]) }}>
-                    <option value="375">Inget</option>
+                    <option value="375">Ingen Färg</option>
                     <option value="059">Gul</option>
                     <option value="024">Silver</option>
                     <option value="692">Svart</option>
