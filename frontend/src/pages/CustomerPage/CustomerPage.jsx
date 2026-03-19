@@ -243,8 +243,8 @@ export default function CustomerPage(props) {
             </div>
             {showButtons && (
               <div className="buttons-dropdown">
-                <button className='primary-button' onClick={() => archiveCustomer(customerGroup)}>Arkivera</button>
                 <button className='primary-button' onClick={() => { setOpenSmsModal(true) }}>SMS</button>
+                <button className='primary-button' onClick={() => archiveCustomer(customerGroup)}>Arkivera</button>
                 {openSmsModal &&
                   <SmsModal customerGroup={customerGroup} sendPriceSMS={sendPriceSMS} sendDoneSMS={sendDoneSMS} closeModal={() => { setOpenSmsModal(false) }} />
                 }
