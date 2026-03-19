@@ -1,15 +1,15 @@
 @use "../../assets/scss/main.scss" as *;
 
 .price-accepted {
-  border: 4px solid $marked-color !important;
-}
-
-.price-acceptance-pending {
   border: 4px solid $working-color !important;
 }
 
-.bike-done {
+.price-acceptance-pending {
   border: 4px solid $error-color !important;
+}
+
+.bike-done {
+  border: 4px solid $marked-color !important;
 }
 
 .customer {
