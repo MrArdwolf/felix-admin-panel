@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 // import './customerGroup.scss'
 import Customer from '../Customer/Customer';
 import SmsModal from '../SmsModal/SmsModal';
+import axios from 'axios';
 
 
 
 export default function CustomerGroup(props) {
+    const backend = import.meta.env.VITE_API_URL
     const [showButtons, setShowButtons] = useState(false);
     const [openSmsModal, setOpenSmsModal] = useState(false);
 
@@ -109,6 +111,44 @@ export default function CustomerGroup(props) {
             message: `Klart besked skickad`,
             type: "task"
         })
+    }
+
+    const archiveCustomer = (customerGroup) => {
+        customerGroup.forEach(customer => {
+            axios.post(`${backend}/api/archived/add`,
+                customer
+            )
+                .then(res => {
+                    console.log(res.data);
+                    props.setAlert({
+                        show: true,
+                        message: `${customer.name} ${customer.bikeNumber} arkiverad`,
+                        type: "success"
+                    })
+                    deleteCustomer(customer);
+                })
+                .catch(err => {
+                    console.log(err);
+                    if (err.status == 401) {
+                        props.authenticate(archiveCustomer);
+                    }
+                })
+        });
+
+    }
+
+    const deleteCustomer = (customer) => {
+        axios.delete(`${backend}/api/customer/${customer._id}`)
+            .then(res => {
+                console.log(res.data);
+                props.update();
+            })
+            .catch(err => {
+                console.log(err);
+                if (err.status == 401) {
+                    props.authenticate(deleteCustomer);
+                }
+            })
     }
 
     return (
