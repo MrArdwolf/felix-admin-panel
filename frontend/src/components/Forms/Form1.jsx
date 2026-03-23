@@ -42,6 +42,10 @@ export default function Form(props) {
       setForm1Data({ ...form1Data, [name]: cleanValue });
       return;
     }
+    if (name === 'email') {
+      const cleanValue = value.toLowerCase();
+      setForm1Data({ ...form1Data, email: cleanValue });
+    }
     setForm1Data({ ...form1Data, [name]: value });
   }
 
@@ -80,7 +84,7 @@ export default function Form(props) {
         </div>
         <div className="input-row">
           <label htmlFor="email">Email*</label>
-          <input type="text" id="email" onChange={handleChange} name="email" pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$" value={form1Data.email} required />
+          <input type="text" id="email" onChange={handleChange} name="email" pattern="[A-Za-z0-9._%+\-]+@[A-Za-z0-9.\-]+\.[A-Za-z]{2,}$" value={form1Data.email} required />
         </div>
         <div className="input-row">
           <label htmlFor="description">Beskrivning av cykel* <p>Skriv gärna färg och märke.</p></label>
