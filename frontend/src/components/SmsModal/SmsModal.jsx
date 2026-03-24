@@ -68,7 +68,7 @@ export default function SmsModal(props) {
             <div className="input-row">
               <label htmlFor="lock">Lås:</label>
               <select name="lock" id="lock" onChange={(e) => { setLock(e.target.value) }}>
-                <option value="375">Inget</option>
+                <option value="375">Ingen Färg</option>
                 <option value="059">Gul</option>
                 <option value="024">Silver</option>
                 <option value="692">Svart</option>
