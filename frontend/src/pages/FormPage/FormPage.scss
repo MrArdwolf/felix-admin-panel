@@ -9,4 +9,21 @@
   h1 {
     @include font-form-title;
   }
+
+  &.error {
+    background-color: $error-color;
+    color: $secondary-color;
+    justify-self: center;
+    width: 60%;
+    border-radius: 16px;
+    padding: 20px;
+
+    p {
+      @include font-label;
+    }
+
+    a {
+      color: $marked-color;
+    }
+  }
 }

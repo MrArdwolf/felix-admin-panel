@@ -7,6 +7,7 @@ import axios from 'axios'
 
 export default function FormPage(props) {
   const backend = import.meta.env.VITE_API_URL
+  const phone = import.meta.env.VITE_PHONE
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({});
 
@@ -80,6 +81,7 @@ export default function FormPage(props) {
           message: `Ett fel uppstod!`,
           type: "error"
         })
+        setStep(0);
       })
   }
 
@@ -94,6 +96,16 @@ export default function FormPage(props) {
       <div className="FormPage">
         <h1>Tack för din inlämning av cykel!</h1>
         <p>Välkommen åter!</p>
+      </div>
+    )
+  }
+
+  if (step === 0) {
+    return (
+      <div className="FormPage error">
+        <h1>Ett fel uppstod</h1>
+        <p>Uppdatera sidan och försök igen.</p>
+        <p>Om problemet kvarstår, kontakta oss via <a href={'sms:' + phone}>{phone}</a></p>
       </div>
     )
   }

@@ -1,5 +1,5 @@
 export const customerEmail = (customer) => {
-	return `
+  return `
 <!DOCTYPE html>
 <html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="sv-SE">
 
@@ -197,7 +197,7 @@ export const customerEmail = (customer) => {
 }
 
 export const adminEmail = (customer) => {
-	return `
+  return `
         <!DOCTYPE html>
         <html>
         <head>
@@ -218,16 +218,39 @@ export const adminEmail = (customer) => {
     `;
 }
 
+export const adminEmailError = (reqData) => {
+  return `
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <style>
+                .email-container { 
+                    width: 90%; 
+                    font-family: Arial, sans-serif; 
+                    color: #2F2E2E; 
+                }
+                .greeting { font-size: 17px; }
+            </style>
+        </head>
+        <body class="email-container">
+            <h2>Ny inlämnad cykel - fel</h2>
+            <p class="greeting">En cykel har lämnats in. Här är datan för cykeln:</p>
+			<p>${JSON.stringify(reqData)}</p>
+        </body>
+        </html>
+    `;
+}
+
 export const receiptEmail = (receipt) => {
-	const partsList = receipt.parts.map(part => {
-		if (part.quantity > 1) {
-			return `<li>x${part.quantity} ${part.name} - ${part.price} - ${part.price * part.quantity} kr</li>`;
-		}
-	}).join('');
-	const totalCost = receipt.parts.reduce((total, part) => total + (part.price * part.quantity), 0);
+  const partsList = receipt.parts.map(part => {
+    if (part.quantity > 1) {
+      return `<li>x${part.quantity} ${part.name} - ${part.price} - ${part.price * part.quantity} kr</li>`;
+    }
+  }).join('');
+  const totalCost = receipt.parts.reduce((total, part) => total + (part.price * part.quantity), 0);
 
 
-	return `
+  return `
         <!DOCTYPE html>
 <html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="sv-SE">
 
