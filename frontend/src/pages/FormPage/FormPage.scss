@@ -26,4 +26,14 @@
       color: $marked-color;
     }
   }
+
+  .vacation {
+    @include font-label;
+    border-radius: 16px;
+    background-color: $secondary-color;
+    border: 4px solid $error-color;
+    padding: 20px;
+    width: 100%;
+    max-width: 340px;
+  }
 }
