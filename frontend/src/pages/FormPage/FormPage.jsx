@@ -114,7 +114,7 @@ export default function FormPage(props) {
     <div className="FormPage">
       <h1>Felix Cykelmeck: Lämna in</h1>
       <div className="vacation">
-        <p>Jag är på semester från 20/6-14/7, lämnar du in din cykel nu finns risken att jag inte hinner klart med den innan min semester. Går bra att lämna in cykeln under min semester, cyklarna plockas in dagligen ändå.</p>
+        <p>Jag är på semester från 20/6-20/7, lämnar du in din cykel nu finns risken att jag inte hinner klart med den innan min semester. Det går bra att lämna in cykeln under min semester, cyklarna plockas in dagligen ändå och lagas senare.</p>
       </div>
       {
         step === 1 && <Form setStep={setStep} setFormData={setFormData} formData={formData} />
