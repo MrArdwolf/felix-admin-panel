@@ -18,6 +18,36 @@ function generateBikeNr() {
   }
 }
 
+function mergeDuplicateParts(parts = []) {
+  const mergedParts = [];
+  const seenParts = new Map();
+
+  parts.forEach((partEntry) => {
+    const partId = partEntry?._id ?? partEntry?.part;
+    if (!partId) {
+      return;
+    }
+
+    const key = partId.toString();
+    const existingPart = seenParts.get(key);
+
+    if (existingPart) {
+      existingPart.quantity = (existingPart.quantity || 1) + (partEntry.quantity || 1);
+      return;
+    }
+
+    const normalizedPart = {
+      _id: partId,
+      quantity: partEntry.quantity || 1,
+    };
+
+    seenParts.set(key, normalizedPart);
+    mergedParts.push(normalizedPart);
+  });
+
+  return mergedParts;
+}
+
 generateBikeNr()
 
 async function removeBikeNumber() {
@@ -71,7 +101,7 @@ async function addCustomer(req, res) {
         console.log(addPart);
         return addPart.part; // array of part IDs
       }));
-      partIdArrays.forEach(arr => arr.forEach(partId => parts.push({ _id: partId })));
+      partIdArrays.forEach(arr => arr.forEach(partId => parts.push({ _id: partId, quantity: 1 })));
     }
 
     if (alsoDo && alsoDo.length > 0) {
@@ -89,7 +119,7 @@ async function addCustomer(req, res) {
         console.log(addPart);
         return addPart.part; // array of part IDs
       }));
-      partIdArrays.forEach(arr => arr.forEach(partId => parts.push({ _id: partId })));
+      partIdArrays.forEach(arr => arr.forEach(partId => parts.push({ _id: partId, quantity: 1 })));
     }
 
     if (servicePackage) {
@@ -100,9 +130,11 @@ async function addCustomer(req, res) {
           throw new Error(`Part ${servicePackage} does not exist`);
         }
         console.log(addPart);
-        parts.push({ _id: addPart.part }); // add service package part ID
+        parts.push({ _id: addPart.part, quantity: 1 }); // add service package part ID
       }
     }
+
+    const mergedParts = mergeDuplicateParts(parts);
 
     // now create the Customer;
     const newCustomer = await CustomerModel.create({
@@ -114,7 +146,7 @@ async function addCustomer(req, res) {
       alsoDo,
       comments,
       bikeNumber: bikeNumbers.shift(),
-      parts: parts,
+      parts: mergedParts,
     });
 
     sendMail({
@@ -271,6 +303,10 @@ async function recreateCustomer(req, res) {
   try {
     const customer = req.body;
     customer.bikeNumber = bikeNumbers.shift();
+
+    if (customer.parts && customer.parts.length > 0) {
+      customer.parts = mergeDuplicateParts(customer.parts);
+    }
 
     const { name, email, phone, bikeDescription, partToFix, alsoDo, comments, parts, partPrices, mechanicComments } = customer;
     if (!name || !email || !phone || !bikeDescription) {

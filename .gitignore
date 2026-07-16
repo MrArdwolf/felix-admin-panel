@@ -1,3 +1,4 @@
 nginx.conf
 docker-compose.yml
 commands.md
+node_modules
