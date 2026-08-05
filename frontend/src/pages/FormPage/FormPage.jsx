@@ -113,9 +113,10 @@ export default function FormPage(props) {
   return (
     <div className="FormPage">
       <h1>Felix Cykelmeck: Lämna in</h1>
-      <div className="vacation">
+      {/* <div className="vacation">
         <p>Jag är på semester från 20/6-20/7, lämnar du in din cykel nu finns risken att jag inte hinner klart med den innan min semester. Det går bra att lämna in cykeln under min semester, cyklarna plockas in dagligen ändå och lagas senare.</p>
-      </div>
+      </div> */}
+      <div className="vacation">Hej, då jag inte kommer ha lika mycket tid för verkstaden i höst kommer jag att hålla stängt mellan 1/9-7/12. Cyklar som lämnats in före kommer att lagas innan jag stänger ner verkstaden. Tack för er förståelse. /Felix Cykelmeck</div>
       {
         step === 1 && <Form setStep={setStep} setFormData={setFormData} formData={formData} />
       }
