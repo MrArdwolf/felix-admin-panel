@@ -72,6 +72,9 @@ export default function SmsModal(props) {
                 <option value="059">Gul</option>
                 <option value="024">Silver</option>
                 <option value="692">Svart</option>
+                <option value="721">Röd</option>
+                <option value="014">Röd + Silver</option>
+                <option value="159">Röd + Svart</option>
                 <option value="nothing">Inget lås</option>
               </select>
             </div>
